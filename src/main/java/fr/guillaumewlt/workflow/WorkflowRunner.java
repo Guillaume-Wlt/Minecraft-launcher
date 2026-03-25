@@ -43,6 +43,10 @@ public class WorkflowRunner {
                 case DOWNLOAD_CLIENT_JAR:
                     System.out.println(currentStep.getMainTask());
                     new DownloadClientJarProcess().process(); // Download Client .jar
+                    currentStep = ProgramStep.DOWNLOAD_VERSION_LIBRARIES;
+                    break;
+                case DOWNLOAD_VERSION_LIBRARIES:
+                    System.out.println(currentStep.getMainTask());
                     end();
                     break;
             }

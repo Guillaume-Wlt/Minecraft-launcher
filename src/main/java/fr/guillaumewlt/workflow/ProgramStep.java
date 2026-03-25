@@ -9,7 +9,6 @@ public enum ProgramStep {
     DOWNLOAD_VERSION_JSON("=== Downloading version JSON file..."),
     INTERPRET_VERSION_JSON("=== Interpreting version JSON file..."),
     DOWNLOAD_CLIENT_JAR("=== Downloading client jar..."),
-    CHECK_CLIENT_FILE("=== Checking client file..."),
     DOWNLOAD_VERSION_LIBRARIES("=== Downloading version libraries..."),
     STARTING_CLIENT("=== Starting client..."),
     END("");
