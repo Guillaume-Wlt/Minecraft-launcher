@@ -9,7 +9,7 @@ public class InterpretVersionJSONProcess {
 
     public static void interpVersionJSON() {
         try {
-            new VersionJSONParser();
+            new VersionJSONParser().jsonParser();
         } catch (LauncherException e) {
             System.err.println("Fatal Error: " + e.getMessage());
             System.exit(1);

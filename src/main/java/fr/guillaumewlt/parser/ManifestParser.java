@@ -19,7 +19,7 @@ public class ManifestParser extends Parsers {
         String scVersion = scanner.nextLine();
         LauncherUtils.setVersionName(scVersion); // scanner version // Define by user
         try {
-            String content = Files.readString(Path.of(LauncherUtils.getVersionsDir() + LauncherUtils.getManifestName()));
+            String content = Files.readString(Path.of(manifestPath));
             JSONObject manifest = new JSONObject(content);
             JSONArray versions = manifest.getJSONArray("versions");
             for (int i = 0; i < versions.length(); i++) {

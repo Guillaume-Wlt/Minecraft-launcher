@@ -14,11 +14,11 @@ public class CheckFoldersExistence {
         if (!folder.exists()) {
             boolean created = folder.mkdirs();
             if (!created) {
-                throw new LauncherException("Failed to create folder >> " + folder.getPath());
+                throw new LauncherException("Failed to create folder >> \"" + folder.getName() + "\", in >> " + folder.getPath());
             }
-            System.out.println("Folder created >> " + created);
+            System.out.println("Folder \"" + folder.getName() + "\" created in >> " + folder.getPath());
         } else {
-            System.out.println("Folder already exists >> " + folder.getPath());
+            System.out.println("Folder \"" + folder.getName() + "\" already exists in >> " + folder.getPath());
         }
     }
 }
