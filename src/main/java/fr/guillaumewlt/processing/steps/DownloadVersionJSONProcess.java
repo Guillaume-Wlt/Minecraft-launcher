@@ -2,15 +2,14 @@ package fr.guillaumewlt.processing.steps;
 
 import fr.guillaumewlt.downloads.VersionJSONDownload;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.utils.URLUtils;
 
-public class DownloadVersionJSONProcess {
+public class DownloadVersionJSONProcess extends Processes {
 
-    private DownloadVersionJSONProcess() {}
-
-    public static void downloadVersionJSON() {
+    @Override
+    public void process() {
         try {
-            String url = LauncherUtils.getVersionUrl();
+            String url = URLUtils.getSelectedVersionURL();
             if (url != null) {
                 new VersionJSONDownload(url).download();
             } else {

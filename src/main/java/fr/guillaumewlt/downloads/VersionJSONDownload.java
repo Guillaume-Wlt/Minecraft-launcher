@@ -2,6 +2,7 @@ package fr.guillaumewlt.downloads;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.processing.CheckFoldersExistence;
+import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.LauncherUtils;
 
 import java.io.File;
@@ -20,10 +21,10 @@ public class VersionJSONDownload extends Downloads {
     private String selectedVersionDir;
 
     public VersionJSONDownload(String url) {
-        if (LauncherUtils.getVersionName() != null) {
+        if (LauncherUtils.getSelectedVersionName() != null) {
             this.url = url;
-            this.versionName = LauncherUtils.getVersionName();
-            this.versionsDir = LauncherUtils.getVersionsDir(); // versionDir -> [...]/launcher/versions/
+            this.versionName = LauncherUtils.getSelectedVersionName();
+            this.versionsDir = DirectoryPathUtils.getVersionsDir(); // versionDir -> [...]/launcher/versions/
             this.selectedVersionDir = versionsDir + versionName + "/"; // selectedVersionDir -> [...]/launcher/versions/<selected_version>/
         } else {
             throw new LauncherException("Incorrect version");

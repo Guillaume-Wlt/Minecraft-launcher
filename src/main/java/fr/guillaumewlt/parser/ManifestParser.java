@@ -2,6 +2,7 @@ package fr.guillaumewlt.parser;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.utils.URLUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,7 +18,7 @@ public class ManifestParser extends Parsers {
         System.out.println("Select version to download : ");
         Scanner scanner = new Scanner(System.in);
         String scVersion = scanner.nextLine();
-        LauncherUtils.setVersionName(scVersion); // scanner version // Define by user
+        LauncherUtils.setSelectedVersionName(scVersion); // scanner version // Define by user
         try {
             String content = Files.readString(Path.of(manifestPath));
             JSONObject manifest = new JSONObject(content);
@@ -27,7 +28,7 @@ public class ManifestParser extends Parsers {
                 String id = version.getString("id");
                 if (id.equals(scVersion)) {
                     String url = version.getString("url");
-                    LauncherUtils.setVersionUrl(url);
+                    URLUtils.setSelectedVersionURL(url);
                     System.out.println("Version URL set to >> " + url);
                     return;
                 }

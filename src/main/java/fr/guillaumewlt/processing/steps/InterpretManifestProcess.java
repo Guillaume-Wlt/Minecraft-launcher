@@ -3,11 +3,10 @@ package fr.guillaumewlt.processing.steps;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.parser.ManifestParser;
 
-public class InterpretManifestProcess {
+public class InterpretManifestProcess extends Processes {
 
-    private InterpretManifestProcess() {}
-
-    public static void interpManifest() {
+    @Override
+    public void process() {
         try {
             new ManifestParser().jsonParser();
         } catch (LauncherException e) {

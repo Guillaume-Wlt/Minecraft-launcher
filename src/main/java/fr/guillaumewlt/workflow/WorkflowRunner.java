@@ -1,9 +1,6 @@
 package fr.guillaumewlt.workflow;
 
-import fr.guillaumewlt.processing.steps.DownloadManifestProcess;
-import fr.guillaumewlt.processing.steps.DownloadVersionJSONProcess;
-import fr.guillaumewlt.processing.steps.InterpretManifestProcess;
-import fr.guillaumewlt.processing.steps.InterpretVersionJSONProcess;
+import fr.guillaumewlt.processing.steps.*;
 
 public class WorkflowRunner {
 
@@ -13,31 +10,39 @@ public class WorkflowRunner {
         currentStep = ProgramStep.INIT;
     }
 
+
+    // TODO Remplacer l'instantiation de chaque méthode pour POO (new ...)
     public void run() {
         while (currentStep != ProgramStep.END) {
             switch (currentStep) {
                 case INIT:
                     System.out.println(currentStep.getMainTask());
+                    new InitProcess().process(); // init the app
                     currentStep = ProgramStep.DOWNLOAD_MANIFEST;
                     break;
                 case DOWNLOAD_MANIFEST:
                     System.out.println(currentStep.getMainTask());
-                    DownloadManifestProcess.downloadManifest(); // Download Manifest
+                    new DownloadManifestProcess().process(); // Download Manifest
                     currentStep = ProgramStep.INTERPRET_MANIFEST;
                     break;
                 case INTERPRET_MANIFEST:
                     System.out.println(currentStep.getMainTask());
-                    InterpretManifestProcess.interpManifest(); // Interpret Manifest
+                    new InterpretManifestProcess().process(); // Interpret Manifest
                     currentStep = ProgramStep.DOWNLOAD_VERSION_JSON;
                     break;
                 case DOWNLOAD_VERSION_JSON:
                     System.out.println(currentStep.getMainTask());
-                    DownloadVersionJSONProcess.downloadVersionJSON();
+                    new DownloadVersionJSONProcess().process(); // Download version JSON file
                     currentStep = ProgramStep.INTERPRET_VERSION_JSON;
                     break;
                 case INTERPRET_VERSION_JSON:
                     System.out.println(currentStep.getMainTask());
-                    InterpretVersionJSONProcess.interpVersionJSON();
+                    new InterpretVersionJSONProcess().process(); // Interpret version JSON file
+                    currentStep = ProgramStep.DOWNLOAD_CLIENT_JAR;
+                    break;
+                case DOWNLOAD_CLIENT_JAR:
+                    System.out.println(currentStep.getMainTask());
+                    new DownloadClientJarProcess().process(); // Download Client .jar
                     end();
                     break;
             }

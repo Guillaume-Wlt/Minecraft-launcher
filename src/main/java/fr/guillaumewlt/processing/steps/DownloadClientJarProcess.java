@@ -1,14 +1,14 @@
 package fr.guillaumewlt.processing.steps;
 
-import fr.guillaumewlt.downloads.ManifestDownload;
+import fr.guillaumewlt.downloads.ClientDownload;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 
-public class DownloadManifestProcess extends Processes {
+public class DownloadClientJarProcess extends Processes{
 
     @Override
     public void process() {
         try {
-            new ManifestDownload().download();
+            new ClientDownload().download();
         } catch (LauncherException e) {
             System.err.println("Fatal Error: " + e.getMessage());
             System.exit(1);

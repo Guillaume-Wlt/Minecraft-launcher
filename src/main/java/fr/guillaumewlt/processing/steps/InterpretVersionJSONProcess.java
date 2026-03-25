@@ -3,11 +3,10 @@ package fr.guillaumewlt.processing.steps;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.parser.VersionJSONParser;
 
-public class InterpretVersionJSONProcess {
+public class InterpretVersionJSONProcess extends Processes {
 
-    private InterpretVersionJSONProcess() {}
-
-    public static void interpVersionJSON() {
+    @Override
+    public void process() {
         try {
             new VersionJSONParser().jsonParser();
         } catch (LauncherException e) {

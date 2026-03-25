@@ -2,7 +2,9 @@ package fr.guillaumewlt.downloads;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.processing.CheckFoldersExistence;
+import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.utils.URLUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,8 +22,8 @@ public class ManifestDownload extends Downloads {
 
     public ManifestDownload() {
         fileName = LauncherUtils.getManifestName();
-        versionsDir = LauncherUtils.getVersionsDir();
-        url = LauncherUtils.getManifestUrl();
+        versionsDir = DirectoryPathUtils.getVersionsDir();
+        url = URLUtils.getManifestURL();
     }
 
 
