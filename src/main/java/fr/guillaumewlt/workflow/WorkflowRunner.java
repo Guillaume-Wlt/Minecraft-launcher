@@ -11,8 +11,6 @@ public class WorkflowRunner {
         currentStep = ProgramStep.INIT;
     }
 
-
-    // TODO Remplacer l'instantiation de chaque méthode pour POO (new ...)
     public void run() {
         while (currentStep != ProgramStep.END) {
             switch (currentStep) {

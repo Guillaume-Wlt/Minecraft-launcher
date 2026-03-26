@@ -14,6 +14,7 @@ public enum ConsoleMessage {
     WORKFLOW_RUNNER_CHANGE_STEP_MESSAGE(ConsolePrefix.INFO.getPrefix() + "%s"),
     WORKFLOW_RUNNER_UNKNOWN_STEP_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Unknown step: %s"),
     WORKFLOW_RUNNER_ENDING_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Ending..."),
+
     /**
      * Create Message for {@link fr.guillaumewlt.processing.CheckFoldersExistence}<br>
      * - Created -> Message for when the folder is correctly created<br>
@@ -24,12 +25,14 @@ public enum ConsoleMessage {
     CHECK_FOLDER_EXISTENCE_CREATED(ConsolePrefix.INFO.getPrefix() + "Folder \"%s\" created in >> %s"),
     CHECK_FOLDER_EXISTENCE_EXIST(ConsolePrefix.INFO.getPrefix() + "Folder \"%s\" already exists in >> %s"),
     CHECK_FOLDER_EXISTENCE_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Failed to create folder >> \"%s\", in >> %s"),
+
     /**
      * Create Message for {@link Processes} <br>
      * - Fatal Error -> Message for when there is a processing error<br>
      *
      */
     PROCESSES_FATAL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Failed to process %s"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.utils.DirectoryPathUtils} <br>
      * - Launcher directory : Invalid path -> Message for when the Path of the launcher directory ([...]/launcher/) is invalid <br>
@@ -42,6 +45,7 @@ public enum ConsoleMessage {
     DIRECTORYPATH_UTILS_LAUNCHER_DIR_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Launcher directory is null"),
     DIRECTORYPATH_UTILS_VERSIONS_DIR_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Versions directory is null"),
     DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected Version directory is null"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.utils.LauncherUtils} <br>
      * - Selected Version : Name NULL -> Message for when the selected version name is NULL <br>
@@ -52,6 +56,7 @@ public enum ConsoleMessage {
     LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Version name is null"),
     LAUNCHER_UTILS_MANIFEST_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest name is null"),
     LAUNCHER_UTILS_CLIENT_JAR_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Client jar name is null"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.utils.FilePathUtils} <br>
      * - Manifest : Path NULL -> Message for when the Manifest file Path is NULL <br>
@@ -60,6 +65,7 @@ public enum ConsoleMessage {
      */
     FILEPATH_UTILS_MANIFEST_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest path is null"),
     FILEPATH_UTILS_SELECTED_VERSION_JSON_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version JSON file path is null"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.utils.URLUtils} <br>
      * - Selected Version URL : URL NULL -> Message for when the Selected version URL is NULL <br>
@@ -68,12 +74,14 @@ public enum ConsoleMessage {
      */
     URL_UTILS_SELECTED_VERSION_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version URL is null"),
     URL_UTILS_MANIFEST_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest URL is null"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.processing.DownloadProgress} <br>
      * - Update message -> Message to display in the console everytime the download progress
      *
      */
     DOWNLOAD_PROGRESS_UPDATE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "%s >> %s%%"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.utils.ClientJarInfosUtils} <br>
      * - Client Jar Infos : JSON Object NULL -> Message for when the Client Jar Infos JSON Object is NULL <br>
@@ -86,12 +94,14 @@ public enum ConsoleMessage {
     CLIENTJARINFOS_UTILS_SELECTED_CLIENT_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client jar hash is null"),
     CLIENTJARINFOS_UTILS_SELECTED_CLIENT_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client jar size is null"),
     CLIENTJARINFOS_UTILS_SELECTED_CLIENT_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client URL is null"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.utils.LibrariesInfosUtils} <br>
      * - Libraries : JSON Array NULL -> Message for when the Libraries JSON Array is NULL <br>
      *
      */
     LIBRARIESINFOS_UTILS_LIBRARIES_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Libraries JSON Array is null"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.ManifestDownload} <br>
      * - Already up-to-date -> Message for when the manifest is already download and up-to-date <br>
@@ -102,6 +112,7 @@ public enum ConsoleMessage {
     MANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "Manifest already up to date, skipping download"),
     MANIFEST_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Manifest download >> Successful"),
     MANIFEST_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading manifest: %s"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.parser.ManifestParser} <br>
      * - Input Message -> Message for the scanner to input the wanted version <br>
@@ -112,6 +123,7 @@ public enum ConsoleMessage {
     MANIFEST_PARSER_SCANNER_INPUT_MESSAGE(ConsolePrefix.INPUT.getPrefix() + "Select version to download : "),
     MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR(ConsolePrefix.ERROR.getPrefix() + "Version : %s not found"),
     MANIFEST_PARSER_URL_SET_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Version URL set to >> %s"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.VersionJSONDownload} <br>
      * - Already up-to-date -> Message for when the Selected Version JSON is already download and up-to-date <br>
@@ -122,6 +134,7 @@ public enum ConsoleMessage {
     VERSION_JSON_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "Version JSON already up to date, skipping download"),
     VERSION_JSON_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Version JSON download >> Successful"),
     VERSION_JSON_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error Downloading Version JSON : %s"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.parser.VersionJSONParser} <br>
      * - Client Jar Infos Message -> Message to give notice to the console that the Client Jar Infos are well parse <br>
@@ -132,6 +145,7 @@ public enum ConsoleMessage {
     VERSION_JSON_PARSER_CLIENT_JAR_INFOS_MESSAGE(ConsolePrefix.INFO.getPrefix() + ">> Client Jar Infos: OK"),
     VERSION_JSON_PARSER_LIBRARIES_INFOS_MESSAGE(ConsolePrefix.INFO.getPrefix() + ">> Libraries Infos : OK"),
     VERSION_JSON_PARSER_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error while parsing the Selected Version JSON Informations : %s"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.parser.ClientJarInfosParser} <br>
      * - URL Message -> Message to show the client URL to the console <br>
@@ -142,6 +156,7 @@ public enum ConsoleMessage {
     CLIENT_JAR_INFOS_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Download URL >> %s"),
     CLIENT_JAR_INFOS_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Client Hash (Sha1) >> %s"),
     CLIENT_JAR_INFOS_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Client Size >> %sMo"),
+
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.ClientJarDownload} <br>
      * - Local Client Hash Message -> Message to notice the console of the current local client hash <br>
