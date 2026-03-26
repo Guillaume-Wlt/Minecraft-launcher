@@ -8,10 +8,6 @@ public class URLUtils {
     @Setter
     private static String selectedVersionURL;
 
-    @Getter
-    @Setter
-    private static String selectedClientJarURL;
-
     private URLUtils() {}
 
     public static String getManifestURL() {

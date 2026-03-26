@@ -1,5 +1,7 @@
 package fr.guillaumewlt.processing;
 
+import fr.guillaumewlt.utils.console.ConsoleMessage;
+
 public class DownloadProgress {
 
     private long totalSize;
@@ -17,7 +19,7 @@ public class DownloadProgress {
         int percent = (int) ((bytesRead * 100) / totalSize);
         int milestone = (percent / 25) * 25;
         if (milestone != lastMilestone) {
-            System.out.println(filename + " >> " + milestone + "%");
+            System.out.println(ConsoleMessage.DOWNLOAD_PROGRESS_UPDATE_MESSAGE.format(filename, milestone));
             lastMilestone = milestone;
         }
     }

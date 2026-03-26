@@ -1,8 +1,8 @@
 package fr.guillaumewlt.downloads;
 
+import fr.guillaumewlt.utils.ClientJarInfosUtils;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.LauncherUtils;
-import fr.guillaumewlt.utils.URLUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ public abstract class Downloads {
     protected String clientJarName = LauncherUtils.getClientJarName();
 
     // Get Select Client jar (1.8.9, 1.21.5, ...) URL
-    protected String selectedClientJarURL = URLUtils.getSelectedClientJarURL();
+    protected String selectedClientJarURL = ClientJarInfosUtils.getSelectedClientJarURL();
 
     // Get the launcher root directory
     protected String launcherDir = DirectoryPathUtils.getLauncherDir();

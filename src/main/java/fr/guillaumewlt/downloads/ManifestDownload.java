@@ -5,6 +5,7 @@ import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.LauncherUtils;
 import fr.guillaumewlt.utils.URLUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,7 +45,7 @@ public class ManifestDownload extends Downloads {
                 String localHash = computeMD5(localContent);
 
                 if (localHash.equals(remoteHash)) {
-                    System.out.println("Manifest already up to date, skipping download.");
+                    System.out.println(ConsoleMessage.MANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE.getMessage());
                     return true;
                 }
             }
@@ -52,12 +53,12 @@ public class ManifestDownload extends Downloads {
             // Fichier différent ou inexistant → télécharge
             try (FileOutputStream fos = new FileOutputStream(versionsDir + fileName)) {
                 fos.write(remoteContent);
-                System.out.println("Manifest download >> Successfull");
+                System.out.println(ConsoleMessage.MANIFEST_DOWNLOAD_SUCCESSFUL.getMessage());
                 return true;
             }
 
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException("Error downloading manifest: " + e.getMessage());
+            throw new LauncherException(ConsoleMessage.MANIFEST_DOWNLOAD_ERR.format(e.getMessage()));
         }
     }
 

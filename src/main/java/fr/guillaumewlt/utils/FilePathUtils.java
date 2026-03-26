@@ -1,6 +1,7 @@
 package fr.guillaumewlt.utils;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 
 public class FilePathUtils {
 
@@ -8,20 +9,20 @@ public class FilePathUtils {
 
     public static String getManifestPath() { // ManifestPath -> [...]/launcher/versions/<manifest_name>
         if (DirectoryPathUtils.getVersionsDir() == null) {
-            throw new LauncherException("Versions directory is null");
+            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_VERSIONS_DIR_PATH_NULL_ERR.getMessage());
         }
         if (LauncherUtils.getManifestName() == null) {
-            throw new LauncherException("Manifest name is null");
+            throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_MANIFEST_NAME_NULL_ERR.getMessage());
         }
         return DirectoryPathUtils.getVersionsDir() + LauncherUtils.getManifestName();
     }
 
     public static String getSelectedVersionJSONPath() { // SelectedVersionJSONPath -> [...]/launcher/versions/<selected_version>/<selected_version>.json
         if (DirectoryPathUtils.getSelectedVersionDir() == null) {
-            throw new LauncherException("Selected version directory is null");
+            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.getMessage());
         }
         if (LauncherUtils.getSelectedVersionName() == null) {
-            throw new LauncherException("Version Name is null");
+            throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR.getMessage());
         }
         return DirectoryPathUtils.getSelectedVersionDir() + LauncherUtils.getSelectedVersionName() + ".json";
     }

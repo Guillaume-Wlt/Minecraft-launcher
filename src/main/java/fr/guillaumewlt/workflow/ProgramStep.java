@@ -8,7 +8,9 @@ public enum ProgramStep {
     INTERPRET_MANIFEST("=== Interpreting manifest..."),
     DOWNLOAD_VERSION_JSON("=== Downloading version JSON file..."),
     INTERPRET_VERSION_JSON("=== Interpreting version JSON file..."),
+    INTERPRET_CLIENT_JAR_INFOS("=== Interpreting client jar infos..."),
     DOWNLOAD_CLIENT_JAR("=== Downloading client jar..."),
+    INTERPRET_VERSION_LIBRARIES_INFOS("=== Interpreting client libraries..."),
     DOWNLOAD_VERSION_LIBRARIES("=== Downloading version libraries..."),
     STARTING_CLIENT("=== Starting client..."),
     END("");

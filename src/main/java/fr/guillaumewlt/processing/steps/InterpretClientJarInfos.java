@@ -1,14 +1,14 @@
 package fr.guillaumewlt.processing.steps;
 
-import fr.guillaumewlt.downloads.ClientJarDownload;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
+import fr.guillaumewlt.parser.ClientJarInfosParser;
 
-public class DownloadClientJarProcess extends Processes{
+public class InterpretClientJarInfos extends Processes{
 
     @Override
     public void process() {
         try {
-            new ClientJarDownload().download();
+            new ClientJarInfosParser().jsonParser();
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

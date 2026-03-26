@@ -10,8 +10,7 @@ public class DownloadManifestProcess extends Processes {
         try {
             new ManifestDownload().download();
         } catch (LauncherException e) {
-            System.err.println("Fatal Error: " + e.getMessage());
-            System.exit(1);
+            stop(e.getMessage(), 1);
         }
     }
 }

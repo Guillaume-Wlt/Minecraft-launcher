@@ -4,6 +4,7 @@ import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +28,7 @@ public class VersionJSONDownload extends Downloads {
             this.versionsDir = DirectoryPathUtils.getVersionsDir(); // versionDir -> [...]/launcher/versions/
             this.selectedVersionDir = versionsDir + versionName + "/"; // selectedVersionDir -> [...]/launcher/versions/<selected_version>/
         } else {
-            throw new LauncherException("Incorrect version");
+            throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR.getMessage());
         }
     }
 
@@ -48,19 +49,19 @@ public class VersionJSONDownload extends Downloads {
                 String localHash = computeMD5(localContent);
 
                 if (localHash.equals(remoteHash)) {
-                    System.out.println("Version JSON already up to date, skipping download.");
+                    System.out.println(ConsoleMessage.VERSION_JSON_DOWNLOAD_ALREADY_UP_TO_DATE.getMessage());
                     return true;
                 }
             }
 
             try (FileOutputStream fos = new FileOutputStream(selectedVersionDir + versionName + ".json")) {
                 fos.write(remoteContent);
-                System.out.println("Version JSON has been downloaded.");
+                System.out.println(ConsoleMessage.VERSION_JSON_DOWNLOAD_SUCCESSFUL.getMessage());
                 return true;
             }
 
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException("Error Downloading Version JSON", e);
+            throw new LauncherException(ConsoleMessage.VERSION_JSON_DOWNLOAD_ERR.format(e.getMessage()));
         }
     }
 

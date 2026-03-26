@@ -1,9 +1,10 @@
 package fr.guillaumewlt.parser;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.processing.json.ClientJarInfosProcess;
-import fr.guillaumewlt.processing.json.LibrariesInfosProcess;
+import fr.guillaumewlt.utils.ClientJarInfosUtils;
 import fr.guillaumewlt.utils.FilePathUtils;
+import fr.guillaumewlt.utils.LibrariesInfosUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,11 +20,13 @@ public class VersionJSONParser extends Parsers {
             String content = Files.readString(Path.of(FilePathUtils.getSelectedVersionJSONPath())); //read the content of the file.
             JSONObject versionJSON = new JSONObject(content);
             JSONObject client =  versionJSON.getJSONObject("downloads").getJSONObject("client");
-            new ClientJarInfosProcess(client).processClientJarInfos(); // Process the infos of the Client Jar
+            ClientJarInfosUtils.setClientJarInfos(client); // Store the infos the client Jar
+            System.out.println(ConsoleMessage.VERSION_JSON_PARSER_CLIENT_JAR_INFOS_MESSAGE.getMessage());
             JSONArray libraries =  versionJSON.getJSONArray("libraries");
-            new LibrariesInfosProcess(libraries).processLibrariesInfos(); // Process the infos of the differents libraries
+            LibrariesInfosUtils.setLibraries(libraries); // Store the infos of the Libraries
+            System.out.println(ConsoleMessage.VERSION_JSON_PARSER_LIBRARIES_INFOS_MESSAGE.getMessage());
         } catch (IOException e) {
-            throw new LauncherException(e.getMessage());
+            throw new LauncherException(ConsoleMessage.VERSION_JSON_PARSER_PARSING_ERR.format(e.getMessage()));
         }
     }
 }

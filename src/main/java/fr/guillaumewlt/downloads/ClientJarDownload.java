@@ -2,8 +2,10 @@ package fr.guillaumewlt.downloads;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.processing.DownloadProgress;
+import fr.guillaumewlt.utils.ClientJarInfosUtils;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,14 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 
-public class ClientDownload extends Downloads{
+public class ClientJarDownload extends Downloads{
 
     private String selectedVersionName = LauncherUtils.getSelectedVersionName();
     private String selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir();
-    private String selectedClientHash = LauncherUtils.getSelectedClientHash();
+    private String selectedClientHash = ClientJarInfosUtils.getSelectedClientHash();
     private String selectedClientJarPath;
 
-    public ClientDownload() {
+    public ClientJarDownload() {
         defineSelectedClientJarName();
     }
 
@@ -34,16 +36,16 @@ public class ClientDownload extends Downloads{
 
             if (localClientJar.exists()){
                 String localClientJarHash = computeSHA1(localClientJar.toPath());
-                System.out.println("Local Client Jar >> " + localClientJarHash);
+                System.out.println(ConsoleMessage.CLIENT_JAR_DOWNLOAD_LOCAL_CLIENT_HASH_MESSAGE.format(localClientJarHash));
 
                 if (localClientJarHash.equals(selectedClientHash)){
-                    System.out.println("Client JAR already exists and is correct, skipping download.");
+                    System.out.println(ConsoleMessage.CLIENT_JAR_DOWNLOAD_CLIENT_ALREADY_UP_TO_DATE.getMessage());
                     return true;
                 }
             }
 
             Path destination = Path.of(selectedClientJarPath);
-            long totalSize = LauncherUtils.getSelectedClientSize(); // Size store in Launcherutils.
+            long totalSize = ClientJarInfosUtils.getSelectedClientSize(); // Size store in Launcherutils.
             DownloadProgress progress = new DownloadProgress(totalSize);
 
             try (InputStream is = URI.create(selectedClientJarURL).toURL().openStream();
@@ -60,30 +62,30 @@ public class ClientDownload extends Downloads{
             String downloadedHash = computeSHA1(destination);
             if (!downloadedHash.equals(selectedClientHash)) {
                 Files.delete(destination); // supprime le fichier corrompu
-                throw new LauncherException("Client Jar is corrupted, file deleted.");
+                throw new LauncherException(ConsoleMessage.CLIENT_JAR_DOWNLOAD_CLIENT_JAR_CORRUPTED_ERR.getMessage());
             }
 
-            System.out.println("Client JAR >> " + selectedVersionName + ".jar has been successfully downloaded.");
+            System.out.println(ConsoleMessage.CLIENT_JAR_DOWNLOAD_SUCCESSFUL.format(selectedVersionName));
             return true;
 
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException("Error downloading client jar", e);
+            throw new LauncherException(ConsoleMessage.CLIENT_JAR_DOWNLOAD_ERR.format(e.getMessage()));
         }
     }
 
     @Override
     protected void checkRequirements() {
         if (selectedClientJarURL == null) {
-            throw new LauncherException("Selected Client Jar URL is null");
+            throw new LauncherException(ConsoleMessage.CLIENTJARINFOS_UTILS_SELECTED_CLIENT_URL_NULL_ERR.getMessage());
         }
     }
 
     private void defineSelectedClientJarName() {
         if (selectedVersionDir == null) {
-            throw new LauncherException("Selected Version Directory is null");
+            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.getMessage());
         }
         if (selectedVersionName == null) {
-            throw new LauncherException("Selected Version Name is null");
+            throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR.getMessage());
         }
         selectedClientJarPath = selectedVersionDir + selectedVersionName + ".jar";
     }

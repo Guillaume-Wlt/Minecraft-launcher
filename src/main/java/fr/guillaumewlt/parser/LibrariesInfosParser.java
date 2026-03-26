@@ -1,16 +1,17 @@
-package fr.guillaumewlt.processing.json;
+package fr.guillaumewlt.parser;
 
 import org.json.JSONArray;
 
-public class LibrariesInfosProcess {
+public class LibrariesInfosParser extends Parsers {
 
     private JSONArray libraries;
 
-    public LibrariesInfosProcess(JSONArray libraries) {
+    public LibrariesInfosParser(JSONArray libraries) {
         this.libraries = libraries;
     }
 
-    public void processLibrariesInfos() {
+    @Override
+    protected void jsonParser() {
         System.out.println("Libraries Infos :" + libraries.toString(2));
 
         // TODO Create Libraries Folder

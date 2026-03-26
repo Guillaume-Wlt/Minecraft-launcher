@@ -10,8 +10,7 @@ public class InterpretManifestProcess extends Processes {
         try {
             new ManifestParser().jsonParser();
         } catch (LauncherException e) {
-            System.err.println("Fatal Error: " + e.getMessage());
-            System.exit(1);
+            stop(e.getMessage(), 1);
         }
     }
 }

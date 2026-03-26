@@ -3,6 +3,7 @@ package fr.guillaumewlt.processing.steps;
 import fr.guillaumewlt.downloads.VersionJSONDownload;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.utils.URLUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 
 public class DownloadVersionJSONProcess extends Processes {
 
@@ -13,11 +14,10 @@ public class DownloadVersionJSONProcess extends Processes {
             if (url != null) {
                 new VersionJSONDownload(url).download();
             } else {
-                throw new LauncherException("No version url found");
+                throw new LauncherException(ConsoleMessage.URL_UTILS_SELECTED_VERSION_URL_NULL_ERR.getMessage());
             }
         } catch (LauncherException e) {
-            System.err.println("Fatal Error: " + e.getMessage());
-            System.exit(1);
+            stop(e.getMessage(), 1);
         }
     }
 }
