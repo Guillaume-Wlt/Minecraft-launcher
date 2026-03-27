@@ -57,6 +57,7 @@ public class WorkflowRunner {
                     break;
                 case DOWNLOAD_VERSION_LIBRARIES:
                     changeStepMessage(currentStep);
+                    new DownloadLibrariesProcess(context).process();
                     end();
                     break;
                 default:

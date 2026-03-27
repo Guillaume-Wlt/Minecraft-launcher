@@ -11,9 +11,9 @@ public class DownloadLibrariesProcess extends Processes {
     }
 
     @Override
-    protected void process() {
+    public void process() {
         try {
-            new LibrariesDownload().download();
+            new LibrariesDownload(context).download();
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }
