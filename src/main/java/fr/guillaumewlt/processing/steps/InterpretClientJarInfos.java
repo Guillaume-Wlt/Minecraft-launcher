@@ -1,23 +1,21 @@
 package fr.guillaumewlt.processing.steps;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.model.ClientJarInfo;
+import fr.guillaumewlt.model.ClientJarInfos;
 import fr.guillaumewlt.parser.ClientJarInfosParser;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 public class InterpretClientJarInfos extends Processes{
 
-    private final LauncherContext context;
-
     public InterpretClientJarInfos(LauncherContext context){
-        this.context = context;
+        super(context);
     }
 
     @Override
     public void process() {
         try {
-            ClientJarInfo info = new ClientJarInfosParser(context).jsonParser();
-            context.setClientJarInfo(info);
+            ClientJarInfos info = new ClientJarInfosParser(context).jsonParser();
+            context.setClientJarInfos(info);
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

@@ -48,12 +48,12 @@ public enum ConsoleMessage {
 
     /**
      * Create Message for {@link fr.guillaumewlt.utils.LauncherUtils} <br>
-     * - Selected Version : Name NULL -> Message for when the selected version name is NULL <br>
+     * - Manifest URL : URL NULL -> Message for when the Manifest URL is NULL <br>
      * - Manifest : Name NULL -> Message for when the Manifest name is NULL <br>
      * - Client Jar : Name NULL -> Message for when the Client Jar name is NULL <br>
      *
      */
-    LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Version name is null"),
+    LAUNCHER_UTILS_MANIFEST_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest URL is null"),
     LAUNCHER_UTILS_MANIFEST_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest name is null"),
     LAUNCHER_UTILS_CLIENT_JAR_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Client jar name is null"),
 
@@ -67,15 +67,6 @@ public enum ConsoleMessage {
     FILEPATH_UTILS_SELECTED_VERSION_JSON_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version JSON file path is null"),
 
     /**
-     * Create Message for {@link fr.guillaumewlt.utils.URLUtils} <br>
-     * - Selected Version URL : URL NULL -> Message for when the Selected version URL is NULL <br>
-     * - Manifest URL : URL NULL -> Message for when the Manifest URL is NULL <br>
-     *
-     */
-    URL_UTILS_SELECTED_VERSION_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version URL is null"),
-    URL_UTILS_MANIFEST_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest URL is null"),
-
-    /**
      * Create Message for {@link fr.guillaumewlt.processing.DownloadProgress} <br>
      * - Update message -> Message to display in the console everytime the download progress
      *
@@ -83,24 +74,32 @@ public enum ConsoleMessage {
     DOWNLOAD_PROGRESS_UPDATE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "%s >> %s%%"),
 
     /**
-     * Create Message for {@link fr.guillaumewlt.utils.ClientJarInfosUtils} <br>
-     * - Client Jar Infos : JSON Object NULL -> Message for when the Client Jar Infos JSON Object is NULL <br>
+     * Create Message for {@link fr.guillaumewlt.model.SelectedVersion} <br>
+     * - Selected Version : Record NULL -> Message for when the record is NULL <br>
+     * - Selected version : Name NULL -> Message for when the selected version name is NULL <br>
+     * - Selected Version URL : URL NULL -> Message for when the Selected version URL is NULL <br>
+     */
+    SELECTEDVERSION_RECORD_NULL_ERR(ConsolePrefix.INFO.getPrefix() + "Selected version record is null"),
+    SELECTEDVERSION_RECORD_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Version name is null"),
+    SELECTEDVERSION_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version URL is null"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.model.VersionRawData}
+     * - Version Raw Data : JSON Object NULL -> Message for when the Client JSON Object is NULL <br>
+     */
+    VERSIONRAWDATA_RECORD_CLIENT_JSON_OBJECT_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Client jar infos JSON object is null"),
+    VERSIONRAWDATA_RECORD_LIBRARIES_JSON_ARRAY_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Libraries JSON Array is null"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.model.ClientJarInfos} <br>
      * - Client Hash : Hash NULL -> Message for when the Selected Client Hash is NULL <br>
      * - Client Size : Size NULL -> Message for when the Selected Client Size is NULL <br>
      * - Client URL : URL NULL -> Message for when the Selected Client URL is NULL <br>
      *
      */
-    CLIENTJARINFOS_UTILS_CLIENT_JAR_INFOS_OBJECT_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Client jar infos JSON object is null"),
-    CLIENTJARINFOS_UTILS_SELECTED_CLIENT_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client jar hash is null"),
-    CLIENTJARINFOS_UTILS_SELECTED_CLIENT_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client jar size is null"),
-    CLIENTJARINFOS_UTILS_SELECTED_CLIENT_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client URL is null"),
-
-    /**
-     * Create Message for {@link fr.guillaumewlt.utils.LibrariesInfosUtils} <br>
-     * - Libraries : JSON Array NULL -> Message for when the Libraries JSON Array is NULL <br>
-     *
-     */
-    LIBRARIESINFOS_UTILS_LIBRARIES_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Libraries JSON Array is null"),
+    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client jar hash is null"),
+    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client jar size is null"),
+    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client URL is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.ManifestDownload} <br>

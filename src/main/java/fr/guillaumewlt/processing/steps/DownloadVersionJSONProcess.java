@@ -7,21 +7,23 @@ import fr.guillaumewlt.workflow.LauncherContext;
 
 public class DownloadVersionJSONProcess extends Processes {
 
-    private final LauncherContext context;
-
     public DownloadVersionJSONProcess(LauncherContext context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
     public void process() {
         try {
-            String url = context.getSelectedVersion().url();
-            if (url != null) {
-                new VersionJSONDownload(context, url).download();
-            } else {
-                throw new LauncherException(ConsoleMessage.URL_UTILS_SELECTED_VERSION_URL_NULL_ERR.getMessage());
+            if (context.getSelectedVersion() == null) {
+                throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NULL_ERR.getMessage());
             }
+            String url = context.getSelectedVersion().url();
+
+            if (url == null) {
+                throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_URL_NULL_ERR.getMessage());
+            }
+            new VersionJSONDownload(context, url).download();
+
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

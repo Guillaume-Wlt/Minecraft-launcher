@@ -22,7 +22,7 @@ public class ManifestParser {
     }
 
     public SelectedVersion jsonparser() {
-        System.out.println(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_MESSAGE.getMessage());
+        System.out.print(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_MESSAGE.getMessage());
         Scanner scanner = new Scanner(System.in); // scanner version // Define by user
         String selectedVersion = scanner.nextLine();
 

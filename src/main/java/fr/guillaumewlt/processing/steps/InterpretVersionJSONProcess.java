@@ -7,10 +7,8 @@ import fr.guillaumewlt.workflow.LauncherContext;
 
 public class InterpretVersionJSONProcess extends Processes {
 
-    private final LauncherContext context;
-
     public InterpretVersionJSONProcess(LauncherContext context){
-        this.context = context;
+        super(context);
     }
 
     @Override

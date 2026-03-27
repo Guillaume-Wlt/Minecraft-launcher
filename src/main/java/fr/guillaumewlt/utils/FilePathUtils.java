@@ -19,11 +19,12 @@ public class FilePathUtils {
 
     public static String getSelectedVersionJSONPath(String selectedVersion) { // SelectedVersionJSONPath -> [...]/launcher/versions/<selected_version>/<selected_version>.json
         if (selectedVersion == null) {
-            throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR.getMessage());
+            throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
         }
-        if (DirectoryPathUtils.getSelectedVersionDir(selectedVersion) == null) {
+        String selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(selectedVersion);
+        if (selectedVersionDir == null) {
             throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.getMessage());
         }
-        return DirectoryPathUtils.getSelectedVersionDir(selectedVersion) + selectedVersion + ".json";
+        return selectedVersionDir + selectedVersion + ".json";
     }
 }

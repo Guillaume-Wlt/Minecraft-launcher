@@ -17,7 +17,7 @@ public class WorkflowRunner {
             switch (currentStep) {
                 case INIT:
                     changeStepMessage(currentStep);
-                    new InitProcess().process(); // init the app
+                    new InitProcess(context).process(); // init the app
                     currentStep = ProgramStep.DOWNLOAD_MANIFEST;
                     break;
                 case DOWNLOAD_MANIFEST:
@@ -52,7 +52,7 @@ public class WorkflowRunner {
                     break;
                 case INTERPRET_VERSION_LIBRARIES_INFOS:
                     changeStepMessage(currentStep);
-                    // TODO Logic to interp the libraries infos
+                    new InterpretLibrariesInfos(context).process(); //*
                     currentStep = ProgramStep.DOWNLOAD_VERSION_LIBRARIES;
                     break;
                 case DOWNLOAD_VERSION_LIBRARIES:

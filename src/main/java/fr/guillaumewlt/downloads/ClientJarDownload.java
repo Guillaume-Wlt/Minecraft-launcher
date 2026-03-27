@@ -27,9 +27,9 @@ public class ClientJarDownload extends Downloads{
     public ClientJarDownload(LauncherContext context) {
         selectedVersionName = context.getSelectedVersion().selectedVersion();
         selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(selectedVersionName);
-        selectedClientJarHash = context.getClientJarInfo().sha1();
-        selectedClientJarURL = context.getClientJarInfo().url();
-        selectedClientJarSize = context.getClientJarInfo().size();
+        selectedClientJarHash = context.getClientJarInfos().sha1();
+        selectedClientJarURL = context.getClientJarInfos().url();
+        selectedClientJarSize = context.getClientJarInfos().size();
         defineSelectedClientJarName();
     }
 
@@ -82,7 +82,7 @@ public class ClientJarDownload extends Downloads{
     @Override
     protected void checkRequirements() {
         if (selectedClientJarURL == null) {
-            throw new LauncherException(ConsoleMessage.CLIENTJARINFOS_UTILS_SELECTED_CLIENT_URL_NULL_ERR.getMessage());
+            throw new LauncherException(ConsoleMessage.CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR.getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ public class ClientJarDownload extends Downloads{
             throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.getMessage());
         }
         if (selectedVersionName == null) {
-            throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR.getMessage());
+            throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
         }
         selectedClientJarPath = selectedVersionDir + selectedVersionName + ".jar";
     }

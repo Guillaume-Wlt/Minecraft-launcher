@@ -6,16 +6,14 @@ import fr.guillaumewlt.workflow.LauncherContext;
 
 public class DownloadManifestProcess extends Processes {
 
-    private final LauncherContext context;
-
     public DownloadManifestProcess(LauncherContext context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
     public void process() {
         try {
-            new ManifestDownload(context).download();
+            new ManifestDownload().download();
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

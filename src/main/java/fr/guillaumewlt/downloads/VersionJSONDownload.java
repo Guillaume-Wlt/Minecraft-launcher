@@ -28,7 +28,7 @@ public class VersionJSONDownload extends Downloads {
             this.versionsDir = DirectoryPathUtils.getVersionsDir(); // versionDir -> [...]/launcher/versions/
             this.selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(versionName); // selectedVersionDir -> [...]/launcher/versions/<selected_version>/
         } else {
-            throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR.getMessage());
+            throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
         }
     }
 

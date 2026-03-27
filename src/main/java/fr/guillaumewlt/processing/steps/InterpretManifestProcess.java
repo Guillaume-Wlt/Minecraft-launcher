@@ -7,10 +7,8 @@ import fr.guillaumewlt.workflow.LauncherContext;
 
 public class InterpretManifestProcess extends Processes {
 
-    private final LauncherContext context;
-
     public InterpretManifestProcess(LauncherContext context) {
-        this.context = context;
+        super(context);
     }
 
     @Override

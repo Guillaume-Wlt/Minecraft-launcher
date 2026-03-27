@@ -1,19 +1,19 @@
 package fr.guillaumewlt.processing.steps;
 
-import fr.guillaumewlt.downloads.ClientJarDownload;
+import fr.guillaumewlt.downloads.LibrariesDownload;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.workflow.LauncherContext;
 
-public class DownloadClientJarProcess extends Processes{
+public class DownloadLibrariesProcess extends Processes {
 
-    public DownloadClientJarProcess(LauncherContext context) {
+    public DownloadLibrariesProcess(LauncherContext context) {
         super(context);
     }
 
     @Override
-    public void process() {
+    protected void process() {
         try {
-            new ClientJarDownload(context).download();
+            new LibrariesDownload().download();
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }
