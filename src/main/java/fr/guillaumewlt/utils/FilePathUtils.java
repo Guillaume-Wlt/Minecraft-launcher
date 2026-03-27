@@ -17,13 +17,13 @@ public class FilePathUtils {
         return DirectoryPathUtils.getVersionsDir() + LauncherUtils.getManifestName();
     }
 
-    public static String getSelectedVersionJSONPath() { // SelectedVersionJSONPath -> [...]/launcher/versions/<selected_version>/<selected_version>.json
-        if (DirectoryPathUtils.getSelectedVersionDir() == null) {
-            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.getMessage());
-        }
-        if (LauncherUtils.getSelectedVersionName() == null) {
+    public static String getSelectedVersionJSONPath(String selectedVersion) { // SelectedVersionJSONPath -> [...]/launcher/versions/<selected_version>/<selected_version>.json
+        if (selectedVersion == null) {
             throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR.getMessage());
         }
-        return DirectoryPathUtils.getSelectedVersionDir() + LauncherUtils.getSelectedVersionName() + ".json";
+        if (DirectoryPathUtils.getSelectedVersionDir(selectedVersion) == null) {
+            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.getMessage());
+        }
+        return DirectoryPathUtils.getSelectedVersionDir(selectedVersion) + selectedVersion + ".json";
     }
 }

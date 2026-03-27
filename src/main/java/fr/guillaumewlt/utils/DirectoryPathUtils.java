@@ -31,13 +31,13 @@ public class DirectoryPathUtils {
         }
     }
 
-    public static String getSelectedVersionDir() { // SelectedVersionDir -> [...]/launcher/versions/<selected_version>/
+    public static String getSelectedVersionDir(String selectedVersion) { // SelectedVersionDir -> [...]/launcher/versions/<selected_version>/
         if (DirectoryPathUtils.getVersionsDir() == null) {
             throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_VERSIONS_DIR_PATH_NULL_ERR.getMessage());
         }
-        if (LauncherUtils.getSelectedVersionName() == null) {
+        if (selectedVersion == null) {
             throw new LauncherException("Version name is null");
         }
-        return DirectoryPathUtils.getVersionsDir() + LauncherUtils.getSelectedVersionName() + "/";
+        return DirectoryPathUtils.getVersionsDir() + selectedVersion + "/";
     }
 }

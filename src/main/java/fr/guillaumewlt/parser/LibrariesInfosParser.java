@@ -2,7 +2,7 @@ package fr.guillaumewlt.parser;
 
 import org.json.JSONArray;
 
-public class LibrariesInfosParser extends Parsers {
+public class LibrariesInfosParser {
 
     private JSONArray libraries;
 
@@ -10,8 +10,7 @@ public class LibrariesInfosParser extends Parsers {
         this.libraries = libraries;
     }
 
-    @Override
-    protected void jsonParser() {
+    public void jsonParser() {
         System.out.println("Libraries Infos :" + libraries.toString(2));
 
         // TODO Create Libraries Folder

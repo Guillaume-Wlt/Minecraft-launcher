@@ -5,6 +5,7 @@ import fr.guillaumewlt.utils.console.ConsoleMessage;
 
 public class WorkflowRunner {
 
+    private final LauncherContext context =  new LauncherContext();
     private ProgramStep currentStep;
 
     public WorkflowRunner() {
@@ -21,32 +22,32 @@ public class WorkflowRunner {
                     break;
                 case DOWNLOAD_MANIFEST:
                     changeStepMessage(currentStep);
-                    new DownloadManifestProcess().process(); // Download Manifest
+                    new DownloadManifestProcess(context).process(); // Download Manifest
                     currentStep = ProgramStep.INTERPRET_MANIFEST;
                     break;
                 case INTERPRET_MANIFEST:
                     changeStepMessage(currentStep);
-                    new InterpretManifestProcess().process(); // Interpret Manifest
+                    new InterpretManifestProcess(context).process(); // Interpret Manifest
                     currentStep = ProgramStep.DOWNLOAD_VERSION_JSON;
                     break;
                 case DOWNLOAD_VERSION_JSON:
                     changeStepMessage(currentStep);
-                    new DownloadVersionJSONProcess().process(); // Download version JSON file
+                    new DownloadVersionJSONProcess(context).process(); // Download version JSON file
                     currentStep = ProgramStep.INTERPRET_VERSION_JSON;
                     break;
                 case INTERPRET_VERSION_JSON:
                     changeStepMessage(currentStep);
-                    new InterpretVersionJSONProcess().process(); // Interpret version JSON file
+                    new InterpretVersionJSONProcess(context).process(); // Interpret version JSON file
                     currentStep = ProgramStep.INTERPRET_CLIENT_JAR_INFOS;
                     break;
                 case INTERPRET_CLIENT_JAR_INFOS:
                     changeStepMessage(currentStep);
-                    new InterpretClientJarInfos().process(); // Interpret Client Jar Infos
+                    new InterpretClientJarInfos(context).process(); // Interpret Client Jar Infos
                     currentStep = ProgramStep.DOWNLOAD_CLIENT_JAR;
                     break;
                 case DOWNLOAD_CLIENT_JAR:
                     changeStepMessage(currentStep);
-                    new DownloadClientJarProcess().process(); // Download Client .jar*
+                    new DownloadClientJarProcess(context).process(); // Download Client .jar*
                     currentStep = ProgramStep.INTERPRET_VERSION_LIBRARIES_INFOS;
                     break;
                 case INTERPRET_VERSION_LIBRARIES_INFOS:

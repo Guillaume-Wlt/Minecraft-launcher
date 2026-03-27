@@ -2,10 +2,9 @@ package fr.guillaumewlt.downloads;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.processing.DownloadProgress;
-import fr.guillaumewlt.utils.ClientJarInfosUtils;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
-import fr.guillaumewlt.utils.LauncherUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
+import fr.guillaumewlt.workflow.LauncherContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,12 +17,19 @@ import java.security.NoSuchAlgorithmException;
 
 public class ClientJarDownload extends Downloads{
 
-    private String selectedVersionName = LauncherUtils.getSelectedVersionName();
-    private String selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir();
-    private String selectedClientHash = ClientJarInfosUtils.getSelectedClientHash();
+    private final String selectedVersionName;
+    private final String selectedVersionDir;
+    private final String selectedClientJarHash;
+    private final String selectedClientJarURL;
+    private final long selectedClientJarSize;
     private String selectedClientJarPath;
 
-    public ClientJarDownload() {
+    public ClientJarDownload(LauncherContext context) {
+        selectedVersionName = context.getSelectedVersion().selectedVersion();
+        selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(selectedVersionName);
+        selectedClientJarHash = context.getClientJarInfo().sha1();
+        selectedClientJarURL = context.getClientJarInfo().url();
+        selectedClientJarSize = context.getClientJarInfo().size();
         defineSelectedClientJarName();
     }
 
@@ -38,14 +44,14 @@ public class ClientJarDownload extends Downloads{
                 String localClientJarHash = computeSHA1(localClientJar.toPath());
                 System.out.println(ConsoleMessage.CLIENT_JAR_DOWNLOAD_LOCAL_CLIENT_HASH_MESSAGE.format(localClientJarHash));
 
-                if (localClientJarHash.equals(selectedClientHash)){
+                if (localClientJarHash.equals(selectedClientJarHash)){
                     System.out.println(ConsoleMessage.CLIENT_JAR_DOWNLOAD_CLIENT_ALREADY_UP_TO_DATE.getMessage());
                     return true;
                 }
             }
 
             Path destination = Path.of(selectedClientJarPath);
-            long totalSize = ClientJarInfosUtils.getSelectedClientSize(); // Size store in Launcherutils.
+            long totalSize = selectedClientJarSize; // Size store in Launcherutils.
             DownloadProgress progress = new DownloadProgress(totalSize);
 
             try (InputStream is = URI.create(selectedClientJarURL).toURL().openStream();
@@ -60,7 +66,7 @@ public class ClientJarDownload extends Downloads{
 
             // Vérification intégrité post-téléchargement
             String downloadedHash = computeSHA1(destination);
-            if (!downloadedHash.equals(selectedClientHash)) {
+            if (!downloadedHash.equals(selectedClientJarHash)) {
                 Files.delete(destination); // supprime le fichier corrompu
                 throw new LauncherException(ConsoleMessage.CLIENT_JAR_DOWNLOAD_CLIENT_JAR_CORRUPTED_ERR.getMessage());
             }

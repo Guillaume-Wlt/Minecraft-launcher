@@ -3,8 +3,8 @@ package fr.guillaumewlt.downloads;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
-import fr.guillaumewlt.utils.LauncherUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
+import fr.guillaumewlt.workflow.LauncherContext;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,12 +21,12 @@ public class VersionJSONDownload extends Downloads {
     private String versionsDir;
     private String selectedVersionDir;
 
-    public VersionJSONDownload(String url) {
-        if (LauncherUtils.getSelectedVersionName() != null) {
+    public VersionJSONDownload(LauncherContext context, String url) {
+        if (context.getSelectedVersion() != null) {
             this.url = url;
-            this.versionName = LauncherUtils.getSelectedVersionName();
+            this.versionName = context.getSelectedVersion().selectedVersion();
             this.versionsDir = DirectoryPathUtils.getVersionsDir(); // versionDir -> [...]/launcher/versions/
-            this.selectedVersionDir = versionsDir + versionName + "/"; // selectedVersionDir -> [...]/launcher/versions/<selected_version>/
+            this.selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(versionName); // selectedVersionDir -> [...]/launcher/versions/<selected_version>/
         } else {
             throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_SELECTED_VERSION_NAME_NULL_ERR.getMessage());
         }
