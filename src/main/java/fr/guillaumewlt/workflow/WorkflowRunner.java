@@ -17,7 +17,7 @@ public class WorkflowRunner {
             switch (currentStep) {
                 case INIT:
                     changeStepMessage(currentStep);
-                    new InitProcess(context).process(); // init the app
+                    new InitProcess(context).process(); // init the Program
                     currentStep = ProgramStep.DOWNLOAD_MANIFEST;
                     break;
                 case DOWNLOAD_MANIFEST:
@@ -42,7 +42,7 @@ public class WorkflowRunner {
                     break;
                 case INTERPRET_CLIENT_JAR_INFOS:
                     changeStepMessage(currentStep);
-                    new InterpretClientJarInfos(context).process(); // Interpret Client Jar Infos
+                    new InterpretClientJarInfos(context).process(); // Interpret Client Jar Infos collected in INTERPRET_VERSION_JSON
                     currentStep = ProgramStep.DOWNLOAD_CLIENT_JAR;
                     break;
                 case DOWNLOAD_CLIENT_JAR:
@@ -50,14 +50,29 @@ public class WorkflowRunner {
                     new DownloadClientJarProcess(context).process(); // Download Client .jar*
                     currentStep = ProgramStep.INTERPRET_VERSION_LIBRARIES_INFOS;
                     break;
-                case INTERPRET_VERSION_LIBRARIES_INFOS:
+                case INTERPRET_VERSION_LIBRARIES_INFOS: // Interpret the libraries infos collected in INTERPRET_VERSION_JSON
                     changeStepMessage(currentStep);
-                    new InterpretLibrariesInfos(context).process(); //*
+                    new InterpretLibrariesInfos(context).process();
                     currentStep = ProgramStep.DOWNLOAD_VERSION_LIBRARIES;
                     break;
-                case DOWNLOAD_VERSION_LIBRARIES:
+                case DOWNLOAD_VERSION_LIBRARIES: // Download each library from List<LibraryInfos>
                     changeStepMessage(currentStep);
                     new DownloadLibrariesProcess(context).process();
+                    currentStep = ProgramStep.INTERPRET_CLIENT_ASSETS_INDEX;
+                    break;
+                case INTERPRET_CLIENT_ASSETS_INDEX: // Interpret the client assets index infos
+                    changeStepMessage(currentStep);
+                    new InterpretClientAssetsIndex(context).process();
+                    currentStep = ProgramStep.DOWNLOAD_CLIENT_ASSETS_INDEX;
+                    break;
+                case DOWNLOAD_CLIENT_ASSETS_INDEX: // Download the client assets index
+                    changeStepMessage(currentStep);
+                    new DownloadAssetsIndexProcess(context).process();
+                    currentStep = ProgramStep.INTERPRET_CLIENT_ASSETS_INFOS;
+                    break;
+                case INTERPRET_CLIENT_ASSETS_INFOS: // Interpret the client assets infos
+                    changeStepMessage(currentStep);
+                    new InterpretClientAssetsInfos(context).process();
                     end();
                     break;
                 default:

@@ -5,5 +5,6 @@ import org.json.JSONObject;
 
 public record VersionRawData(
         JSONObject clientData,
-        JSONArray librariesData
+        JSONArray librariesData,
+        JSONObject assets
 ) {}

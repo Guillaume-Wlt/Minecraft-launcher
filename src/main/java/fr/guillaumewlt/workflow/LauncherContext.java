@@ -1,9 +1,6 @@
 package fr.guillaumewlt.workflow;
 
-import fr.guillaumewlt.model.ClientJarInfos;
-import fr.guillaumewlt.model.LibraryInfos;
-import fr.guillaumewlt.model.SelectedVersion;
-import fr.guillaumewlt.model.VersionRawData;
+import fr.guillaumewlt.model.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +13,8 @@ public class LauncherContext {
     private SelectedVersion selectedVersion;
     private ClientJarInfos clientJarInfos;
     private VersionRawData versionRawData;
+    private AssetsIndex assetsIndex;
 
     private List<LibraryInfos> librariesInfos;
+    private List<AssetInfos> assetsInfos;
 }

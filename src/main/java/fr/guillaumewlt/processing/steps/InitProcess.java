@@ -16,8 +16,8 @@ public class InitProcess extends Processes {
             // TODO Create Folder to store values for launcher (Already downloaded versions, ...)
             CheckFoldersExistence.checkDirectories(launcherDir + "bin/"); // Create [...]/launcher/bin/
             CheckFoldersExistence.checkDirectories(launcherDir + "temp/"); // Create [...]/launcher/temp/
-            CheckFoldersExistence.checkDirectories(launcherDir + "versions/");
-            CheckFoldersExistence.checkDirectories(launcherDir + "libraries/");
+            CheckFoldersExistence.checkDirectories(launcherDir + "versions/"); // Create [...]/launcher/versions/
+            CheckFoldersExistence.checkDirectories(launcherDir + "libraries/"); // Create [...]/launcher/libraries/
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

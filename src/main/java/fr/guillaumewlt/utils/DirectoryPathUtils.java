@@ -36,7 +36,7 @@ public class DirectoryPathUtils {
             throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_VERSIONS_DIR_PATH_NULL_ERR.getMessage());
         }
         if (selectedVersion == null) {
-            throw new LauncherException("Version name is null");
+            throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
         }
         return DirectoryPathUtils.getVersionsDir() + selectedVersion + "/";
     }

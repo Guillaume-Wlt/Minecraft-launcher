@@ -22,40 +22,42 @@ public class LibrariesInfosParser {
 
         for (int i = 0; i < libraries.length(); i++) {
             JSONObject library = libraries.getJSONObject(i);
-            JSONObject artifact = library.getJSONObject("downloads").getJSONObject("artifact");
+            if (library.getJSONObject("downloads").has("artifact")) { // Check if the artifact key exist in the JSON, prevent NullPointerException for older version
+                JSONObject artifact = library.getJSONObject("downloads").getJSONObject("artifact");
 
-            String sha1 = artifact.getString("sha1");
-            String path = artifact.getString("path");
-            long size = artifact.getLong("size");
-            String url = artifact.getString("url");
+                String sha1 = artifact.getString("sha1");
+                String path = artifact.getString("path");
+                long size = artifact.getLong("size");
+                String url = artifact.getString("url");
 
-            String name = library.getString("name");
+                String name = library.getString("name");
 
-            boolean shouldAdd = true;
+                boolean shouldAdd = true;
 
-            if (library.has("rules")) {
-                shouldAdd = false;
-                JSONArray rules = library.getJSONArray("rules");
+                if (library.has("rules")) {
+                    shouldAdd = false;
+                    JSONArray rules = library.getJSONArray("rules");
 
-                for (int j = 0; j < rules.length(); j++) {
-                    JSONObject rule = rules.getJSONObject(j);
-                    String action = rule.getString("action");
-                    if (rule.has("os")) {
-                        String osName = rule.getJSONObject("os").getString("name");
+                    for (int j = 0; j < rules.length(); j++) {
+                        JSONObject rule = rules.getJSONObject(j);
+                        String action = rule.getString("action");
+                        if (rule.has("os")) {
+                            String osName = rule.getJSONObject("os").getString("name");
 
-                        if (action.equals("allow") && LauncherUtils.currentOs().equals(osName)) {
+                            if (action.equals("allow") && LauncherUtils.currentOs().equals(osName)) {
+                                shouldAdd = true;
+                                break;
+                            }
+                        } else if (action.equals("allow")) {
                             shouldAdd = true;
                             break;
                         }
-                    } else if (action.equals("allow")) {
-                        shouldAdd = true;
-                        break;
                     }
                 }
-            }
 
-            if (shouldAdd) {
-                librariesInfos.add(new LibraryInfos(name, sha1, path, size, url));
+                if (shouldAdd) {
+                    librariesInfos.add(new LibraryInfos(name, sha1, path, size, url));
+                }
             }
         }
         return librariesInfos;

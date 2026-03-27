@@ -102,6 +102,20 @@ public enum ConsoleMessage {
     CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client URL is null"),
 
     /**
+     * Create Message for {@link fr.guillaumewlt.model.LibraryInfos}
+     * - Library : Name NULL -> Message for when the name of the library is NULL
+     * - Library : Hash NULL -> Message for when the Hash of the library is NULL
+     * - Library : Path NULL -> Message for when the Path of the library is NULL
+     * - Library : Size NULL -> Message for when the Size of the library is NULL
+     * - Library : URL NULL -> Message for when the URL of the library is NULL
+     */
+    LIBRARYINFOS_RECORD_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's name is null"),
+    LIBRARYINFOS_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's hash is null"),
+    LIBRARYINFOS_RECORD_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's path is null"),
+    LIBRARYINFOS_RECORD_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's size is null"),
+    LIBRARYINFOS_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's URL is null"),
+
+    /**
      * Create Message for {@link fr.guillaumewlt.downloads.ManifestDownload} <br>
      * - Already up-to-date -> Message for when the manifest is already download and up-to-date <br>
      * - Successful -> Message for when the manifest is successfully downloaded <br>
@@ -138,11 +152,13 @@ public enum ConsoleMessage {
      * Create Message for {@link fr.guillaumewlt.parser.VersionJSONParser} <br>
      * - Client Jar Infos Message -> Message to give notice to the console that the Client Jar Infos are well parse <br>
      * - Libraries Infos Message -> Message to give notice to the console that the Libraries Infos are well parse <br>
+     * - Assets Infos Message -> Message to give notice to the console that the Assets Infos are well parse <br>
      * - Parsing Error -> Message for when there is an error while parsing the data <br>
      *
      */
     VERSION_JSON_PARSER_CLIENT_JAR_INFOS_MESSAGE(ConsolePrefix.INFO.getPrefix() + ">> Client Jar Infos: OK"),
     VERSION_JSON_PARSER_LIBRARIES_INFOS_MESSAGE(ConsolePrefix.INFO.getPrefix() + ">> Libraries Infos : OK"),
+    VERSION_JSON_PARSER_ASSETS_INFOS_MESSAGE(ConsolePrefix.INFO.getPrefix() + ">> Assets Infos : OK"),
     VERSION_JSON_PARSER_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error while parsing the Selected Version JSON Informations : %s"),
 
     /**
@@ -169,7 +185,38 @@ public enum ConsoleMessage {
     CLIENT_JAR_DOWNLOAD_CLIENT_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "Client JAR already exists and is correct, skipping download"),
     CLIENT_JAR_DOWNLOAD_CLIENT_JAR_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Client Jar is corrupted, file deleted"),
     CLIENT_JAR_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Client JAR >> %s.jar has been successfully downloaded"),
-    CLIENT_JAR_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading client jar >> %s");
+    CLIENT_JAR_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading client jar >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.downloads.LibrariesDownload} <br>
+     * - Libraries : list NULL -> Message for when the list (List<LibraryInfos>) contains no library <br>
+     * - Local Library : File Hash message -> Message that display the hash of the local library file <br>
+     * - Already up-to-date message -> Message for when the local library file is up-to-date and don't need to be re-download <br>
+     * - Corrupt Error -> Message for when the downloaded file is corrupted <br>
+     * - Successful -> Message for when the download is successful <br>
+     * - Error -> Message for when a problem happen while the file were getting download <br>
+     *
+     */
+    LIBRARIESDOWNLOAD_LIBRARIES_LIST_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "No libraries found"),
+    LIBRARIESDOWNLOAD_LOCAL_LIBRARY_FILE_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Local Library File Hash >> %s"),
+    LIBRARIESDOWNLOAD_ALREAY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "%s already up-to-date, skipping download"),
+    LIBRARIESDOWNLOAD_CORRUPT_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() +  "Error downloading >> %s, the file is corrupted"),
+    LIBRARIESDOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "%s has been successfully downloaded"),
+    LIBRARIESDOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading library :  %s >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.parser.AssetsIndexParser} <br>
+     * - Id Message -> Message to display the current Assets Id
+     * - Hash Message -> Message to display the current Assets Hash
+     * - Size Message -> Message to display the current Assets Size
+     * - TotalSize Message -> Message to display the current Assets TotalSize
+     * - URL Message -> Message to display the current Assets URL
+     */
+    ASSETINDEX_PARSER_ID_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Id >> %s"),
+    ASSETINDEX_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Hash >> %s"),
+    ASSETINDEX_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Size >> %sMo"),
+    ASSETINDEX_PARSER_TOTALSIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Total Size >> %sMo"),
+    ASSETINDEX_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets URL >> %s");
 
     @Getter
     private String message;

@@ -2,8 +2,10 @@ package fr.guillaumewlt.downloads;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.LibraryInfos;
+import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.processing.DownloadProgress;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 import java.io.File;
@@ -29,7 +31,7 @@ public class LibrariesDownload extends Downloads {
         checkRequirements();
 
         if (libraries.isEmpty()) {
-            throw new LauncherException("No libraries found");
+            throw new LauncherException(ConsoleMessage.LIBRARIESDOWNLOAD_LIBRARIES_LIST_NULL_ERR.getMessage());
         }
 
         for (LibraryInfos library : libraries) {
@@ -40,9 +42,9 @@ public class LibrariesDownload extends Downloads {
             try {
                 if (localLibraryFile.exists())  {
                     String localLibraryFileHash = computeSHA1(localLibraryFile.toPath());
-                    System.out.println("local library file hash: " + localLibraryFileHash);
+                    System.out.println(ConsoleMessage.LIBRARIESDOWNLOAD_LOCAL_LIBRARY_FILE_HASH_MESSAGE.format(localLibraryFileHash));
                     if (localLibraryFileHash.equals(library.sha1())) {
-                        System.out.println("Library already up to date, skipping download");
+                        System.out.println(ConsoleMessage.LIBRARIESDOWNLOAD_ALREAY_UP_TO_DATE.format(library.name()));
                         continue;
                     }
                 }
@@ -64,11 +66,11 @@ public class LibrariesDownload extends Downloads {
                 String downloadedHash = computeSHA1(destination);
                 if (!downloadedHash.equals(library.sha1())) {
                     Files.delete(destination);
-                    throw new LauncherException("Download failed");
+                    throw new LauncherException(ConsoleMessage.LIBRARIESDOWNLOAD_CORRUPT_ERR.format(library.name()));
                 }
-                System.out.println(library.name() + " has been downloaded");
+                System.out.println(ConsoleMessage.LIBRARIESDOWNLOAD_SUCCESSFUL.format(library.name()));
             } catch (IOException | NoSuchAlgorithmException e) {
-                throw new LauncherException(e.getMessage());
+                throw new LauncherException(ConsoleMessage.LIBRARIESDOWNLOAD_ERR.format(library.name(), e.getMessage()));
             }
         }
         return true;
@@ -76,6 +78,6 @@ public class LibrariesDownload extends Downloads {
 
     @Override
     protected void checkRequirements() {
-
+        CheckFoldersExistence.checkDirectories(launcherDir + "libraries/");
     }
 }
