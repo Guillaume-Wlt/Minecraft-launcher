@@ -2,9 +2,15 @@
 
 A Minecraft launcher developed in Java (Swing), allowing to download and launch game versions via the official Mojang API.
 
+## Latest Release
+
+**[v1.0 — First Stable Release](https://github.com/Guillaume-Wlt/Minecraft-launcher/releases/tag/v1.0)**
+
+The CLI version is fully functional. See the release page for installation instructions.
+
 ## Project Status
 
-> **In progress** — The CLI version is functional: download pipeline, classpath construction, user info collection and game launch via ProcessBuilder are all complete. Next step: native libraries extraction.
+> **v1.0 released** — The CLI version is stable: download pipeline, classpath construction, user info collection and game launch via ProcessBuilder are all complete. Next step: native libraries extraction and Java Swing GUI.
 
 | Feature | Status |
 |---|---|
@@ -22,8 +28,10 @@ A Minecraft launcher developed in Java (Swing), allowing to download and launch 
 | Collect user info (username, RAM) via CLI | Done |
 | Launch game client via ProcessBuilder | Done |
 | Native libraries extraction | Next |
+| Error recovery — retry failed steps instead of stopping | To do |
 | Java Swing GUI | To do |
 | Mojang / Microsoft authentication | To do |
+| Auto-update system | Long term |
 
 ## Technical Stack
 
