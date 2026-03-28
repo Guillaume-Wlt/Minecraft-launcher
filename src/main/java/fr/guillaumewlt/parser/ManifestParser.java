@@ -23,25 +23,25 @@ public class ManifestParser {
 
     public SelectedVersion jsonparser() {
         System.out.print(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_MESSAGE.getMessage());
-        Scanner scanner = new Scanner(System.in); // scanner version // Define by user
-        String selectedVersion = scanner.nextLine();
-
-        try {
-            String content = Files.readString(Path.of(FilePathUtils.getManifestPath()));
-            JSONObject manifest = new JSONObject(content);
-            JSONArray versions = manifest.getJSONArray("versions");
-            for (int i = 0; i < versions.length(); i++) {
-                JSONObject version = versions.getJSONObject(i);
-                String id = version.getString("id");
-                if (id.equals(selectedVersion)) {
-                    String url = version.getString("url");
-                    System.out.println(ConsoleMessage.MANIFEST_PARSER_URL_SET_MESSAGE.format(url));
-                    return new SelectedVersion(selectedVersion, url);
+        try (Scanner scanner = new Scanner(System.in)) {
+            String selectedVersion = scanner.nextLine();
+            try {
+                String content = Files.readString(Path.of(FilePathUtils.getManifestPath(context.getLauncherDirs())));
+                JSONObject manifest = new JSONObject(content);
+                JSONArray versions = manifest.getJSONArray("versions");
+                for (int i = 0; i < versions.length(); i++) {
+                    JSONObject version = versions.getJSONObject(i);
+                    String id = version.getString("id");
+                    if (id.equals(selectedVersion)) {
+                        String url = version.getString("url");
+                        System.out.println(ConsoleMessage.MANIFEST_PARSER_URL_SET_MESSAGE.format(url));
+                        return new SelectedVersion(selectedVersion, url);
+                    }
                 }
+                throw new LauncherException(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR.format(selectedVersion));
+            } catch (IOException e) {
+                throw new LauncherException(e.getMessage());
             }
-            throw new LauncherException(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR.format(selectedVersion));
-        } catch (IOException e) {
-            throw new LauncherException(e.getMessage());
         }
     }
 }

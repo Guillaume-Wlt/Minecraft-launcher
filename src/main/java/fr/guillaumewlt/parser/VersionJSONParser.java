@@ -22,8 +22,14 @@ public class VersionJSONParser {
 
     public VersionRawData jsonParser() {
         try {
-            String content = Files.readString(Path.of(FilePathUtils.getSelectedVersionJSONPath(context.getSelectedVersion().selectedVersion()))); //read the content of the file.
+            String content = Files.readString(Path.of(FilePathUtils.getSelectedVersionJSONPath(context.getLauncherDirs(), context.getSelectedVersion().selectedVersion()))); //read the content of the file.
             JSONObject versionJSON = new JSONObject(content);
+            if (!versionJSON.has("downloads") || !versionJSON.has("libraries") || !versionJSON.has("assetIndex")) {
+                throw new LauncherException("version JSON file does not exist.");
+            }
+            if (!versionJSON.getJSONObject("downloads").has("client")) {
+                throw new LauncherException("version JSON file does not have a client key.");
+            }
             JSONObject client =  versionJSON.getJSONObject("downloads").getJSONObject("client");
             JSONArray libraries =  versionJSON.getJSONArray("libraries");
             JSONObject assets = versionJSON.getJSONObject("assetIndex");

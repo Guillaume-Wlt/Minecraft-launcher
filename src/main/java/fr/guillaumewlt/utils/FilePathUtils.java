@@ -1,30 +1,30 @@
 package fr.guillaumewlt.utils;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
+import fr.guillaumewlt.model.directories.LauncherDirs;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 
 public class FilePathUtils {
 
     private FilePathUtils() {}
 
-    public static String getManifestPath() { // ManifestPath -> [...]/launcher/versions/<manifest_name>
-        if (DirectoryPathUtils.getVersionsDir() == null) {
+    public static String getManifestPath(LauncherDirs dirs) { // ManifestPath -> [...]/launcher/versions/<manifest_name>
+        if (dirs.versionsDir().path() == null) {
             throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_VERSIONS_DIR_PATH_NULL_ERR.getMessage());
         }
         if (LauncherUtils.getManifestName() == null) {
             throw new LauncherException(ConsoleMessage.LAUNCHER_UTILS_MANIFEST_NAME_NULL_ERR.getMessage());
         }
-        return DirectoryPathUtils.getVersionsDir() + LauncherUtils.getManifestName();
+        return dirs.versionsDir().path() + LauncherUtils.getManifestName();
     }
 
-    public static String getSelectedVersionJSONPath(String selectedVersion) { // SelectedVersionJSONPath -> [...]/launcher/versions/<selected_version>/<selected_version>.json
+    public static String getSelectedVersionJSONPath(LauncherDirs dirs, String selectedVersion) { // SelectedVersionJSONPath -> [...]/launcher/versions/<selected_version>/<selected_version>.json
+        if (dirs.versionsDir().path() == null) {
+            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_VERSIONS_DIR_PATH_NULL_ERR.getMessage());
+        }
         if (selectedVersion == null) {
             throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
         }
-        String selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(selectedVersion);
-        if (selectedVersionDir == null) {
-            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.getMessage());
-        }
-        return selectedVersionDir + selectedVersion + ".json";
+        return dirs.versionsDir().path() + selectedVersion + "/" + selectedVersion + ".json";
     }
 }

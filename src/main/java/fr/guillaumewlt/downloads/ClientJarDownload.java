@@ -25,8 +25,9 @@ public class ClientJarDownload extends Downloads{
     private String selectedClientJarPath;
 
     public ClientJarDownload(LauncherContext context) {
+        super(context);
         selectedVersionName = context.getSelectedVersion().selectedVersion();
-        selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(selectedVersionName);
+        selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(context.getLauncherDirs(), selectedVersionName);
         selectedClientJarHash = context.getClientJarInfos().sha1();
         selectedClientJarURL = context.getClientJarInfos().url();
         selectedClientJarSize = context.getClientJarInfos().size();

@@ -15,5 +15,5 @@ package fr.guillaumewlt.model;
 public record ClientJarInfos(
         String url,
         String sha1,
-        int size
+        long size
 ) {}

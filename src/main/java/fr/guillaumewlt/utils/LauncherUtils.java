@@ -9,7 +9,7 @@ public class LauncherUtils {
         if (os.contains("win")) return "windows";
         if (os.contains("mac")) return "osx";
         if (os.contains("linux")) return "linux";
-        return os;
+        return "windows"; // default value
     }
 
     public static String getManifestURL() {

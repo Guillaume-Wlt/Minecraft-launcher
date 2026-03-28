@@ -9,6 +9,9 @@ public class DownloadProgress {
     private int lastMilestone;
 
     public DownloadProgress(long totalSize) {
+        if (totalSize <= 0) {
+            throw new IllegalArgumentException("totalSize must be grater than 0.");
+        }
         this.totalSize = totalSize;
         this.bytesRead = 0;
         this.lastMilestone = -1;
@@ -16,7 +19,7 @@ public class DownloadProgress {
 
     public void update(String filename, int chunkSize) {
         bytesRead += chunkSize;
-        int percent = (int) ((bytesRead * 100) / totalSize);
+        int percent = (int) (bytesRead / (totalSize / 100.0));
         int milestone = (percent / 25) * 25;
         if (milestone != lastMilestone) {
             System.out.println(ConsoleMessage.DOWNLOAD_PROGRESS_UPDATE_MESSAGE.format(filename, milestone));

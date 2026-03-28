@@ -20,7 +20,7 @@ public class ClientJarInfosParser {
     public ClientJarInfos jsonParser() {
         String downloadURL = clientObj.getString("url");
         String versionHash = clientObj.getString("sha1");
-        int clientSize = clientObj.getInt("size");
+        long clientSize = clientObj.getLong("size");
 
         System.out.println(ConsoleMessage.CLIENT_JAR_INFOS_PARSER_URL_MESSAGE.format(downloadURL));
         System.out.println(ConsoleMessage.CLIENT_JAR_INFOS_PARSER_HASH_MESSAGE.format(versionHash));

@@ -1,7 +1,7 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.workflow.LauncherContext;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,14 +13,23 @@ import java.util.HexFormat;
 
 public abstract class Downloads {
 
+    protected final LauncherContext context;
+
+    // Get the launcher root directory
+    protected String launcherDir;
+
+    public Downloads(LauncherContext context) {
+        this.context = context;
+        this.launcherDir = context.getLauncherDirs().launcherDir().path();
+    }
+
     // Get Client Jar Name
     protected String clientJarName = LauncherUtils.getClientJarName();
 
-    // Get the launcher root directory
-    protected String launcherDir = DirectoryPathUtils.getLauncherDir();
-
+    // Method to download the desire File
     protected abstract boolean download();
 
+    // Method to check requirements before download
     protected abstract void checkRequirements();
 
     // Method to process the MD5 hash

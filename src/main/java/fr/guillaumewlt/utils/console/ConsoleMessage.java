@@ -79,7 +79,7 @@ public enum ConsoleMessage {
      * - Selected version : Name NULL -> Message for when the selected version name is NULL <br>
      * - Selected Version URL : URL NULL -> Message for when the Selected version URL is NULL <br>
      */
-    SELECTEDVERSION_RECORD_NULL_ERR(ConsolePrefix.INFO.getPrefix() + "Selected version record is null"),
+    SELECTEDVERSION_RECORD_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version record is null"),
     SELECTEDVERSION_RECORD_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Version name is null"),
     SELECTEDVERSION_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version URL is null"),
 
@@ -102,12 +102,26 @@ public enum ConsoleMessage {
     CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client URL is null"),
 
     /**
-     * Create Message for {@link fr.guillaumewlt.model.LibraryInfos}
-     * - Library : Name NULL -> Message for when the name of the library is NULL
-     * - Library : Hash NULL -> Message for when the Hash of the library is NULL
-     * - Library : Path NULL -> Message for when the Path of the library is NULL
-     * - Library : Size NULL -> Message for when the Size of the library is NULL
-     * - Library : URL NULL -> Message for when the URL of the library is NULL
+     * Create Message for {@link fr.guillaumewlt.model.AssetsIndex} <br>
+     * - Asset Index : Id NULL -> Message for when the Assets index ID is null <br>
+     * - Asset Index : Hash NULL -> Message for when the Assets index Hash is null <br>
+     * - Asset Index : Size NULL -> Message for when the Assets index Size is null <br>
+     * - Asset Index : TotalSize NULL -> Message for when the Assets index TotalSize is null <br>
+     * - Asset Index : URL NULL -> Message for when the Assets index URL is null <br>
+     */
+    ASSETSINDEX_RECORD_ID_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets Id is null"),
+    ASSETSINDEX_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets hash is null"),
+    ASSETSINDEX_RECORD_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets size is null"),
+    ASSETSINDEX_RECORD_TOTALSIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets total size is null"),
+    ASSETSINDEX_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets URL is null"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.model.LibraryInfos} <br>
+     * - Library : Name NULL -> Message for when the name of the library is NULL <br>
+     * - Library : Hash NULL -> Message for when the Hash of the library is NULL <br>
+     * - Library : Path NULL -> Message for when the Path of the library is NULL <br>
+     * - Library : Size NULL -> Message for when the Size of the library is NULL <br>
+     * - Library : URL NULL -> Message for when the URL of the library is NULL <br>
      */
     LIBRARYINFOS_RECORD_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's name is null"),
     LIBRARYINFOS_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's hash is null"),
@@ -206,17 +220,31 @@ public enum ConsoleMessage {
 
     /**
      * Create Message for {@link fr.guillaumewlt.parser.AssetsIndexParser} <br>
-     * - Id Message -> Message to display the current Assets Id
-     * - Hash Message -> Message to display the current Assets Hash
-     * - Size Message -> Message to display the current Assets Size
-     * - TotalSize Message -> Message to display the current Assets TotalSize
-     * - URL Message -> Message to display the current Assets URL
+     * - Id Message -> Message to display the current Assets Id <br>
+     * - Hash Message -> Message to display the current Assets Hash <br>
+     * - Size Message -> Message to display the current Assets Size <br>
+     * - TotalSize Message -> Message to display the current Assets TotalSize <br>
+     * - URL Message -> Message to display the current Assets URL <br>
      */
-    ASSETINDEX_PARSER_ID_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Id >> %s"),
-    ASSETINDEX_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Hash >> %s"),
-    ASSETINDEX_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Size >> %sMo"),
-    ASSETINDEX_PARSER_TOTALSIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Total Size >> %sMo"),
-    ASSETINDEX_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets URL >> %s");
+    ASSETSINDEX_PARSER_ID_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Id >> %s"),
+    ASSETSINDEX_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Hash >> %s"),
+    ASSETSINDEX_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Size >> %sMo"),
+    ASSETSINDEX_PARSER_TOTALSIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Total Size >> %sMo"),
+    ASSETSINDEX_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets URL >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.downloads.AssetsIndexDownload} <br>
+     * - Local File : Hash Message -> Message to display the local Assets Index file <br>
+     * - File : Already up-to-date -> Message for when the Assets Index File is already downloaded and up-to-date <br>
+     * - File : Corrupted Error -> Message for when the downloaded Assets index file is corrupted after download <br>
+     * - File : Download Successful -> Message for when the download is successful <br>
+     * - Download Error -> Message for when there was an error trying to download the file <br>
+     */
+    ASSETSINDEX_DOWNLOAD_LOCAL_FILE_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Local Assets Index File Hash >> %s"),
+    ASSETSINDEX_DOWNLOAD_FILE_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "Assets index already exists and is up-to-date"),
+    ASSETSINDEX_DOWNLOAD_FILE_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets index is corrupted, file deleted"),
+    ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Assets index has been successfully downloaded"),
+    ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading assets index, error : %s"),;
 
     @Getter
     private String message;

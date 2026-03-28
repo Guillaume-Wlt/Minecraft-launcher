@@ -22,11 +22,12 @@ public class VersionJSONDownload extends Downloads {
     private String selectedVersionDir;
 
     public VersionJSONDownload(LauncherContext context, String url) {
+        super(context);
         if (context.getSelectedVersion() != null) {
             this.url = url;
             this.versionName = context.getSelectedVersion().selectedVersion();
-            this.versionsDir = DirectoryPathUtils.getVersionsDir(); // versionDir -> [...]/launcher/versions/
-            this.selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(versionName); // selectedVersionDir -> [...]/launcher/versions/<selected_version>/
+            this.versionsDir = context.getLauncherDirs().versionsDir().path(); // versionDir -> [...]/launcher/versions/
+            this.selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(context.getLauncherDirs(), versionName); // selectedVersionDir -> [...]/launcher/versions/<selected_version>/
         } else {
             throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
         }

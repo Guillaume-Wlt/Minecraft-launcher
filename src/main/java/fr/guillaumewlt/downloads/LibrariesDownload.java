@@ -4,7 +4,6 @@ import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.LibraryInfos;
 import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.processing.DownloadProgress;
-import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 
@@ -23,6 +22,7 @@ public class LibrariesDownload extends Downloads {
     private List<LibraryInfos> libraries;
 
     public LibrariesDownload(LauncherContext context) {
+        super(context);
         libraries = context.getLibrariesInfos();
     }
 
@@ -30,14 +30,15 @@ public class LibrariesDownload extends Downloads {
     public boolean download() {
         checkRequirements();
 
-        if (libraries.isEmpty()) {
+        if (libraries == null || libraries.isEmpty()) {
             throw new LauncherException(ConsoleMessage.LIBRARIESDOWNLOAD_LIBRARIES_LIST_NULL_ERR.getMessage());
         }
 
         for (LibraryInfos library : libraries) {
-            File localLibraryFile = new File(DirectoryPathUtils.getLauncherDir() + "libraries/" + library.path());
-            if (!localLibraryFile.exists()) { // Create Folder for the Path if doesn't existe
-                localLibraryFile.getParentFile().mkdirs();
+            File localLibraryFile = new File(context.getLauncherDirs().librariesDir().path() + library.path());
+            File parentFile = localLibraryFile.getParentFile();
+            if (!localLibraryFile.exists() && parentFile != null) { // Create Folder for the Path if doesn't existe
+                parentFile.mkdirs();
             }
             try {
                 if (localLibraryFile.exists())  {

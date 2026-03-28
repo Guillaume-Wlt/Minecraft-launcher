@@ -1,14 +1,11 @@
 package fr.guillaumewlt.processing.steps;
 
-import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 public abstract class Processes {
 
     protected final LauncherContext context;
-
-    protected String launcherDir = DirectoryPathUtils.getLauncherDir();
 
     public Processes(LauncherContext context) {
         this.context = context;

@@ -13,7 +13,7 @@ public class DownloadManifestProcess extends Processes {
     @Override
     public void process() {
         try {
-            new ManifestDownload().download();
+            new ManifestDownload(context).download();
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

@@ -1,6 +1,7 @@
 package fr.guillaumewlt.workflow;
 
 import fr.guillaumewlt.model.*;
+import fr.guillaumewlt.model.directories.LauncherDirs;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class LauncherContext {
     private ClientJarInfos clientJarInfos;
     private VersionRawData versionRawData;
     private AssetsIndex assetsIndex;
+    private LauncherDirs launcherDirs;
 
     private List<LibraryInfos> librariesInfos;
     private List<AssetInfos> assetsInfos;
