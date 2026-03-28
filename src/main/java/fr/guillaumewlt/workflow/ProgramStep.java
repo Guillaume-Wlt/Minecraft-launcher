@@ -28,6 +28,4 @@ public enum ProgramStep {
     ProgramStep(String mainTask) {
         this.mainTask = mainTask;
     }
-
-    // gh release create v1.0 "target/minecraft-launcher-1.0.jar" \ --title "Minecraft Launcher v1.0" \ --notes "First Stable Release"
 }
