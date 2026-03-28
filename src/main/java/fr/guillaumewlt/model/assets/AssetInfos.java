@@ -1,4 +1,4 @@
-package fr.guillaumewlt.model;
+package fr.guillaumewlt.model.assets;
 
 /**
  * Holds the metadata for a single Minecraft game asset (texture, sound, language file, etc.).
@@ -11,6 +11,7 @@ package fr.guillaumewlt.model;
  * @param size The size of the asset file in bytes.
  */
 public record AssetInfos(
+    String name,
     String hash,
     long size
 ) {}

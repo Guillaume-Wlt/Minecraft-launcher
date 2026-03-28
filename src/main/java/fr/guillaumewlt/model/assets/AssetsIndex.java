@@ -1,4 +1,6 @@
-package fr.guillaumewlt.model;
+package fr.guillaumewlt.model.assets;
+
+import fr.guillaumewlt.model.VersionRawData;
 
 /**
  * Holds the metadata for the Minecraft asset index, which is a JSON file listing

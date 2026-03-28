@@ -73,6 +73,11 @@ public class WorkflowRunner {
                 case INTERPRET_CLIENT_ASSETS_INFOS: // Interpret the client assets infos
                     changeStepMessage(currentStep);
                     new InterpretClientAssetsInfos(context).process();
+                    currentStep = ProgramStep.DOWNLOAD_CLIENT_ASSETS;
+                    break;
+                case DOWNLOAD_CLIENT_ASSETS:
+                    changeStepMessage(currentStep);
+                    new DownloadClientAssetsProcess(context).process();
                     end();
                     break;
                 default:

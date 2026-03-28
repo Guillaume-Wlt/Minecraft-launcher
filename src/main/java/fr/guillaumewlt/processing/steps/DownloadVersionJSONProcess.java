@@ -17,8 +17,8 @@ public class DownloadVersionJSONProcess extends Processes {
             if (context.getSelectedVersion() == null) {
                 throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NULL_ERR.getMessage());
             }
-            String url = context.getSelectedVersion().url();
 
+            String url = context.getSelectedVersion().url();
             if (url == null) {
                 throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_URL_NULL_ERR.getMessage());
             }

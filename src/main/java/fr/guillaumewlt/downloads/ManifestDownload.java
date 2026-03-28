@@ -1,7 +1,6 @@
 package fr.guillaumewlt.downloads;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.utils.LauncherUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -30,8 +29,6 @@ public class ManifestDownload extends Downloads {
 
     @Override
     public boolean download() {
-        checkRequirements();
-
         try (InputStream is = URI.create(url).toURL().openStream()) {
             // Télécharge le contenu distant en mémoire
             byte[] remoteContent = is.readAllBytes();
@@ -60,11 +57,5 @@ public class ManifestDownload extends Downloads {
         } catch (IOException | NoSuchAlgorithmException e) {
             throw new LauncherException(ConsoleMessage.MANIFEST_DOWNLOAD_ERR.format(e.getMessage()));
         }
-    }
-
-    @Override
-    protected void checkRequirements() {
-        CheckFoldersExistence.checkDirectories(launcherDir);
-        CheckFoldersExistence.checkDirectories(versionsDir);
     }
 }

@@ -1,7 +1,7 @@
 package fr.guillaumewlt.processing.steps;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.model.AssetsIndex;
+import fr.guillaumewlt.model.assets.AssetsIndex;
 import fr.guillaumewlt.parser.AssetsIndexParser;
 import fr.guillaumewlt.workflow.LauncherContext;
 

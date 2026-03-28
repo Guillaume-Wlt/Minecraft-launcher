@@ -59,19 +59,16 @@ public class AssetsIndexDownload extends Downloads{
         }
     }
 
-    @Override
-    protected void checkRequirements() {
+    private void checkRequirements() {
         if (context.getLauncherDirs().launcherDir().path() == null) {
-            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_LAUNCHER_DIR_PATH_NULL_ERR.getMessage());
+            throw new LauncherException(ConsoleMessage.LAUNCHERDIRS_LAUNCHER_DIR_NULL_ERR.getMessage());
         }
         if (context.getAssetsIndex().id() == null) {
             throw new LauncherException(ConsoleMessage.ASSETSINDEX_RECORD_ID_NULL_ERR.getMessage());
         }
-        File indexesDir = new File(context.getLauncherDirs().assetsDir().path() + "indexes/");
-        if (!indexesDir.exists()) {
-            indexesDir.mkdirs();
-            System.out.println("Indexes Directory Created Successfully");
+        if (context.getLauncherDirs().assetsIndexesDir().path() == null) {
+            throw new LauncherException(ConsoleMessage.LAUNCHERDIRS_ASSETS_INDEXES_DIR_NULL_ERR.getMessage());
         }
-        this.localPath = Path.of(context.getLauncherDirs().assetsDir().path() + "indexes/" + context.getAssetsIndex().id() + ".json");
+        this.localPath = Path.of(context.getLauncherDirs().assetsIndexesDir().path() + context.getAssetsIndex().id() + ".json");
     }
 }

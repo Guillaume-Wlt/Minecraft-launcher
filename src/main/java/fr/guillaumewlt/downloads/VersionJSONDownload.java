@@ -66,9 +66,7 @@ public class VersionJSONDownload extends Downloads {
         }
     }
 
-    @Override
-    protected void checkRequirements() {
-        CheckFoldersExistence.checkDirectories(versionsDir);
+    private void checkRequirements() {
         CheckFoldersExistence.checkDirectories(selectedVersionDir);
     }
 }

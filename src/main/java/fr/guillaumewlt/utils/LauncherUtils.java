@@ -12,6 +12,10 @@ public class LauncherUtils {
         return "windows"; // default value
     }
 
+    public static String getAssetsURL() {
+        return "https://resources.download.minecraft.net/";
+    }
+
     public static String getManifestURL() {
         return "https://launchermeta.mojang.com/mc/game/version_manifest.json";
     }

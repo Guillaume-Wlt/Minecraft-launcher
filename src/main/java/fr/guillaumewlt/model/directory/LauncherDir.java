@@ -1,4 +1,4 @@
-package fr.guillaumewlt.model.directories;
+package fr.guillaumewlt.model.directory;
 
 /**
  * Represents a single directory used by the launcher, associating a human-readable name

@@ -2,7 +2,6 @@ package fr.guillaumewlt.downloads;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.LibraryInfos;
-import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.processing.DownloadProgress;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -28,8 +27,6 @@ public class LibrariesDownload extends Downloads {
 
     @Override
     public boolean download() {
-        checkRequirements();
-
         if (libraries == null || libraries.isEmpty()) {
             throw new LauncherException(ConsoleMessage.LIBRARIESDOWNLOAD_LIBRARIES_LIST_NULL_ERR.getMessage());
         }
@@ -75,10 +72,5 @@ public class LibrariesDownload extends Downloads {
             }
         }
         return true;
-    }
-
-    @Override
-    protected void checkRequirements() {
-        CheckFoldersExistence.checkDirectories(launcherDir + "libraries/");
     }
 }

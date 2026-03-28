@@ -1,8 +1,8 @@
 package fr.guillaumewlt.processing.steps;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.model.directories.LauncherDir;
-import fr.guillaumewlt.model.directories.LauncherDirs;
+import fr.guillaumewlt.model.directory.LauncherDir;
+import fr.guillaumewlt.model.directory.LauncherDirs;
 import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.workflow.LauncherContext;
 
@@ -33,7 +33,9 @@ public class InitProcess extends Processes {
                     new LauncherDir("bin", launcherPath + "bin/"),
                     new LauncherDir("versions", launcherPath + "versions/"),
                     new LauncherDir("libraries", launcherPath + "libraries/"),
-                    new LauncherDir("assets", launcherPath + "assets/")
+                    new LauncherDir("assets", launcherPath + "assets/"),
+                    new LauncherDir("assets_indexes", launcherPath + "assets/indexes/"),
+                    new LauncherDir("assets_objects", launcherPath + "assets/objects/")
             );
             context.setLauncherDirs(directories);
 
@@ -42,6 +44,8 @@ public class InitProcess extends Processes {
             CheckFoldersExistence.checkDirectories(directories.versionsDir().path()); // Create [...]/launcher/versions/
             CheckFoldersExistence.checkDirectories(directories.librariesDir().path()); // Create [...]/launcher/libraries/
             CheckFoldersExistence.checkDirectories(directories.assetsDir().path()); // Create [...]/launcher/assets/
+            CheckFoldersExistence.checkDirectories(directories.assetsIndexesDir().path()); // Create [...]/launcher/assets/indexes/
+            CheckFoldersExistence.checkDirectories(directories.assetsObjectsDir().path()); // Create [...]/launcher/assets/objects/
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

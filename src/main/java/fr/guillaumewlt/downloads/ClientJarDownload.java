@@ -80,8 +80,7 @@ public class ClientJarDownload extends Downloads{
         }
     }
 
-    @Override
-    protected void checkRequirements() {
+    private void checkRequirements() {
         if (selectedClientJarURL == null) {
             throw new LauncherException(ConsoleMessage.CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR.getMessage());
         }

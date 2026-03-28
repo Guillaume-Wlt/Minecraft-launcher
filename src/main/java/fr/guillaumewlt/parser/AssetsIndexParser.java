@@ -1,6 +1,6 @@
 package fr.guillaumewlt.parser;
 
-import fr.guillaumewlt.model.AssetsIndex;
+import fr.guillaumewlt.model.assets.AssetsIndex;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 import org.json.JSONObject;

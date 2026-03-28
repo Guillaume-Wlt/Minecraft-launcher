@@ -27,10 +27,7 @@ public abstract class Downloads {
     protected String clientJarName = LauncherUtils.getClientJarName();
 
     // Method to download the desire File
-    protected abstract boolean download();
-
-    // Method to check requirements before download
-    protected abstract void checkRequirements();
+    public abstract boolean download();
 
     // Method to process the MD5 hash
     protected String computeMD5(byte[] data) throws NoSuchAlgorithmException {
