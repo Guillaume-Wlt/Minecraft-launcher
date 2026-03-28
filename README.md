@@ -4,7 +4,7 @@ A Minecraft launcher developed in Java (Swing), allowing to download and launch 
 
 ## Project Status
 
-> **In progress** — The download pipeline is mostly complete. Asset downloading and game launch are the remaining steps before the CLI version is functional. The Swing GUI and authentication layer come after.
+> **In progress** — The full download pipeline is complete. Game launch (classpath construction, ProcessBuilder) is the remaining step before the CLI version is functional. The Swing GUI and authentication layer come after.
 
 | Feature | Status |
 |---|---|
@@ -15,10 +15,12 @@ A Minecraft launcher developed in Java (Swing), allowing to download and launch 
 | Interpret & download client `.jar` (SHA-1) | Done |
 | Interpret & download libraries (SHA-1, OS filter) | Done |
 | Interpret assets index | Done |
-| Download assets index JSON | In progress |
-| Interpret assets list | In progress |
-| Download game assets (textures, sounds…) | To do |
-| Launch the game client | To do |
+| Download assets index JSON | Done |
+| Interpret assets list | Done |
+| Download game assets (textures, sounds…) | Done |
+| Build classpath from libraries + client JAR | To do |
+| Launch game client via ProcessBuilder | To do |
+| Native libraries extraction (legacy versions) | To do |
 | Java Swing GUI | To do |
 | Mojang / Microsoft authentication | To do |
 
@@ -63,10 +65,10 @@ INIT
                                └─> INTERPRET_VERSION_LIBRARIES_INFOS
                                     └─> DOWNLOAD_VERSION_LIBRARIES
                                          └─> INTERPRET_CLIENT_ASSETS_INDEX
-                                              └─> DOWNLOAD_CLIENT_ASSETS_INDEX  ← in progress
-                                                   └─> INTERPRET_CLIENT_ASSETS_INFOS  ← in progress
-                                                        └─> DOWNLOAD_CLIENT_ASSETS    ← to do
-                                                             └─> STARTING_CLIENT       ← to do
+                                              └─> DOWNLOAD_CLIENT_ASSETS_INDEX  <- done
+                                                   └─> INTERPRET_CLIENT_ASSETS_INFOS  <- done
+                                                        └─> DOWNLOAD_CLIENT_ASSETS    <- done
+                                                             └─> STARTING_CLIENT       <- to do
                                                                   └─> END
 ```
 
