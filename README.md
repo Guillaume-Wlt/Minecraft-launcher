@@ -4,7 +4,7 @@ A Minecraft launcher developed in Java (Swing), allowing to download and launch 
 
 ## Project Status
 
-> **In progress** — The full download pipeline is complete. Game launch (classpath construction, ProcessBuilder) is the remaining step before the CLI version is functional. The Swing GUI and authentication layer come after.
+> **In progress** — The CLI version is functional: download pipeline, classpath construction, user info collection and game launch via ProcessBuilder are all complete. Next step: native libraries extraction.
 
 | Feature | Status |
 |---|---|
@@ -18,9 +18,10 @@ A Minecraft launcher developed in Java (Swing), allowing to download and launch 
 | Download assets index JSON | Done |
 | Interpret assets list | Done |
 | Download game assets (textures, sounds…) | Done |
-| Build classpath from libraries + client JAR | To do |
-| Launch game client via ProcessBuilder | To do |
-| Native libraries extraction (legacy versions) | To do |
+| Build classpath from libraries + client JAR | Done |
+| Collect user info (username, RAM) via CLI | Done |
+| Launch game client via ProcessBuilder | Done |
+| Native libraries extraction | Next |
 | Java Swing GUI | To do |
 | Mojang / Microsoft authentication | To do |
 
@@ -68,8 +69,10 @@ INIT
                                               └─> DOWNLOAD_CLIENT_ASSETS_INDEX  <- done
                                                    └─> INTERPRET_CLIENT_ASSETS_INFOS  <- done
                                                         └─> DOWNLOAD_CLIENT_ASSETS    <- done
-                                                             └─> STARTING_CLIENT       <- to do
-                                                                  └─> END
+                                                             └─> CLASSPATH_BUILDING    <- done
+                                                                  └─> REQUEST_INFOS        <- done
+                                                                       └─> STARTING_CLIENT <- done
+                                                                            └─> END
 ```
 
 ## Generated Folder Structure

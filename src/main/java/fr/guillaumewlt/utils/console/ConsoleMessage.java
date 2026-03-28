@@ -15,9 +15,9 @@ public enum ConsoleMessage {
      *   | %s : the unknown {@link fr.guillaumewlt.workflow.ProgramStep} value <br>
      * - Ending message -> Message for when the program stops <br>
      */
-    WORKFLOW_RUNNER_CHANGE_STEP_MESSAGE(ConsolePrefix.INFO.getPrefix() + "%s"),
-    WORKFLOW_RUNNER_UNKNOWN_STEP_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Unknown step: %s"),
-    WORKFLOW_RUNNER_ENDING_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Ending..."),
+    WORKFLOW_RUNNER_CHANGE_STEP_MESSAGE(ConsolePrefix.INFO.getLabel() + "%s"),
+    WORKFLOW_RUNNER_UNKNOWN_STEP_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Unknown step: %s"),
+    WORKFLOW_RUNNER_ENDING_MESSAGE(ConsolePrefix.INFO.getLabel() + "Workflow Ending... >> Starting Game"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.processing.CheckFoldersExistence}<br>
@@ -29,9 +29,9 @@ public enum ConsoleMessage {
      *   | %s : folder name | %s : absolute path where the folder creation failed <br>
      *
      */
-    CHECK_FOLDER_EXISTENCE_CREATED(ConsolePrefix.INFO.getPrefix() + "Folder \"%s\" created in >> %s"),
-    CHECK_FOLDER_EXISTENCE_EXIST(ConsolePrefix.INFO.getPrefix() + "Folder \"%s\" already exists in >> %s"),
-    CHECK_FOLDER_EXISTENCE_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Failed to create folder >> \"%s\", in >> %s"),
+    CHECK_FOLDER_EXISTENCE_CREATED(ConsolePrefix.INFO.getLabel() + "Folder \"%s\" created in >> %s"),
+    CHECK_FOLDER_EXISTENCE_EXIST(ConsolePrefix.INFO.getLabel() + "Folder \"%s\" already exists in >> %s"),
+    CHECK_FOLDER_EXISTENCE_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Failed to create folder >> \"%s\", in >> %s"),
 
     /**
      * Create Message for {@link Processes} <br>
@@ -39,7 +39,7 @@ public enum ConsoleMessage {
      *   | %s : the error reason message <br>
      *
      */
-    PROCESSES_FATAL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Failed to process >> %s"),
+    PROCESSES_FATAL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Failed to process >> %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.utils.DirectoryPathUtils} <br>
@@ -48,8 +48,8 @@ public enum ConsoleMessage {
      * - Selected Version directory : Path NULL -> Message for when the Path of the selected version directory ([...]/launcher/versions/&lt;selected_version&gt;) is NULL <br>
      *
      */
-    DIRECTORYPATH_UTILS_LAUNCHER_DIR_INVALID_PATH_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Invalid JAR path >> %s"),
-    DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected Version directory is null"),
+    DIRECTORYPATH_UTILS_LAUNCHER_DIR_INVALID_PATH_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Invalid JAR path >> %s"),
+    DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Selected Version directory is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.utils.LauncherUtils} <br>
@@ -58,9 +58,9 @@ public enum ConsoleMessage {
      * - Client Jar : Name NULL -> Message for when the Client Jar name is NULL <br>
      *
      */
-    LAUNCHER_UTILS_MANIFEST_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest URL is null"),
-    LAUNCHER_UTILS_MANIFEST_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest name is null"),
-    LAUNCHER_UTILS_CLIENT_JAR_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Client jar name is null"),
+    LAUNCHER_UTILS_MANIFEST_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Manifest URL is null"),
+    LAUNCHER_UTILS_MANIFEST_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Manifest name is null"),
+    LAUNCHER_UTILS_CLIENT_JAR_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Client jar name is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.utils.FilePathUtils} <br>
@@ -68,8 +68,8 @@ public enum ConsoleMessage {
      * - Selected version JSON File : Path NULL -> Message for when the Selected version JSON file Path is NULL <br>
      *
      */
-    FILEPATH_UTILS_MANIFEST_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Manifest path is null"),
-    FILEPATH_UTILS_SELECTED_VERSION_JSON_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version JSON file path is null"),
+    FILEPATH_UTILS_MANIFEST_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Manifest path is null"),
+    FILEPATH_UTILS_SELECTED_VERSION_JSON_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Selected version JSON file path is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.processing.DownloadProgress} <br>
@@ -77,7 +77,7 @@ public enum ConsoleMessage {
      *   | %s : the filename being downloaded | %s : the current download percentage (0-100) <br>
      *
      */
-    DOWNLOAD_PROGRESS_UPDATE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "%s >> %s%%"),
+    DOWNLOAD_PROGRESS_UPDATE_MESSAGE(ConsolePrefix.INFO.getLabel() + "%s >> %s%%"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.model.directory.LauncherDirs} <br>
@@ -89,13 +89,13 @@ public enum ConsoleMessage {
      * - Assets Indexes Dir : NULL Err -> Message for when the Assets Indexes directory infos are NULL <br>
      * - Assets Objects Dir : NULL Err -> Message for when the Assets Objects directory infos are NULL <br>
      */
-    LAUNCHERDIRS_LAUNCHER_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Launcher directory infos are null"),
-    LAUNCHERDIRS_BIN_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Bin directory infos are null"),
-    LAUNCHERDIRS_VERSIONS_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Versions directory infos are null"),
-    LAUNCHERDIRS_LIBRARIES_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Libraries directory infos are null"),
-    LAUNCHERDIRS_ASSETS_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets directory infos are null"),
-    LAUNCHERDIRS_ASSETS_INDEXES_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets Indexes directory infos are null"),
-    LAUNCHERDIRS_ASSETS_OBJECTS_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets Objects directory infos are null"),
+    LAUNCHERDIRS_LAUNCHER_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Launcher directory infos are null"),
+    LAUNCHERDIRS_BIN_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Bin directory infos are null"),
+    LAUNCHERDIRS_VERSIONS_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Versions directory infos are null"),
+    LAUNCHERDIRS_LIBRARIES_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Libraries directory infos are null"),
+    LAUNCHERDIRS_ASSETS_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets directory infos are null"),
+    LAUNCHERDIRS_ASSETS_INDEXES_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets Indexes directory infos are null"),
+    LAUNCHERDIRS_ASSETS_OBJECTS_DIR_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets Objects directory infos are null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.model.directory.LauncherDir} <br>
@@ -103,8 +103,8 @@ public enum ConsoleMessage {
      * - Path : NULL Error -> Message for when the path of the directory is NULL <br>
      *
      */
-    LAUNCHERDIR_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "directory name is null"),
-    LAUNCHERDIR_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "directory path is null"),
+    LAUNCHERDIR_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "directory name is null"),
+    LAUNCHERDIR_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "directory path is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.model.SelectedVersion} <br>
@@ -112,16 +112,16 @@ public enum ConsoleMessage {
      * - Selected version : Name NULL -> Message for when the selected version name is NULL <br>
      * - Selected Version URL : URL NULL -> Message for when the Selected version URL is NULL <br>
      */
-    SELECTEDVERSION_RECORD_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version record is null"),
-    SELECTEDVERSION_RECORD_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Version name is null"),
-    SELECTEDVERSION_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected version URL is null"),
+    SELECTEDVERSION_RECORD_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Selected version record is null"),
+    SELECTEDVERSION_RECORD_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Version name is null"),
+    SELECTEDVERSION_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Selected version URL is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.model.VersionRawData} <br>
      * - Version Raw Data : JSON Object NULL -> Message for when the Client JSON Object is NULL <br>
      */
-    VERSIONRAWDATA_RECORD_CLIENT_JSON_OBJECT_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Client jar infos JSON object is null"),
-    VERSIONRAWDATA_RECORD_LIBRARIES_JSON_ARRAY_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Libraries JSON Array is null"),
+    VERSIONRAWDATA_RECORD_CLIENT_JSON_OBJECT_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Client jar infos JSON object is null"),
+    VERSIONRAWDATA_RECORD_LIBRARIES_JSON_ARRAY_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Libraries JSON Array is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.model.ClientJarInfos} <br>
@@ -130,9 +130,9 @@ public enum ConsoleMessage {
      * - Client URL : URL NULL -> Message for when the Selected Client URL is NULL <br>
      *
      */
-    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client jar hash is null"),
-    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client jar size is null"),
-    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Selected client URL is null"),
+    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Selected client jar hash is null"),
+    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Selected client jar size is null"),
+    CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Selected client URL is null"),
 
     /**
      * Create Message for {@link AssetsIndex} <br>
@@ -142,11 +142,11 @@ public enum ConsoleMessage {
      * - Asset Index : TotalSize NULL -> Message for when the Assets index TotalSize is null <br>
      * - Asset Index : URL NULL -> Message for when the Assets index URL is null <br>
      */
-    ASSETSINDEX_RECORD_ID_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets Id is null"),
-    ASSETSINDEX_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets hash is null"),
-    ASSETSINDEX_RECORD_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets size is null"),
-    ASSETSINDEX_RECORD_TOTALSIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets total size is null"),
-    ASSETSINDEX_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets URL is null"),
+    ASSETSINDEX_RECORD_ID_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets Id is null"),
+    ASSETSINDEX_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets hash is null"),
+    ASSETSINDEX_RECORD_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets size is null"),
+    ASSETSINDEX_RECORD_TOTALSIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets total size is null"),
+    ASSETSINDEX_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets URL is null"),
 
     /**
      * Create Message for {@link AssetInfos} <br>
@@ -154,8 +154,8 @@ public enum ConsoleMessage {
      * - Size: NULL Err -> Message for when the size value of the asset is NULL
      *
      */
-    ASSETINFOS_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Asset hash is null"),
-    ASSETINFOS_RECORD_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Asset size is null"),
+    ASSETINFOS_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Asset hash is null"),
+    ASSETINFOS_RECORD_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Asset size is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.model.LibraryInfos} <br>
@@ -165,11 +165,11 @@ public enum ConsoleMessage {
      * - Library : Size NULL -> Message for when the Size of the library is NULL <br>
      * - Library : URL NULL -> Message for when the URL of the library is NULL <br>
      */
-    LIBRARYINFOS_RECORD_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's name is null"),
-    LIBRARYINFOS_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's hash is null"),
-    LIBRARYINFOS_RECORD_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's path is null"),
-    LIBRARYINFOS_RECORD_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's size is null"),
-    LIBRARYINFOS_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Library's URL is null"),
+    LIBRARYINFOS_RECORD_NAME_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Library's name is null"),
+    LIBRARYINFOS_RECORD_HASH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Library's hash is null"),
+    LIBRARYINFOS_RECORD_PATH_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Library's path is null"),
+    LIBRARYINFOS_RECORD_SIZE_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Library's size is null"),
+    LIBRARYINFOS_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Library's URL is null"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.ManifestDownload} <br>
@@ -179,9 +179,9 @@ public enum ConsoleMessage {
      *   | %s : the exception error message <br>
      *
      */
-    MANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "Manifest already up to date, skipping download"),
-    MANIFEST_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Manifest download >> Successful"),
-    MANIFEST_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading manifest: %s"),
+    MANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "Manifest already up to date, skipping download"),
+    MANIFEST_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Manifest download >> Successful"),
+    MANIFEST_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading manifest: %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.parser.ManifestParser} <br>
@@ -192,9 +192,9 @@ public enum ConsoleMessage {
      *   | %s : the URL of the selected version JSON file <br>
      *
      */
-    MANIFEST_PARSER_SCANNER_INPUT_MESSAGE(ConsolePrefix.INPUT.getPrefix() + "Select version to download : "),
-    MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR(ConsolePrefix.ERROR.getPrefix() + "Version : %s not found"),
-    MANIFEST_PARSER_URL_SET_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Version URL set to >> %s"),
+    MANIFEST_PARSER_SCANNER_INPUT_MESSAGE(ConsolePrefix.INPUT.getLabel() + "Select version to download : "),
+    MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR(ConsolePrefix.ERROR.getLabel() + "Version : %s not found"),
+    MANIFEST_PARSER_URL_SET_MESSAGE(ConsolePrefix.INFO.getLabel() + "Version URL set to >> %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.VersionJSONDownload} <br>
@@ -204,9 +204,9 @@ public enum ConsoleMessage {
      *   | %s : the exception error message <br>
      *
      */
-    VERSION_JSON_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "Version JSON already up to date, skipping download"),
-    VERSION_JSON_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Version JSON download >> Successful"),
-    VERSION_JSON_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error Downloading Version JSON : %s"),
+    VERSION_JSON_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "Version JSON already up to date, skipping download"),
+    VERSION_JSON_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Version JSON download >> Successful"),
+    VERSION_JSON_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error Downloading Version JSON : %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.parser.VersionJSONParser} <br>
@@ -217,10 +217,10 @@ public enum ConsoleMessage {
      *   | %s : the exception error message <br>
      *
      */
-    VERSION_JSON_PARSER_CLIENT_JAR_INFOS_MESSAGE(ConsolePrefix.INFO.getPrefix() + ">> Client Jar Infos: OK"),
-    VERSION_JSON_PARSER_LIBRARIES_INFOS_MESSAGE(ConsolePrefix.INFO.getPrefix() + ">> Libraries Infos : OK"),
-    VERSION_JSON_PARSER_ASSETS_INFOS_MESSAGE(ConsolePrefix.INFO.getPrefix() + ">> Assets Infos : OK"),
-    VERSION_JSON_PARSER_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error while parsing the Selected Version JSON Informations : %s"),
+    VERSION_JSON_PARSER_CLIENT_JAR_INFOS_MESSAGE(ConsolePrefix.INFO.getLabel() + ">> Client Jar Infos: OK"),
+    VERSION_JSON_PARSER_LIBRARIES_INFOS_MESSAGE(ConsolePrefix.INFO.getLabel() + ">> Libraries Infos : OK"),
+    VERSION_JSON_PARSER_ASSETS_INFOS_MESSAGE(ConsolePrefix.INFO.getLabel() + ">> Assets Infos : OK"),
+    VERSION_JSON_PARSER_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error while parsing the Selected Version JSON Informations : %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.parser.ClientJarInfosParser} <br>
@@ -232,9 +232,9 @@ public enum ConsoleMessage {
      *   | %s : the size of the client JAR in Mo <br>
      *
      */
-    CLIENT_JAR_INFOS_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Download URL >> %s"),
-    CLIENT_JAR_INFOS_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Client Hash (Sha1) >> %s"),
-    CLIENT_JAR_INFOS_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Client Size >> %sMo"),
+    CLIENT_JAR_INFOS_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getLabel() + "Download URL >> %s"),
+    CLIENT_JAR_INFOS_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Client Hash (Sha1) >> %s"),
+    CLIENT_JAR_INFOS_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getLabel() + "Client Size >> %sMo"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.ClientJarDownload} <br>
@@ -248,11 +248,11 @@ public enum ConsoleMessage {
      *   | %s : the exception error message <br>
      *
      */
-    CLIENT_JAR_DOWNLOAD_LOCAL_CLIENT_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Local Client Jar >> %s"),
-    CLIENT_JAR_DOWNLOAD_CLIENT_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "Client JAR already exists and is correct, skipping download"),
-    CLIENT_JAR_DOWNLOAD_CLIENT_JAR_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Client Jar is corrupted, file deleted"),
-    CLIENT_JAR_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Client JAR >> %s.jar has been successfully downloaded"),
-    CLIENT_JAR_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading client jar >> %s"),
+    CLIENT_JAR_DOWNLOAD_LOCAL_CLIENT_HASH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Local Client Jar >> %s"),
+    CLIENT_JAR_DOWNLOAD_CLIENT_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "Client JAR already exists and is correct, skipping download"),
+    CLIENT_JAR_DOWNLOAD_CLIENT_JAR_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Client Jar is corrupted, file deleted"),
+    CLIENT_JAR_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Client JAR >> %s.jar has been successfully downloaded"),
+    CLIENT_JAR_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading client jar >> %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.LibrariesDownload} <br>
@@ -269,12 +269,12 @@ public enum ConsoleMessage {
      *   | %s : the name of the library | %s : the exception error message <br>
      *
      */
-    LIBRARIESDOWNLOAD_LIBRARIES_LIST_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "No libraries found"),
-    LIBRARIESDOWNLOAD_LOCAL_LIBRARY_FILE_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Local Library File Hash >> %s"),
-    LIBRARIESDOWNLOAD_ALREAY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "%s already up-to-date, skipping download"),
-    LIBRARIESDOWNLOAD_CORRUPT_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() +  "Error downloading >> %s, the file is corrupted"),
-    LIBRARIESDOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "%s has been successfully downloaded"),
-    LIBRARIESDOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading library :  %s >> %s"),
+    LIBRARIESDOWNLOAD_LIBRARIES_LIST_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "No libraries found"),
+    LIBRARIESDOWNLOAD_LOCAL_LIBRARY_FILE_HASH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Local Library File Hash >> %s"),
+    LIBRARIESDOWNLOAD_ALREAY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "%s already up-to-date, skipping download"),
+    LIBRARIESDOWNLOAD_CORRUPT_ERR(ConsolePrefix.FATAL_ERROR.getLabel() +  "Error downloading >> %s, the file is corrupted"),
+    LIBRARIESDOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "%s has been successfully downloaded"),
+    LIBRARIESDOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading library :  %s >> %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.parser.AssetsIndexParser} <br>
@@ -289,11 +289,11 @@ public enum ConsoleMessage {
      * - URL Message -> Message to display the current Assets URL
      *   | %s : the download URL of the asset index JSON file <br>
      */
-    ASSETSINDEX_PARSER_ID_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Id >> %s"),
-    ASSETSINDEX_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Hash >> %s"),
-    ASSETSINDEX_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Size >> %sMo"),
-    ASSETSINDEX_PARSER_TOTALSIZE_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Total Size >> %sMo"),
-    ASSETSINDEX_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets URL >> %s"),
+    ASSETSINDEX_PARSER_ID_MESSAGE(ConsolePrefix.INFO.getLabel() + "Assets Id >> %s"),
+    ASSETSINDEX_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Assets Hash >> %s"),
+    ASSETSINDEX_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getLabel() + "Assets Size >> %sMo"),
+    ASSETSINDEX_PARSER_TOTALSIZE_MESSAGE(ConsolePrefix.INFO.getLabel() + "Assets Total Size >> %sMo"),
+    ASSETSINDEX_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getLabel() + "Assets URL >> %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.AssetsIndexDownload} <br>
@@ -305,11 +305,11 @@ public enum ConsoleMessage {
      * - Download Error -> Message for when there was an error trying to download the file
      *   | %s : the exception error message <br>
      */
-    ASSETSINDEX_DOWNLOAD_LOCAL_FILE_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Local Assets Index File Hash >> %s"),
-    ASSETSINDEX_DOWNLOAD_FILE_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "Assets index already exists and is up-to-date"),
-    ASSETSINDEX_DOWNLOAD_FILE_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets index is corrupted, file deleted"),
-    ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Assets index has been successfully downloaded"),
-    ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading assets index, error : %s"),
+    ASSETSINDEX_DOWNLOAD_LOCAL_FILE_HASH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Local Assets Index File Hash >> %s"),
+    ASSETSINDEX_DOWNLOAD_FILE_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "Assets index already exists and is up-to-date"),
+    ASSETSINDEX_DOWNLOAD_FILE_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets index is corrupted, file deleted"),
+    ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Assets index has been successfully downloaded"),
+    ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading assets index, error : %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.parser.AssetsInfosParser} <br>
@@ -318,8 +318,8 @@ public enum ConsoleMessage {
      * - Parsing Error -> Message to display a potential error happening during parsing and the location of the file
      *   | %s : the exception error message <br>
      */
-    ASSETSINFOS_PARSER_LOADING_POINT_PATH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Assets Info Parser Load Point Path >> %s"),
-    ASSETSINFOS_PARSER_LOADING_POINT_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets Info Parser Load Point Parsing error : %s"),
+    ASSETSINFOS_PARSER_LOADING_POINT_PATH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Assets Info Parser Load Point Path >> %s"),
+    ASSETSINFOS_PARSER_LOADING_POINT_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets Info Parser Load Point Parsing error : %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.AssetsObjectsDownload} <br>
@@ -333,12 +333,12 @@ public enum ConsoleMessage {
      * - Error -> Message for when an error occurred while downloading the asset file
      *   | %s : the exception error message <br>
      */
-    ASSETSOBJECTS_DOWNLOAD_ASSETS_LIST_NULL_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Assets List is null or empty"),
-    ASSETSOBJECTS_DOWNLOAD_LOCAL_ASSET_FILE_HASH_MESSAGE(ConsolePrefix.INFO.getPrefix() + "Local Assets File Hash >> %s"),
-    ASSETSOBJECTS_DOWNLOAD_ASSET_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getPrefix() + "local asset file is already downloaded and up-to-date"),
-    ASSETSOBJECTS_DOWNLOAD_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Downloaded Asset file >> %s is corrupted"),
-    ASSETSOBJECTS_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getPrefix() + "Assets file has been successfully downloaded"),
-    ASSETSOBJECTS_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getPrefix() + "Error downloading assets file >> %s");
+    ASSETSOBJECTS_DOWNLOAD_ASSETS_LIST_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets List is null or empty"),
+    ASSETSOBJECTS_DOWNLOAD_LOCAL_ASSET_FILE_HASH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Local Assets File Hash >> %s"),
+    ASSETSOBJECTS_DOWNLOAD_ASSET_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "local asset file is already downloaded and up-to-date"),
+    ASSETSOBJECTS_DOWNLOAD_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Downloaded Asset file >> %s is corrupted"),
+    ASSETSOBJECTS_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Assets file has been successfully downloaded"),
+    ASSETSOBJECTS_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading assets file >> %s");
 
     @Getter
     private String message;

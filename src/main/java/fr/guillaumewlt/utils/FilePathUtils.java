@@ -1,8 +1,10 @@
 package fr.guillaumewlt.utils;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
+import fr.guillaumewlt.model.LibraryInfos;
 import fr.guillaumewlt.model.directory.LauncherDirs;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
+import fr.guillaumewlt.workflow.LauncherContext;
 
 public class FilePathUtils {
 
@@ -26,5 +28,23 @@ public class FilePathUtils {
             throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
         }
         return dirs.versionsDir().path() + selectedVersion + "/" + selectedVersion + ".json";
+    }
+
+    public static String buildClassPath(LauncherContext context, LauncherDirs dirs) {
+        String separator = System.getProperty("path.separator");
+        StringBuilder classPath = new StringBuilder();
+
+        for (LibraryInfos library : context.getLibrariesInfos()) {
+            classPath.append(context.getLauncherDirs().librariesDir().path());
+            classPath.append(library.path());
+            classPath.append(separator);
+        }
+
+        // Client JAR
+        String version = context.getSelectedVersion().selectedVersion();
+        classPath.append(context.getLauncherDirs().versionsDir().path());
+        classPath.append(version).append("/").append(version).append(".jar");
+
+        return classPath.toString();
     }
 }

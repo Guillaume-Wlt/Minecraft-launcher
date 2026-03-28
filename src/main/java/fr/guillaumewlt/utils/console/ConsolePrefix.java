@@ -1,7 +1,5 @@
 package fr.guillaumewlt.utils.console;
 
-import lombok.Getter;
-
 public enum ConsolePrefix {
     INFO("[INFO] "),
     INPUT("[INPUT] "),
@@ -9,10 +7,15 @@ public enum ConsolePrefix {
     ERROR("[ERROR] Error message >> "),
     FATAL_ERROR("[FATAL_ERROR] Stopping process >> ");
 
-    @Getter
-    private final String prefix;
+    private final String label;
 
-    ConsolePrefix(String prefix) {
-        this.prefix = prefix;
+    ConsolePrefix(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        String time = java.time.LocalTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+        return "[" + time + "]" + label;
     }
 }

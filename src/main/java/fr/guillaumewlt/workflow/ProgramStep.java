@@ -16,6 +16,8 @@ public enum ProgramStep {
     DOWNLOAD_CLIENT_ASSETS_INDEX("=== Downloading assets index..."),
     INTERPRET_CLIENT_ASSETS_INFOS("=== Interpreting client assets..."),
     DOWNLOAD_CLIENT_ASSETS("=== Downloading client assets..."),
+    CLASSPATH_BUILDING("=== Classpath building..."),
+    REQUEST_INFOS("=== Request infos..."),
     STARTING_CLIENT("=== Starting client..."),
     END("");
     // TODO Add more states for the app.

@@ -3,6 +3,8 @@ package fr.guillaumewlt.workflow;
 import fr.guillaumewlt.processing.steps.*;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 
+import java.util.Scanner;
+
 public class WorkflowRunner {
 
     private final LauncherContext context =  new LauncherContext();
@@ -10,6 +12,7 @@ public class WorkflowRunner {
 
     public WorkflowRunner() {
         currentStep = ProgramStep.INIT;
+        context.setScanner(new Scanner(System.in));
     }
 
     public void run() {
@@ -78,6 +81,21 @@ public class WorkflowRunner {
                 case DOWNLOAD_CLIENT_ASSETS:
                     changeStepMessage(currentStep);
                     new DownloadClientAssetsProcess(context).process();
+                    currentStep = ProgramStep.CLASSPATH_BUILDING;
+                    break;
+                case CLASSPATH_BUILDING:
+                    changeStepMessage(currentStep);
+                    new ClassPathBuildingProcess(context).process();
+                    currentStep = ProgramStep.REQUEST_INFOS;
+                    break;
+                case REQUEST_INFOS:
+                    changeStepMessage(currentStep);
+                    new RequestInfosProcess(context).process();
+                    currentStep = ProgramStep.STARTING_CLIENT;
+                    break;
+                case STARTING_CLIENT:
+                    changeStepMessage(currentStep);
+                    new StartingClientProcess(context).process();
                     end();
                     break;
                 default:
