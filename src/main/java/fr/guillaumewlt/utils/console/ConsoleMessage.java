@@ -338,7 +338,33 @@ public enum ConsoleMessage {
     ASSETSOBJECTS_DOWNLOAD_ASSET_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "local asset file is already downloaded and up-to-date"),
     ASSETSOBJECTS_DOWNLOAD_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Downloaded Asset file >> %s is corrupted"),
     ASSETSOBJECTS_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Assets file has been successfully downloaded"),
-    ASSETSOBJECTS_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading assets file >> %s");
+    ASSETSOBJECTS_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading assets file >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.processing.steps.ClassPathBuildingProcess} <br>
+     * - Classpath Message -> Message to display the built classpath in the console
+     *   | %s : the full classpath string built from the libraries and client JAR <br>
+     */
+    CLASSPATH_BUILDING_MESSAGE(ConsolePrefix.INFO.getLabel() + "Classpath >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.processing.steps.RequestInfosProcess} <br>
+     * - Username Input Message -> Message to prompt the user to enter their username <br>
+     * - Minimum RAM Input Message -> Message to prompt the user to enter the minimum RAM allocation (in MegaBytes) <br>
+     * - Maximum RAM Input Message -> Message to prompt the user to enter the maximum RAM allocation (in GigaBytes) <br>
+     * - Username Message -> Message to display the entered username
+     *   | %s : the username entered by the user <br>
+     * - Minimum RAM Message -> Message to display the entered minimum RAM allocation
+     *   | %s : the minimum RAM value in MegaBytes entered by the user <br>
+     * - Maximum RAM Message -> Message to display the entered maximum RAM allocation
+     *   | %s : the maximum RAM value in GigaBytes entered by the user <br>
+     */
+    REQUESTINFOS_USERNAME_INPUT_MESSAGE(ConsolePrefix.INPUT.getLabel() + "Enter your Username >> "),
+    REQUESTINFOS_MINIMUM_RAM_INPUT_MESSAGE(ConsolePrefix.INPUT.getLabel() + "Enter the minimum of ram (in MegaBytes) (512Mo by default) >> "),
+    REQUESTINFOS_MAXIMUM_RAM_INPUT_MESSAGE(ConsolePrefix.INPUT.getLabel() + "Enter the maximum of ram (in GigaBytes) (2Go by default) >> "),
+    REQUESTINFOS_USERNAME_MESSAGE(ConsolePrefix.INFO.getLabel() + "Username set to %s"),
+    REQUESTINFOS_MINIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Minimum ram set to %sMo %s"),
+    REQUESTINFOS_MAXIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Maximum Ram set to %sGo %s"),;
 
     @Getter
     private String message;

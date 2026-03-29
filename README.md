@@ -28,6 +28,7 @@ The CLI version is fully functional. See the release page for installation instr
 | Collect user info (username, RAM) via CLI | Done |
 | Launch game client via ProcessBuilder | Done |
 | Native libraries extraction | Next |
+| RAM input validation against system available memory | To do |
 | Error recovery — retry failed steps instead of stopping | To do |
 | Java Swing GUI | To do |
 | Mojang / Microsoft authentication | To do |

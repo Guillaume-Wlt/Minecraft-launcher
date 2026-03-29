@@ -2,6 +2,7 @@ package fr.guillaumewlt.processing.steps;
 
 import fr.guillaumewlt.workflow.LauncherContext;
 
+import java.io.File;
 import java.io.IOException;
 
 public class StartingClientProcess extends Processes {
@@ -31,6 +32,7 @@ public class StartingClientProcess extends Processes {
                     "--userType", "legacy"
             );
 
+            pb.directory(new File(context.getLauncherDirs().launcherDir().path()));
             pb.inheritIO(); // redirige stdout/stderr du jeu vers ta console
             pb.start();
 
