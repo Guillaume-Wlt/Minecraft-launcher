@@ -66,8 +66,7 @@ public class WorkflowRunner {
                 case EXTRACT_NATIVES_LIBRARIES:
                     changeStepMessage(currentStep);
                     new ExtractNativesLibrariesProcess(context).process();
-                    end();
-                    // currentStep = ProgramStep.INTERPRET_CLIENT_ASSETS_INFOS;
+                    currentStep = ProgramStep.INTERPRET_CLIENT_ASSETS_INDEX;
                     break;
                 case INTERPRET_CLIENT_ASSETS_INDEX: // Interpret the client assets index infos
                     changeStepMessage(currentStep);

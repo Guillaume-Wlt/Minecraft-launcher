@@ -71,6 +71,7 @@ public class LibrariesInfosParser {
             // les métadonnées du JAR (sha1, path, size, url). Les versions plus anciennes
             // peuvent ne pas avoir ce champ, d'où la vérification préalable.
             if (library.getJSONObject("downloads").has("artifact")) {
+                String libType = "library";
                 boolean shouldAdd = true;
 
                 JSONObject artifact = library.getJSONObject("downloads").getJSONObject("artifact");
@@ -89,15 +90,16 @@ public class LibrariesInfosParser {
                 }
                 if (shouldAdd) {
                     // extractExcludes est null : les bibliothèques standard ne sont pas extraites
-                    librariesInfos.add(new LibraryInfos(name, sha1, path, size, url, null));
+                    librariesInfos.add(new LibraryInfos(libType, name, sha1, path, size, url, null));
                 }
+            }
 
-            // --- CAS 2 : bibliothèque native ---
             // --- CAS 2 : bibliothèque native ---
             // Les bibliothèques natives sont des JARs contenant du code natif (.dll, .so, .dylib)
             // spécifiques à l'OS. Elles sont référencées via "natives" + "classifiers" plutôt
             // qu'un simple "artifact", car chaque OS a son propre fichier.
-            } else if (library.has("natives")) {
+            if (library.has("natives")) {
+                String libType = "native";
                 boolean shouldAdd = true;
 
                 // Récupère l'architecture JVM (32 ou 64 bits). Certaines natives utilisent
@@ -163,7 +165,7 @@ public class LibrariesInfosParser {
                     }
                     if (shouldAdd) {
                         System.out.println(name + " >> " + sha1 + ", " +  path + ", " + size + ", " + url + ", " + excludes);
-                        librariesInfos.add(new LibraryInfos(name, sha1, path, size, url, excludes));
+                        librariesInfos.add(new LibraryInfos(libType, name, sha1, path, size, url, excludes));
                     }
                 }
             }

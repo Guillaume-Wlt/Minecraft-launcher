@@ -35,9 +35,11 @@ public class FilePathUtils {
         StringBuilder classPath = new StringBuilder();
 
         for (LibraryInfos library : context.getLibrariesInfos()) {
-            classPath.append(context.getLauncherDirs().librariesDir().path());
-            classPath.append(library.path());
-            classPath.append(separator);
+            if (!library.libType().equals("native")) {
+                classPath.append(context.getLauncherDirs().librariesDir().path());
+                classPath.append(library.path());
+                classPath.append(separator);
+            }
         }
 
         // Client JAR
