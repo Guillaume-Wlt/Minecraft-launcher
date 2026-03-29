@@ -18,7 +18,7 @@ public class VersionJSONResourceDownloadTest {
 
     @Test
     void download_shouldStoreVersionJsonInResources() throws Exception {
-        Path resourcesDir = Paths.get("src", "main", "resources");
+        Path resourcesDir = Paths.get("src", "main", "resources", "test");
         File outputFile = resourcesDir.resolve(VERSION + ".json").toFile();
 
         try (InputStream is = URI.create(URL).toURL().openStream();
