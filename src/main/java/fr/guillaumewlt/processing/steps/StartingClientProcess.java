@@ -34,9 +34,9 @@ public class StartingClientProcess extends Processes {
 
             pb.directory(new File(context.getLauncherDirs().launcherDir().path()));
             pb.inheritIO(); // redirige stdout/stderr du jeu vers ta console
-            pb.start();
+            pb.start().waitFor();
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             stop(e.getMessage(), 1);
         }
     }

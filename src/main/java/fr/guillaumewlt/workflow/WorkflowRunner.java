@@ -30,13 +30,14 @@ public class WorkflowRunner {
                     break;
                 case INTERPRET_MANIFEST:
                     changeStepMessage(currentStep);
-                    new InterpretManifestProcess(context).process(); // Interpret Manifest
+                    new InterpretManifestProcess(context).process(); // Interpret Manifest & Selecting version here
                     currentStep = ProgramStep.DOWNLOAD_VERSION_JSON;
                     break;
                 case DOWNLOAD_VERSION_JSON:
                     changeStepMessage(currentStep);
                     new DownloadVersionJSONProcess(context).process(); // Download version JSON file
-                    currentStep = ProgramStep.INTERPRET_VERSION_JSON;
+                    end(); // =========
+                    // currentStep = ProgramStep.INTERPRET_VERSION_JSON;
                     break;
                 case INTERPRET_VERSION_JSON:
                     changeStepMessage(currentStep);

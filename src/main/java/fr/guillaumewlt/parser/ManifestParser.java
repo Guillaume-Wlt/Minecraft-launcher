@@ -22,7 +22,7 @@ public class ManifestParser {
 
     public SelectedVersion jsonparser() {
         System.out.print(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_MESSAGE.getMessage());
-        String selectedVersion = context.getScanner().nextLine();
+        String selectedVersion = context.getScanner().nextLine(); // Selecting version here
         try {
             String content = Files.readString(Path.of(FilePathUtils.getManifestPath(context.getLauncherDirs())));
             JSONObject manifest = new JSONObject(content);

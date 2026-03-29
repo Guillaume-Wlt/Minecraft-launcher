@@ -25,7 +25,7 @@ public class RequestInfosProcess extends Processes{
                 minRam = "512";
                 System.out.println(ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_MESSAGE.format(minRam, "(default)"));
             } else {
-                System.out.println(ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_MESSAGE.format(minRam));
+                System.out.println(ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_MESSAGE.format(minRam, ""));
             }
             System.out.print(ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_INPUT_MESSAGE.getMessage());
             String maxRam = context.getScanner().nextLine();
@@ -33,7 +33,7 @@ public class RequestInfosProcess extends Processes{
                 maxRam = "2";
                 System.out.println(ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_MESSAGE.format(maxRam, "(default)"));
             } else {
-                System.out.println(ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_MESSAGE.format(maxRam));
+                System.out.println(ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_MESSAGE.format(maxRam, ""));
             }
             context.setUsername(username);
             context.setMinRam(minRam);

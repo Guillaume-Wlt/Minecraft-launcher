@@ -374,6 +374,6 @@ public enum ConsoleMessage {
     }
 
     public String format(Object... args) {
-        return String.format(message, args);
+        return String.format(message, args).stripTrailing();
     }
 }
