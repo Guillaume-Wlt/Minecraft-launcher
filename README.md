@@ -43,6 +43,33 @@ The CLI version is fully functional. See the release page for installation instr
 | Lombok | 1.18.44 | Boilerplate reduction |
 | org.json | 20251224 | JSON parsing |
 | Maven Shade Plugin | 3.6.0 | Fat JAR generation |
+| JUnit Jupiter | 5.11.0 | Unit & integration testing |
+| Maven Surefire Plugin | 3.2.5 | Test execution via Maven |
+
+## Testing
+
+Tests are located in `src/test/java/fr/guillaumewlt/` and use **JUnit 5 (Jupiter)**.
+
+Downloaded test files are written to `src/main/resources/test/` which is excluded from Git.
+
+### Run all tests
+
+```bash
+mvn test
+```
+
+### Run a specific test class
+
+```bash
+mvn test -Dtest=VersionJSONDownloadTest
+```
+
+### Test classes
+
+| Class | Type | Description |
+|---|---|---|
+| `VersionJSONDownloadTest` | Integration | Downloads `1.6.4.json` into a temp directory, verifies the file is created and the method returns `true`, then cleans up |
+| `VersionJSONResourceDownloadTest` | Integration | Downloads `1.6.4.json` from the Mojang API and stores it in `src/main/resources/test/` |
 
 ## Architecture
 
