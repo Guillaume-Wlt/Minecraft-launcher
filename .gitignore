@@ -20,6 +20,7 @@ temp/
 release-notes.md
 Structure.md
 GIT_GUIDE.md
+TESTS_GUIDE.md
 
 ### Excluded Project Folder ###
 src/main/resources/test

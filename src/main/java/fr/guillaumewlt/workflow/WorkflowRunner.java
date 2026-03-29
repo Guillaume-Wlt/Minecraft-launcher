@@ -36,8 +36,7 @@ public class WorkflowRunner {
                 case DOWNLOAD_VERSION_JSON:
                     changeStepMessage(currentStep);
                     new DownloadVersionJSONProcess(context).process(); // Download version JSON file
-                    end(); // =========
-                    // currentStep = ProgramStep.INTERPRET_VERSION_JSON;
+                    currentStep = ProgramStep.INTERPRET_VERSION_JSON;
                     break;
                 case INTERPRET_VERSION_JSON:
                     changeStepMessage(currentStep);
