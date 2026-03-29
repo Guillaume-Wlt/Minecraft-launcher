@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **v1.0 released** — The CLI version is stable: download pipeline, classpath construction, user info collection and game launch via ProcessBuilder are all complete. Next step: native libraries extraction and Java Swing GUI.
+> **In progress** — Native libraries extraction is now implemented. Versions **1.6.4** and **1.8.9** are functional. Some compatibility issues remain with older versions (pre-1.6) and more recent ones (1.13+), along with minor known bugs.
 
 | Feature | Status |
 |---|---|
@@ -20,6 +20,9 @@ The CLI version is fully functional. See the release page for installation instr
 | Interpret version JSON | Done |
 | Interpret & download client `.jar` (SHA-1) | Done |
 | Interpret & download libraries (SHA-1, OS filter) | Done |
+| Native libraries extraction into `bin/<version>/` | Done |
+| `${arch}` placeholder resolution in native classifiers | Done |
+| Classpath filtering (natives excluded) | Done |
 | Interpret assets index | Done |
 | Download assets index JSON | Done |
 | Interpret assets list | Done |
@@ -27,12 +30,19 @@ The CLI version is fully functional. See the release page for installation instr
 | Build classpath from libraries + client JAR | Done |
 | Collect user info (username, RAM) via CLI | Done |
 | Launch game client via ProcessBuilder | Done |
-| Native libraries extraction | Next |
+| Compatibility with pre-1.6 versions (mainClass) | In progress |
+| Compatibility with 1.13+ versions (JSON structure changes) | In progress |
 | RAM input validation against system available memory | To do |
 | Error recovery — retry failed steps instead of stopping | To do |
 | Java Swing GUI | To do |
 | Mojang / Microsoft authentication | To do |
 | Auto-update system | Long term |
+
+### Known issues
+
+- **Pre-1.6 versions** (e.g. 1.4.6) : the main class `net.minecraft.client.main.Main` does not exist in these versions — the `mainClass` field from the version JSON must be read dynamically instead of being hardcoded.
+- **1.13+ versions** (e.g. 1.14.4) : some library entries in the JSON do not have a `downloads` field, causing a parsing error. The parser needs to handle this case gracefully.
+- **Debug `System.out.println`** present in `LibrariesInfosParser` and `DownloadLibrariesProcess` — to be removed before release.
 
 ## Technical Stack
 
@@ -45,31 +55,6 @@ The CLI version is fully functional. See the release page for installation instr
 | Maven Shade Plugin | 3.6.0 | Fat JAR generation |
 | JUnit Jupiter | 5.11.0 | Unit & integration testing |
 | Maven Surefire Plugin | 3.2.5 | Test execution via Maven |
-
-## Testing
-
-Tests are located in `src/test/java/fr/guillaumewlt/` and use **JUnit 5 (Jupiter)**.
-
-Downloaded test files are written to `src/main/resources/test/` which is excluded from Git.
-
-### Run all tests
-
-```bash
-mvn test
-```
-
-### Run a specific test class
-
-```bash
-mvn test -Dtest=VersionJSONDownloadTest
-```
-
-### Test classes
-
-| Class | Type | Description |
-|---|---|---|
-| `VersionJSONDownloadTest` | Integration | Downloads `1.6.4.json` into a temp directory, verifies the file is created and the method returns `true`, then cleans up |
-| `VersionJSONResourceDownloadTest` | Integration | Downloads `1.6.4.json` from the Mojang API and stores it in `src/main/resources/test/` |
 
 ## Architecture
 
@@ -123,7 +108,8 @@ target/launcher/
 ├── assets/
 │   ├── indexes/      # Asset index JSON files
 │   └── objects/      # Asset files (hashed subdirectories)
-└── bin/              # Game binaries
+└── bin/
+    └── <version>/    # Extracted native libraries (.dll / .so / .dylib)
 ```
 
 ## Running the Project
