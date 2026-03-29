@@ -21,7 +21,7 @@ public class LauncherUtils {
     }
 
     public static String getManifestName() {
-        return "test/version_manifest.json";
+        return "version_manifest.json";
     }
 
     public static String getClientJarName() {

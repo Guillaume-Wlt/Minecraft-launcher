@@ -61,7 +61,13 @@ public class WorkflowRunner {
                 case DOWNLOAD_VERSION_LIBRARIES: // Download each library from List<LibraryInfos>
                     changeStepMessage(currentStep);
                     new DownloadLibrariesProcess(context).process();
-                    currentStep = ProgramStep.INTERPRET_CLIENT_ASSETS_INDEX;
+                    currentStep = ProgramStep.EXTRACT_NATIVES_LIBRARIES;
+                    break;
+                case EXTRACT_NATIVES_LIBRARIES:
+                    changeStepMessage(currentStep);
+                    new ExtractNativesLibrariesProcess(context).process();
+                    end();
+                    // currentStep = ProgramStep.INTERPRET_CLIENT_ASSETS_INFOS;
                     break;
                 case INTERPRET_CLIENT_ASSETS_INDEX: // Interpret the client assets index infos
                     changeStepMessage(currentStep);
