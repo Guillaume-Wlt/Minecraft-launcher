@@ -33,7 +33,7 @@ public class StartingClientProcess extends Processes {
      *   -Xmx{maxRam}G -Xms{minRam}M        (limites mémoire JVM)
      *   -Djava.library.path=bin/{version}/  (dossier des natives isolé par version)
      *   -cp {classpath}                     (toutes les bibliothèques + client.jar)
-     *   net.minecraft.client.main.Main      (point d'entrée Minecraft)
+     *   {mainClass}                         (point d'entrée Minecraft, lu depuis le JSON de version)
      *   --username --version --gameDir ...  (arguments du jeu)
      * </pre>
      *
@@ -57,7 +57,7 @@ public class StartingClientProcess extends Processes {
                     // Classpath : toutes les bibliothèques standard + client.jar
                     "-cp", context.getClassPath(),
                     // Point d'entrée du client Minecraft
-                    "net.minecraft.client.main.Main",
+                    context.getVersionRawData().mainClass(),
                     // Arguments passés au jeu
                     "--username", context.getUsername(),
                     "--version", version,

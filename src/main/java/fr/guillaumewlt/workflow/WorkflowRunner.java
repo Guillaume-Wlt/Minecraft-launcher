@@ -25,7 +25,7 @@ public class WorkflowRunner {
                     break;
                 case DOWNLOAD_MANIFEST:
                     changeStepMessage(currentStep);
-                    new DownloadManifestProcess(context).process(); // Download Manifest
+                    new DownloadManifestProcess(context).process(); // Download Manifest (version_manifest.jar)
                     currentStep = ProgramStep.INTERPRET_MANIFEST;
                     break;
                 case INTERPRET_MANIFEST:
@@ -40,17 +40,17 @@ public class WorkflowRunner {
                     break;
                 case INTERPRET_VERSION_JSON:
                     changeStepMessage(currentStep);
-                    new InterpretVersionJSONProcess(context).process(); // Interpret version JSON file
-                    currentStep = ProgramStep.INTERPRET_CLIENT_JAR_INFOS;
+                    new InterpretVersionJSONProcess(context).process(); // Interpret version JSON file // CUTTING HERE FOR TEST PURPOSE ONLY ---
+                    currentStep = ProgramStep.DOWNLOAD_RUNTIME_JSON;
                     break;
                 case INTERPRET_CLIENT_JAR_INFOS:
                     changeStepMessage(currentStep);
                     new InterpretClientJarInfos(context).process(); // Interpret Client Jar Infos collected in INTERPRET_VERSION_JSON
                     currentStep = ProgramStep.DOWNLOAD_CLIENT_JAR;
                     break;
-                case DOWNLOAD_CLIENT_JAR:
+                case DOWNLOAD_CLIENT_JAR:  // Download the client JAR (ex: 1.21.11.jar, ...)
                     changeStepMessage(currentStep);
-                    new DownloadClientJarProcess(context).process(); // Download Client .jar*
+                    new DownloadClientJarProcess(context).process();
                     currentStep = ProgramStep.INTERPRET_VERSION_LIBRARIES_INFOS;
                     break;
                 case INTERPRET_VERSION_LIBRARIES_INFOS: // Interpret the libraries infos collected in INTERPRET_VERSION_JSON
@@ -63,7 +63,7 @@ public class WorkflowRunner {
                     new DownloadLibrariesProcess(context).process();
                     currentStep = ProgramStep.EXTRACT_NATIVES_LIBRARIES;
                     break;
-                case EXTRACT_NATIVES_LIBRARIES:
+                case EXTRACT_NATIVES_LIBRARIES: // Extract each Natives from the Jar file downloaded in the previous step
                     changeStepMessage(currentStep);
                     new ExtractNativesLibrariesProcess(context).process();
                     currentStep = ProgramStep.INTERPRET_CLIENT_ASSETS_INDEX;
@@ -83,27 +83,53 @@ public class WorkflowRunner {
                     new InterpretClientAssetsInfos(context).process();
                     currentStep = ProgramStep.DOWNLOAD_CLIENT_ASSETS;
                     break;
-                case DOWNLOAD_CLIENT_ASSETS:
+                case DOWNLOAD_CLIENT_ASSETS: // Download the client assets
                     changeStepMessage(currentStep);
                     new DownloadClientAssetsProcess(context).process();
+                    currentStep = ProgramStep.DOWNLOAD_RUNTIME_JSON;
+                    break;
+                case DOWNLOAD_RUNTIME_JSON: // Download the runtime JSON manifest (all.json) //GOING HERE ---
+                    changeStepMessage(currentStep);
+                    new DownloadRuntimeJSONProcess(context).process();
+                    currentStep = ProgramStep.INTERPRET_RUNTIME_JSON;
+                    break;
+                case INTERPRET_RUNTIME_JSON: // Interpret the manifest to get the right JRE version
+                    changeStepMessage(currentStep);
+                    new InterpretRuntimeProcess(context).process();
+                    currentStep = ProgramStep.DOWNLOAD_JRE_MANIFEST;
+                    break;
+                case DOWNLOAD_JRE_MANIFEST: // Download the detailed JRE manifest (Allow to get all the files to reconstruct the JRE)
+                    changeStepMessage(currentStep);
+                    new DownloadJREManifestProcess(context).process();
+                    currentStep = ProgramStep.INTERPRET_JRE_MANIFEST;
+                    break;
+                case INTERPRET_JRE_MANIFEST: // Parse the JRE manifest to get all the files to download
+                    changeStepMessage(currentStep);
+                    // ---
+                    end();
+//                    currentStep = ProgramStep.DOWNLOAD_JRE_FILES;
+                    break;
+                case DOWNLOAD_JRE_FILES: // Download each JRE file into runtime/<component>/
+                    changeStepMessage(currentStep);
+                    // ---
                     currentStep = ProgramStep.CLASSPATH_BUILDING;
                     break;
-                case CLASSPATH_BUILDING:
+                case CLASSPATH_BUILDING: // Build the classPath to start the game
                     changeStepMessage(currentStep);
                     new ClassPathBuildingProcess(context).process();
                     currentStep = ProgramStep.REQUEST_INFOS;
                     break;
-                case REQUEST_INFOS:
+                case REQUEST_INFOS: // Request infos to the user : username, min ram, max ram, ...
                     changeStepMessage(currentStep);
                     new RequestInfosProcess(context).process();
                     currentStep = ProgramStep.STARTING_CLIENT;
                     break;
-                case STARTING_CLIENT:
+                case STARTING_CLIENT: // Start the client with a processBuilder
                     changeStepMessage(currentStep);
                     new StartingClientProcess(context).process();
                     end();
                     break;
-                default:
+                default: // Activate when a ProgramStep isn't recognize (fallback option)
                     System.err.println(ConsoleMessage.WORKFLOW_RUNNER_UNKNOWN_STEP_ERR.format(currentStep));
                     System.exit(1);
             }

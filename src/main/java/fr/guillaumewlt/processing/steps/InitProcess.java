@@ -35,7 +35,8 @@ public class InitProcess extends Processes {
                     new LauncherDir("libraries", launcherPath + "libraries/"),
                     new LauncherDir("assets", launcherPath + "assets/"),
                     new LauncherDir("assets_indexes", launcherPath + "assets/indexes/"),
-                    new LauncherDir("assets_objects", launcherPath + "assets/objects/")
+                    new LauncherDir("assets_objects", launcherPath + "assets/objects/"),
+                    new LauncherDir("runtime", launcherPath + "runtime/")
             );
             context.setLauncherDirs(directories);
 
@@ -46,6 +47,7 @@ public class InitProcess extends Processes {
             CheckFoldersExistence.checkDirectories(directories.assetsDir().path()); // Create [...]/launcher/assets/
             CheckFoldersExistence.checkDirectories(directories.assetsIndexesDir().path()); // Create [...]/launcher/assets/indexes/
             CheckFoldersExistence.checkDirectories(directories.assetsObjectsDir().path()); // Create [...]/launcher/assets/objects/
+            CheckFoldersExistence.checkDirectories(directories.runtimeDir().path()); // Create [...]/launcher/runtime/
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

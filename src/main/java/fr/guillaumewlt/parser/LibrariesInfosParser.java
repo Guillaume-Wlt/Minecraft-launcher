@@ -112,7 +112,7 @@ public class LibrariesInfosParser {
 
                 JSONObject natives = library.getJSONObject("natives");
                 for (String key : natives.keySet()) {
-                    if (key.contains(LauncherUtils.currentOs())) {
+                    if (key.contains(LauncherUtils.getCurrentOs())) {
                         usableNativeLib = natives.getString(key);
                         // String est immuable en Java : replace() retourne une nouvelle chaîne,
                         // il faut donc réassigner le résultat.
@@ -195,7 +195,7 @@ public class LibrariesInfosParser {
             String action = rule.getString("action");
             if (rule.has("os")) {
                 String osName = rule.getJSONObject("os").getString("name");
-                if (LauncherUtils.currentOs().equals(osName)) {
+                if (LauncherUtils.getCurrentOs().equals(osName)) {
                     shouldAdd = action.equals("allow");
                 }
             } else {

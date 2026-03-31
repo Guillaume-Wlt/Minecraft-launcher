@@ -30,17 +30,26 @@ The CLI version is fully functional. See the release page for installation instr
 | Build classpath from libraries + client JAR | Done |
 | Collect user info (username, RAM) via CLI | Done |
 | Launch game client via ProcessBuilder | Done |
-| Compatibility with pre-1.6 versions (mainClass) | In progress |
+| Dynamic `mainClass` resolution from version JSON | Done |
+| Parse `javaVersion.component` field from version JSON | Done |
+| Download Mojang runtime manifest (`all.json`) | Done |
+| Parse runtime manifest to extract JRE component URL | Done |
+| Download detailed JRE manifest (file list) | Done |
+| Parse detailed JRE manifest | In progress |
+| Download JRE files into `runtime/<component>/` | To do |
+| Resolve Java executable path from downloaded JRE | To do |
+| Compatibility with pre-1.6 versions (full) | In progress |
 | Compatibility with 1.13+ versions (JSON structure changes) | In progress |
 | RAM input validation against system available memory | To do |
 | Error recovery — retry failed steps instead of stopping | To do |
 | Java Swing GUI | To do |
 | Mojang / Microsoft authentication | To do |
 | Auto-update system | Long term |
+| LZMA compression for JRE file downloads (bandwidth optimisation) | Long term |
 
 ### Known issues
 
-- **Pre-1.6 versions** (e.g. 1.4.6) : the main class `net.minecraft.client.main.Main` does not exist in these versions — the `mainClass` field from the version JSON must be read dynamically instead of being hardcoded.
+- **Pre-1.6 versions** (e.g. 1.4.6) : `mainClass` is now read dynamically from the version JSON (defaulting to `net.minecraft.client.main.Main`). However, these versions use `LaunchWrapper`, which requires **Java 8** — running them on Java 9+ causes a `ClassCastException` (`AppClassLoader` cannot be cast to `URLClassLoader`). Fix: parse the `javaVersion.majorVersion` field from the version JSON and resolve the correct Java executable path at launch time.
 - **1.13+ versions** (e.g. 1.14.4) : some library entries in the JSON do not have a `downloads` field, causing a parsing error. The parser needs to handle this case gracefully.
 - **Debug `System.out.println`** present in `LibrariesInfosParser` and `DownloadLibrariesProcess` — to be removed before release.
 
@@ -79,21 +88,27 @@ The launcher follows a step chain driven by `WorkflowRunner`:
 ```
 INIT
  └─> DOWNLOAD_MANIFEST
-      └─> INTERPRET_MANIFEST              (version selection)
+      └─> INTERPRET_MANIFEST                  (version selection)
            └─> DOWNLOAD_VERSION_JSON
                 └─> INTERPRET_VERSION_JSON
                      └─> INTERPRET_CLIENT_JAR_INFOS
                           └─> DOWNLOAD_CLIENT_JAR
                                └─> INTERPRET_VERSION_LIBRARIES_INFOS
                                     └─> DOWNLOAD_VERSION_LIBRARIES
-                                         └─> INTERPRET_CLIENT_ASSETS_INDEX
-                                              └─> DOWNLOAD_CLIENT_ASSETS_INDEX  <- done
-                                                   └─> INTERPRET_CLIENT_ASSETS_INFOS  <- done
-                                                        └─> DOWNLOAD_CLIENT_ASSETS    <- done
-                                                             └─> CLASSPATH_BUILDING    <- done
-                                                                  └─> REQUEST_INFOS        <- done
-                                                                       └─> STARTING_CLIENT <- done
-                                                                            └─> END
+                                         └─> EXTRACT_NATIVES_LIBRARIES
+                                              └─> INTERPRET_CLIENT_ASSETS_INDEX
+                                                   └─> DOWNLOAD_CLIENT_ASSETS_INDEX
+                                                        └─> INTERPRET_CLIENT_ASSETS_INFOS
+                                                             └─> DOWNLOAD_CLIENT_ASSETS
+                                                                  └─> DOWNLOAD_RUNTIME_JSON      <- done
+                                                                       └─> INTERPRET_RUNTIME_JSON <- done
+                                                                            └─> DOWNLOAD_JRE_MANIFEST  <- done
+                                                                                 └─> INTERPRET_JRE_MANIFEST  <- in progress
+                                                                                      └─> DOWNLOAD_JRE_FILES      <- to do
+                                                                                           └─> CLASSPATH_BUILDING
+                                                                                                └─> REQUEST_INFOS
+                                                                                                     └─> STARTING_CLIENT
+                                                                                                          └─> END
 ```
 
 ## Generated Folder Structure
@@ -108,8 +123,14 @@ target/launcher/
 ├── assets/
 │   ├── indexes/      # Asset index JSON files
 │   └── objects/      # Asset files (hashed subdirectories)
-└── bin/
-    └── <version>/    # Extracted native libraries (.dll / .so / .dylib)
+├── bin/
+│   └── <version>/    # Extracted native libraries (.dll / .so / .dylib)
+└── runtime/
+    └── <component>/  # Downloaded JRE (e.g. java-runtime-gamma/, jre-legacy/)
+        ├── bin/
+        │   └── java.exe
+        ├── lib/
+        └── ...
 ```
 
 ## Running the Project

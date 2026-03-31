@@ -1,5 +1,5 @@
 package fr.guillaumewlt.model;
 
-public record JREFiles(
-    
+public record JREFileInfos(
+
 ) {}

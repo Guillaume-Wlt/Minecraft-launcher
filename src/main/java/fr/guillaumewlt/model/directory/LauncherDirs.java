@@ -21,5 +21,6 @@ public record LauncherDirs(
    LauncherDir librariesDir,
    LauncherDir assetsDir,
    LauncherDir assetsIndexesDir,
-   LauncherDir assetsObjectsDir
+   LauncherDir assetsObjectsDir,
+   LauncherDir runtimeDir
 ) {}

@@ -18,9 +18,19 @@ import org.json.JSONObject;
  * @param assets        The raw JSON object describing the asset index metadata,
  *                      extracted from the version JSON field {@code assetIndex}.
  *                      Consumed by {@link fr.guillaumewlt.parser.AssetsIndexParser}.
+ * @param mainClass     The fully qualified main class name used as the JVM entry point,
+ *                      extracted from the version JSON field {@code mainClass}.
+ *                      Defaults to {@code "net.minecraft.client.main.Main"} if absent.
+ *                      Consumed by {@link fr.guillaumewlt.processing.steps.StartingClientProcess}.
+ * @param javaVersion   The major Java version required to run this Minecraft version,
+ *                      extracted from the version JSON field {@code javaVersion.majorVersion}.
+ *                      Defaults to {@code 8} if the field is absent (legacy versions).
+ *                      Consumed by {@link fr.guillaumewlt.processing.steps.StartingClientProcess}.
  */
 public record VersionRawData(
         JSONObject clientData,
         JSONArray librariesData,
-        JSONObject assets
+        JSONObject assets,
+        String mainClass,
+        String javaVersion
 ) {}
