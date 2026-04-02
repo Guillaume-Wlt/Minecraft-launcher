@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **In progress** — Native libraries extraction is now implemented. Versions **1.6.4** and **1.8.9** are functional. Some compatibility issues remain with older versions (pre-1.6) and more recent ones (1.13+), along with minor known bugs.
+> **In progress** — The JRE auto-download pipeline is fully implemented and wired into the workflow. The launcher downloads, parses, and installs the Mojang-provided JRE and resolves the Java executable path automatically. Versions **1.6.4** and **1.8.9** are functional. Some compatibility issues remain with older versions (pre-1.6) and more recent ones (1.13+), along with minor known bugs.
 
 | Feature | Status |
 |---|---|
@@ -35,9 +35,9 @@ The CLI version is fully functional. See the release page for installation instr
 | Download Mojang runtime manifest (`all.json`) | Done |
 | Parse runtime manifest to extract JRE component URL | Done |
 | Download detailed JRE manifest (file list) | Done |
-| Parse detailed JRE manifest | In progress |
-| Download JRE files into `runtime/<component>/` | To do |
-| Resolve Java executable path from downloaded JRE | To do |
+| Parse detailed JRE manifest | Done |
+| Download JRE files into `runtime/<component>/` | Done |
+| Resolve Java executable path from downloaded JRE | Done |
 | Compatibility with pre-1.6 versions (full) | In progress |
 | Compatibility with 1.13+ versions (JSON structure changes) | In progress |
 | RAM input validation against system available memory | To do |
@@ -105,8 +105,8 @@ INIT
                                                                   └─> DOWNLOAD_RUNTIME_JSON      <- done
                                                                        └─> INTERPRET_RUNTIME_JSON <- done
                                                                             └─> DOWNLOAD_JRE_MANIFEST  <- done
-                                                                                 └─> INTERPRET_JRE_MANIFEST  <- in progress
-                                                                                      └─> DOWNLOAD_JRE_FILES      <- to do
+                                                                                 └─> INTERPRET_JRE_MANIFEST  <- done
+                                                                                      └─> DOWNLOAD_JRE_FILES      <- done
                                                                                            └─> CLASSPATH_BUILDING
                                                                                                 └─> REQUEST_INFOS
                                                                                                      └─> STARTING_CLIENT
