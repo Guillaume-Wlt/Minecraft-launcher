@@ -42,7 +42,7 @@ The CLI version is fully functional. See the release page for installation instr
 | Compatibility with 1.13+ versions (JSON structure changes) | In progress |
 | RAM input validation against system available memory | To do |
 | Error recovery — retry failed steps instead of stopping | To do |
-| Java Swing GUI | To do |
+| Java Swing GUI — [Implementation guide](GUI_SWING_GUIDE.md) | To do |
 | Mojang / Microsoft authentication | To do |
 | Auto-update system | Long term |
 | LZMA compression for JRE file downloads (bandwidth optimisation) | Long term |
