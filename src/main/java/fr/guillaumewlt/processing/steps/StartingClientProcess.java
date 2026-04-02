@@ -27,9 +27,13 @@ public class StartingClientProcess extends Processes {
     /**
      * Construit la commande de lancement et démarre le client Minecraft.
      * <p>
+     * L'exécutable Java est résolu dynamiquement depuis le JRE téléchargé via Mojang
+     * ({@code runtime/<component>/bin/java[.exe]}), en fonction du composant indiqué dans
+     * le JSON de version et de l'OS courant (Windows : {@code java.exe}, autre : {@code java}).
+     * <p>
      * La commande générée suit la structure :
      * <pre>
-     * java
+     * runtime/&lt;component&gt;/bin/java[.exe]
      *   -Xmx{maxRam}G -Xms{minRam}M        (limites mémoire JVM)
      *   -Djava.library.path=bin/{version}/  (dossier des natives isolé par version)
      *   -cp {classpath}                     (toutes les bibliothèques + client.jar)
@@ -43,11 +47,13 @@ public class StartingClientProcess extends Processes {
     @Override
     public void process() {
         try {
+            String javaExecutable = System.getProperty("os.name").toLowerCase().contains("win") ? "java.exe" : "java";
+            String jrePath = context.getLauncherDirs().runtimeDir().path() + context.getVersionRawData().javaVersion() + "/bin/" + javaExecutable;
             String version = context.getSelectedVersion().selectedVersion();
             String assetsIndex = context.getAssetsIndex().id();
 
             ProcessBuilder pb = new ProcessBuilder(
-                    "java",
+                    jrePath,
                     // Limites mémoire de la JVM
                     "-Xmx" + context.getMaxRam() + "G",
                     "-Xms" + context.getMinRam() + "M",

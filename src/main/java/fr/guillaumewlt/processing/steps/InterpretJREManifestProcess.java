@@ -17,6 +17,7 @@ public class InterpretJREManifestProcess extends Processes{
     public void process() {
         try {
             List<JREFileInfos> jreFilesInfos = new JREManifestParser(context).jsonParser();
+            context.setJreFilesInfos(jreFilesInfos);
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

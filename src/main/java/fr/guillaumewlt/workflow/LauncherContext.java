@@ -25,6 +25,7 @@ public class LauncherContext {
 
     private List<LibraryInfos> librariesInfos;
     private List<AssetInfos> assetsInfos;
+    private List<JREFileInfos> jreFilesInfos;
 
     private String mainClassPath;
     private String classPath;

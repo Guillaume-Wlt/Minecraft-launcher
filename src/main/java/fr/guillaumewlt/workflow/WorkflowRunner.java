@@ -40,8 +40,8 @@ public class WorkflowRunner {
                     break;
                 case INTERPRET_VERSION_JSON:
                     changeStepMessage(currentStep);
-                    new InterpretVersionJSONProcess(context).process(); // Interpret version JSON file // CUTTING HERE FOR TEST PURPOSE ONLY ---
-                    currentStep = ProgramStep.DOWNLOAD_RUNTIME_JSON;
+                    new InterpretVersionJSONProcess(context).process(); // Interpret version JSON file
+                    currentStep = ProgramStep.INTERPRET_CLIENT_JAR_INFOS;
                     break;
                 case INTERPRET_CLIENT_JAR_INFOS:
                     changeStepMessage(currentStep);
@@ -88,7 +88,7 @@ public class WorkflowRunner {
                     new DownloadClientAssetsProcess(context).process();
                     currentStep = ProgramStep.DOWNLOAD_RUNTIME_JSON;
                     break;
-                case DOWNLOAD_RUNTIME_JSON: // Download the runtime JSON manifest (all.json) //GOING HERE ---
+                case DOWNLOAD_RUNTIME_JSON: // Download the runtime JSON manifest (all.json)
                     changeStepMessage(currentStep);
                     new DownloadRuntimeJSONProcess(context).process();
                     currentStep = ProgramStep.INTERPRET_RUNTIME_JSON;
@@ -105,13 +105,12 @@ public class WorkflowRunner {
                     break;
                 case INTERPRET_JRE_MANIFEST: // Parse the JRE manifest to get all the files to download
                     changeStepMessage(currentStep);
-                    // ---
-                    end();
-//                    currentStep = ProgramStep.DOWNLOAD_JRE_FILES;
+                    new InterpretJREManifestProcess(context).process();
+                    currentStep = ProgramStep.DOWNLOAD_JRE_FILES;
                     break;
                 case DOWNLOAD_JRE_FILES: // Download each JRE file into runtime/<component>/
                     changeStepMessage(currentStep);
-                    // ---
+                    new DownloadJREFilesProcess(context).process();
                     currentStep = ProgramStep.CLASSPATH_BUILDING;
                     break;
                 case CLASSPATH_BUILDING: // Build the classPath to start the game

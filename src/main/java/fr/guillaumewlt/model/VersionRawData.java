@@ -32,5 +32,11 @@ public record VersionRawData(
         JSONArray librariesData,
         JSONObject assets,
         String mainClass,
-        String javaVersion
+        String javaVersion // Example : "component": "java-runtime-delta",
+        /* Example :
+        "javaVersion": {
+            "component": "java-runtime-delta",
+            "majorVersion": 21
+        },
+         */
 ) {}
