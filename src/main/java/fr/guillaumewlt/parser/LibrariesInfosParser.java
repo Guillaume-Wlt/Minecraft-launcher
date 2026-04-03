@@ -55,10 +55,15 @@ public class LibrariesInfosParser {
      * </ol>
      * Dans les deux cas, si la bibliothèque possède des {@code rules}, celles-ci sont évaluées
      * via {@link #shouldAddByRules(JSONArray)} pour déterminer si elle doit être incluse.
+     * <p>
+     * Pour les bibliothèques natives, les {@code rules} sont évaluées <strong>avant</strong>
+     * la résolution du classifier, afin de filtrer les bibliothèques OS-spécifiques
+     * (ex : osx-only) sans tenter de résoudre {@code usableNativeLib} pour un OS non ciblé.
      *
      * @return la liste des {@link LibraryInfos} à télécharger pour la version courante
-     * @throws LauncherException si une bibliothèque native déclare un champ {@code natives}
-     *                           mais qu'aucune clé ne correspond à l'OS courant
+     * @throws LauncherException si une bibliothèque native est autorisée par ses {@code rules}
+     *                           mais qu'aucune clé dans {@code natives} ne correspond à l'OS courant,
+     *                           ce qui indiquerait une incohérence dans le JSON de version
      */
     public List<LibraryInfos> jsonParser() {
         List<LibraryInfos> librariesInfos = new ArrayList<>();
@@ -125,18 +130,24 @@ public class LibrariesInfosParser {
                 if (library.getJSONObject("downloads").has("classifiers")) {
                     JSONObject classifiers = library.getJSONObject("downloads").getJSONObject("classifiers");
 
-                    // Si aucune clé native ne correspond à l'OS courant dans "natives", c'est une erreur
-                    // inattendue (la lib déclare des natives mais pas pour notre OS).
+                    // Les rules sont évaluées en premier : si la lib est restreinte à un autre OS
+                    // (ex : osx-only), on la skip immédiatement sans tenter de résoudre usableNativeLib.
+                    if (library.has("rules")) {
+                        shouldAdd = shouldAddByRules(library.getJSONArray("rules"));
+                    }
+                    if (!shouldAdd) continue;
+
+                    // À ce stade les rules autorisent l'inclusion : si usableNativeLib est null,
+                    // c'est une incohérence réelle dans le JSON (natives déclaré sans clé pour l'OS courant).
                     if (usableNativeLib == null) {
                         throw new LauncherException("");
                     }
 
                     // optJSONObject retourne null au lieu de lever une exception si la clé est absente.
-                    // Cela couvre le cas où la lib n'a pas de classifier pour l'OS courant
-                    // (ex : une lib uniquement macOS alors qu'on est sur Windows).
+                    // Cela couvre le cas où le classifier n'existe pas malgré une clé natives valide.
                     JSONObject nativeInfos = classifiers.optJSONObject(usableNativeLib);
                     if (nativeInfos == null) {
-                        continue; // pas de classifier pour l'OS courant → on ignore cette lib
+                        continue;
                     }
 
                     String path = nativeInfos.getString("path");
@@ -159,14 +170,7 @@ public class LibrariesInfosParser {
                         }
                     }
 
-                    // Même logique que pour les libs standard : on vérifie les règles OS si elles existent.
-                    if (library.has("rules")) {
-                        shouldAdd = shouldAddByRules(library.getJSONArray("rules"));
-                    }
-                    if (shouldAdd) {
-                        System.out.println(name + " >> " + sha1 + ", " +  path + ", " + size + ", " + url + ", " + excludes);
-                        librariesInfos.add(new LibraryInfos(libType, name, sha1, path, size, url, excludes));
-                    }
+                    librariesInfos.add(new LibraryInfos(libType, name, sha1, path, size, url, excludes));
                 }
             }
         }

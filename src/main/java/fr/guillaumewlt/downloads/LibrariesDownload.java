@@ -60,6 +60,7 @@ public class LibrariesDownload extends Downloads {
                         progress.update(library.name(), read);
                     }
                 }
+                progress.complete();
 
                 String downloadedHash = computeSHA1(destination);
                 if (!downloadedHash.equals(library.sha1())) {

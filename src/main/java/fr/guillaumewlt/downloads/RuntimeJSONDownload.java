@@ -2,6 +2,7 @@ package fr.guillaumewlt.downloads;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 import java.io.File;
@@ -34,18 +35,18 @@ public class RuntimeJSONDownload extends Downloads{
                 byte[] localContent = Files.readAllBytes(localFile.toPath());
                 String localHash = computeMD5(localContent);
                 if (localHash.equals(remoteHash)) {
-                    System.out.println("Already up to date");
+                    System.out.println(ConsoleMessage.RUNTIMEJSON_DOWNLOAD_ALREADY_UP_TO_DATE.getMessage());
                     return true;
                 }
             }
 
             try (FileOutputStream fos = new FileOutputStream(localFile)) {
                 fos.write(remoteContent);
-                System.out.println("Successful");
+                System.out.println(ConsoleMessage.RUNTIMEJSON_DOWNLOAD_SUCCESSFUL.getMessage());
                 return true;
             }
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException("Wrong URL or Hash");
+            throw new LauncherException(ConsoleMessage.RUNTIMEJSON_DOWNLOAD_ERR.format(e.getMessage()));
         }
     }
 }

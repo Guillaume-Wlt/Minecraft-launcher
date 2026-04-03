@@ -14,9 +14,11 @@ import java.util.List;
 
 public class AssetsInfosParser {
 
+    private final LauncherContext context;
     private String assetsIndexPath;
 
     public AssetsInfosParser(LauncherContext context) {
+        this.context = context;
         if (context.getAssetsIndex() == null || context.getAssetsIndex().id() == null) {
             throw new LauncherException(ConsoleMessage.ASSETSINDEX_RECORD_ID_NULL_ERR.getMessage());
         }
@@ -29,6 +31,12 @@ public class AssetsInfosParser {
         try {
             String content = Files.readString(Path.of(assetsIndexPath));
             JSONObject jsonObject = new JSONObject(content);
+
+            // Handle virtual assets for legacy versions
+            boolean isVirtual = jsonObject.optBoolean("virtual", false)
+                                || jsonObject.optBoolean("map_to_resources", false);
+            context.setVirtualAssets(isVirtual);
+
             JSONObject objects = jsonObject.getJSONObject("objects");
             for (String key : objects.keySet()) {
                 JSONObject asset = objects.getJSONObject(key);

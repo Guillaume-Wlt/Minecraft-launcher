@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **In progress** — The JRE auto-download pipeline is fully implemented and wired into the workflow. The launcher downloads, parses, and installs the Mojang-provided JRE and resolves the Java executable path automatically. Versions **1.6.4** and **1.8.9** are functional. Some compatibility issues remain with older versions (pre-1.6) and more recent ones (1.13+), along with minor known bugs.
+> **In progress** — The JRE auto-download pipeline is fully implemented and wired into the workflow. The launcher downloads, parses, and installs the Mojang-provided JRE and resolves the Java executable path automatically. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) now correctly map assets to a virtual directory for sound support. Some compatibility issues remain with pre-1.6 versions, along with minor known bugs.
 
 | Feature | Status |
 |---|---|
@@ -38,8 +38,9 @@ The CLI version is fully functional. See the release page for installation instr
 | Parse detailed JRE manifest | Done |
 | Download JRE files into `runtime/<component>/` | Done |
 | Resolve Java executable path from downloaded JRE | Done |
+| Legacy assets virtual directory mapping (sound on 1.6.x / 1.7.x) | Done |
+| 1.13+ library parsing (OS-filtered natives, rules evaluation) | Done |
 | Compatibility with pre-1.6 versions (full) | In progress |
-| Compatibility with 1.13+ versions (JSON structure changes) | In progress |
 | RAM input validation against system available memory | To do |
 | Error recovery — retry failed steps instead of stopping | To do |
 | Java Swing GUI — [Implementation guide](GUI_SWING_GUIDE.md) | To do |
@@ -51,9 +52,6 @@ The CLI version is fully functional. See the release page for installation instr
 ### Known issues
 
 - **Pre-1.6 versions — no sound** (e.g. 1.4.6) : these versions download their sounds at runtime from `s3.amazonaws.com/MinecraftResources/`, a server that has been offline for years. The game launches and is playable but has no audio. This cannot be fixed at the launcher level — it is a limitation of the client itself.
-- **Pre-1.6 versions** (e.g. 1.4.6) : `mainClass` is now read dynamically from the version JSON (defaulting to `net.minecraft.client.main.Main`). However, these versions use `LaunchWrapper`, which requires **Java 8** — running them on Java 9+ causes a `ClassCastException` (`AppClassLoader` cannot be cast to `URLClassLoader`). Fix: parse the `javaVersion.majorVersion` field from the version JSON and resolve the correct Java executable path at launch time.
-- **1.13+ versions** (e.g. 1.14.4) : some library entries in the JSON do not have a `downloads` field, causing a parsing error. The parser needs to handle this case gracefully.
-- **Debug `System.out.println`** present in `LibrariesInfosParser` and `DownloadLibrariesProcess` — to be removed before release.
 
 ## Technical Stack
 
@@ -124,7 +122,9 @@ target/launcher/
 ├── libraries/        # Game libraries (.jar)
 ├── assets/
 │   ├── indexes/      # Asset index JSON files
-│   └── objects/      # Asset files (hashed subdirectories)
+│   ├── objects/      # Asset files (hashed subdirectories)
+│   └── virtual/
+│       └── legacy/   # Mapped assets for legacy versions (1.6.x, 1.7.x) — original filenames
 ├── bin/
 │   └── <version>/    # Extracted native libraries (.dll / .so / .dylib)
 └── runtime/

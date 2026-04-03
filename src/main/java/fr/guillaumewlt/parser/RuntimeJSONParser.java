@@ -3,6 +3,7 @@ package fr.guillaumewlt.parser;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.RuntimeRawData;
 import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -59,7 +60,7 @@ public class RuntimeJSONParser {
 
             JSONArray componentArray = osEntry.getJSONArray(component);
             if (componentArray.isEmpty()) {
-                throw new LauncherException("No JRE runtime info found for component " + component);
+                throw new LauncherException(ConsoleMessage.RUNTIMEJSON_PARSER_COMPONENTARRAY_EMPTY_ERR.format(component));
             }
             JSONObject entry = componentArray.getJSONObject(0);
             JSONObject manifest = entry.getJSONObject("manifest");
@@ -71,15 +72,15 @@ public class RuntimeJSONParser {
             String jreName = version.getString("name");
             String jreReleaseDate = version.getString("released");
 
-            System.out.println("Name >> " + component);
-            System.out.println("Hash >> " + sha1);
-            System.out.println("Size >> " + size);
-            System.out.println("Url >> " + url);
-            System.out.println("Jre Name >> " + jreName);
-            System.out.println("Jre Release Date >> " + jreReleaseDate);
+            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_NAME_MESSAGE.format(component));
+            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_HASH_MESSAGE.format(sha1));
+            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_SIZE_MESSAGE.format(size));
+            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_URL_MESSAGE.format(url));
+            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_JRE_NAME_MESSAGE.format(jreName));
+            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_JRE_RELEASED_DATE_MESSAGE.format(jreReleaseDate));
             return new RuntimeRawData(component, sha1, size, url, jreName, jreReleaseDate);
         } catch (IOException e) {
-            throw new LauncherException("Error while parsing JSON File");
+            throw new LauncherException(ConsoleMessage.RUNTIMEJSON_PARSER_PARSING_ERR.format(e.getMessage()));
         }
     }
 }

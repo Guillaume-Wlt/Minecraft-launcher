@@ -38,7 +38,7 @@ public class StartingClientProcess extends Processes {
      *   -Djava.library.path=bin/{version}/  (dossier des natives isolé par version)
      *   -cp {classpath}                     (toutes les bibliothèques + client.jar)
      *   {mainClass}                         (point d'entrée Minecraft, lu depuis le JSON de version)
-     *   --username --version --gameDir ...  (arguments du jeu)
+     *   --username --version --gameDir ...  (arguments du jeu, dont --userProperties {} requis par 1.7/1.8)
      * </pre>
      *
      * @throws fr.guillaumewlt.exceptionhandler.LauncherException si le processus ne peut pas
@@ -68,10 +68,11 @@ public class StartingClientProcess extends Processes {
                     "--username", context.getUsername(),
                     "--version", version,
                     "--gameDir", context.getLauncherDirs().launcherDir().path(),
-                    "--assetsDir", context.getLauncherDirs().assetsDir().path(),
+                    "--assetsDir", context.isVirtualAssets() ? context.getLauncherDirs().assetsDir().path() + "virtual/legacy/" : context.getLauncherDirs().assetsDir().path(),
                     "--assetIndex", assetsIndex,
                     "--accessToken", "0",
-                    "--userType", "legacy"
+                    "--userType", "legacy",
+                    "--userProperties", "{}"
             );
 
             // Définit le répertoire de travail du processus (là où le jeu cherche ses fichiers)

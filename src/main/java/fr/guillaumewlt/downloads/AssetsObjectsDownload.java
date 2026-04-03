@@ -63,6 +63,7 @@ public class AssetsObjectsDownload extends Downloads{
                         progress.update(asset.name(), read);
                     }
                 }
+                progress.complete();
 
                 String downloadedHash = computeSHA1(destination);
                 if (!downloadedHash.equals(asset.hash())) {
@@ -72,6 +73,23 @@ public class AssetsObjectsDownload extends Downloads{
                 System.out.println(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_SUCCESSFUL.getMessage());
             } catch (IOException | NoSuchAlgorithmException e) {
                 throw new LauncherException(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_ERR.format(e.getMessage()), e);
+            }
+        }
+
+        if (context.isVirtualAssets()) {
+            for (AssetInfos asset : assets) {
+                Path src = Path.of(context.getLauncherDirs().assetsObjectsDir().path()
+                        + asset.hash().substring(0, 2) + "/" + asset.hash());
+                Path dst = Path.of(context.getLauncherDirs().assetsDir().path()
+                        + "virtual/legacy/" + asset.name());
+                dst.getParent().toFile().mkdirs();
+                if (!dst.toFile().exists()) {
+                    try {
+                        Files.copy(src, dst);
+                    } catch (IOException e) {
+                        throw new LauncherException(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_COPY_VIRTUAL_ASSETS_ERROR.format(e.getMessage()));
+                    }
+                }
             }
         }
         return true;

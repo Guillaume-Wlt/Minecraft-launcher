@@ -64,6 +64,7 @@ public class ClientJarDownload extends Downloads{
                     progress.update(selectedVersionName + ".jar", read);
                 }
             }
+            progress.complete();
 
             // Vérification intégrité post-téléchargement
             String downloadedHash = computeSHA1(destination);

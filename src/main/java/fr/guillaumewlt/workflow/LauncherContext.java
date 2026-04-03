@@ -32,4 +32,5 @@ public class LauncherContext {
     private String username;
     private String minRam;
     private String maxRam;
+    private boolean virtualAssets;
 }

@@ -5,6 +5,22 @@ import fr.guillaumewlt.model.assets.AssetsIndex;
 import fr.guillaumewlt.processing.steps.Processes;
 import lombok.Getter;
 
+/**
+ * Enum centralizing all console messages of the application.
+ *
+ * <p>Each constant represents a message prefixed via {@link ConsolePrefix}.
+ * Messages containing {@code %s} or {@code %d} placeholders must be
+ * formatted via {@link #format(Object...)}.</p>
+ *
+ * <p>Example usage:</p>
+ * <pre>{@code
+ * // Simple message
+ * String msg = ConsoleMessage.MANIFEST_DOWNLOAD_SUCCESSFUL.getMessage();
+ *
+ * // Message with arguments
+ * String err = ConsoleMessage.MANIFEST_DOWNLOAD_ERR.format("Connection refused");
+ * }</pre>
+ */
 public enum ConsoleMessage {
 
     /**
@@ -73,11 +89,13 @@ public enum ConsoleMessage {
 
     /**
      * Create Message for {@link fr.guillaumewlt.processing.DownloadProgress} <br>
-     * - Update message -> Message to display in the console everytime the download progress
-     *   | %s : the filename being downloaded | %s : the current download percentage (0-100) <br>
+     * - Update message -> In-place progress bar printed via {@code System.out.print} (starts with {@code \r} to overwrite the current line)
+     *   | %s : the filename being downloaded | %s : the progress bar string (filled/empty blocks) | %s : the current download percentage (0-100) <br>
+     * - Size Error -> Message thrown as {@link IllegalArgumentException} when {@code totalSize} is zero or negative <br>
      *
      */
-    DOWNLOAD_PROGRESS_UPDATE_MESSAGE(ConsolePrefix.INFO.getLabel() + "%s >> %s%%"),
+    DOWNLOAD_PROGRESS_UPDATE_MESSAGE("\r" + ConsolePrefix.INFO.getLabel() + " %s [%s] %s%%"),
+    DOWNLOAD_PROGRESS_SIZE_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "totalSize must be grater than 0."),
 
     /**
      * Create Message for {@link fr.guillaumewlt.model.directory.LauncherDirs} <br>
@@ -339,6 +357,82 @@ public enum ConsoleMessage {
     ASSETSOBJECTS_DOWNLOAD_CORRUPTED_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Downloaded Asset file >> %s is corrupted"),
     ASSETSOBJECTS_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Assets file has been successfully downloaded"),
     ASSETSOBJECTS_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading assets file >> %s"),
+    ASSETSOBJECTS_DOWNLOAD_COPY_VIRTUAL_ASSETS_ERROR(ConsolePrefix.FATAL_ERROR.getLabel() + "can't copy virtual assets >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.downloads.RuntimeJSONDownload} <br>
+     * - Already up-to-date -> Message for when the Runtime JSON file is already downloaded and up-to-date <br>
+     * - Successful -> Message for when the Runtime JSON file has been successfully downloaded <br>
+     * - Error -> Message for when an error occurred while downloading the Runtime JSON file
+     *   | %s : the exception error message <br>
+     */
+    RUNTIMEJSON_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "Runtime JSON file is already up-to-date"),
+    RUNTIMEJSON_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Runtime JSON has been successfully downloaded"),
+    RUNTIMEJSON_DOWNLOAD_ERR(ConsolePrefix.INFO.getLabel() + "Error downloading runtime JSON file >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.parser.RuntimeJSONParser} <br>
+     * - Component Array Empty Error -> Message for when no JRE runtime info is found for the requested component
+     *   | %s : the component name that was not found (e.g. {@code "java-runtime-gamma"}) <br>
+     * - Name Message -> Message to display the runtime name
+     *   | %s : the name of the runtime <br>
+     * - Hash Message -> Message to display the runtime hash
+     *   | %s : the SHA-1 hash of the runtime archive <br>
+     * - Size Message -> Message to display the runtime size
+     *   | %s : the size of the runtime archive in Mo <br>
+     * - URL Message -> Message to display the runtime download URL
+     *   | %s : the download URL of the runtime archive <br>
+     * - JRE Name Message -> Message to display the JRE name
+     *   | %s : the JRE name (e.g. {@code "17.0.8"}) <br>
+     * - JRE Released Date Message -> Message to display the JRE release date
+     *   | %s : the release date of the JRE version <br>
+     * - Parsing Error -> Message for when an error occurred while parsing the Runtime JSON file
+     *   | %s : the exception error message <br>
+     */
+    RUNTIMEJSON_PARSER_COMPONENTARRAY_EMPTY_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "No JRE runtime info found for component %s"),
+    RUNTIMEJSON_PARSER_NAME_MESSAGE(ConsolePrefix.INFO.getLabel() + "Runtime Name >> %s"),
+    RUNTIMEJSON_PARSER_HASH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Runtime Hash >> %s"),
+    RUNTIMEJSON_PARSER_SIZE_MESSAGE(ConsolePrefix.INFO.getLabel() + "Runtime Size >> %sMo"),
+    RUNTIMEJSON_PARSER_URL_MESSAGE(ConsolePrefix.INFO.getLabel() + "Runtime URL >> %s"),
+    RUNTIMEJSON_PARSER_JRE_NAME_MESSAGE(ConsolePrefix.INFO.getLabel() + "Runtime JRE Name >> %s"),
+    RUNTIMEJSON_PARSER_JRE_RELEASED_DATE_MESSAGE(ConsolePrefix.INFO.getLabel() + "Runtime JRE Released Date >> %s"),
+    RUNTIMEJSON_PARSER_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error while parsing JSON File >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.downloads.JREManifestDownload} <br>
+     * - Already up-to-date -> Message for when the JRE manifest is already downloaded and up-to-date <br>
+     * - Successful -> Message for when the JRE manifest has been successfully downloaded <br>
+     * - Error -> Message for when an error occurred while downloading the JRE manifest
+     *   | %s : the exception error message <br>
+     */
+    JREMANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "JRE manifest is already up-to-date"),
+    JREMANIFEST_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "JRE manifest has been successfully downloaded"),
+    JREMANIFEST_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading JRE manifest >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.parser.JREManifestParser} <br>
+     * - Parsing Error -> Message for when an error occurred while parsing the JRE manifest JSON file
+     *   | %s : the exception error message <br>
+     */
+    JREMANIFEST_PARSER_PARSING_ERR(ConsolePrefix.INFO.getLabel() + "Error while parsing JSON file >> %s"),
+
+    /**
+     * Create Message for {@link fr.guillaumewlt.downloads.JREFilesDownload} <br>
+     * - JRE Files List Empty Error -> Message for when the JRE files list is empty <br>
+     * - Local JRE File Hash Message -> Message to display the hash of the local JRE file
+     *   | %s : the SHA-1 hash of the local JRE file <br>
+     * - Already up-to-date -> Message for when the local JRE file is already downloaded and up-to-date
+     *   | %s : the name or path of the JRE file <br>
+     * - Corrupted File Error -> Message for when the downloaded JRE file is corrupted
+     *   | %s : the name or path of the corrupted JRE file <br>
+     * - Error -> Message for when an error occurred while downloading a JRE file
+     *   | %s : the name or path of the JRE file | %s : the exception error message <br>
+     */
+    JREFILES_DOWNLOAD_JRE_FILES_LIST_EMPTY_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "JRE Files List is Empty"),
+    JREFILES_DOWNLOAD_LOCAL_JRE_FILE_MESSAGE(ConsolePrefix.INFO.getLabel() + "Local JRE File Hash >> %s"),
+    JREFILES_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "%s >> already up-to-date"),
+    JREFILES_DOWNLOAD_CORRUPTED_FILE_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "%s >> File is corrupted"),
+    JREFILES_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading >> %s >> %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.processing.steps.ClassPathBuildingProcess} <br>
@@ -366,13 +460,26 @@ public enum ConsoleMessage {
     REQUESTINFOS_MINIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Minimum ram set to %sMo %s"),
     REQUESTINFOS_MAXIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Maximum Ram set to %sGo %s"),;
 
+    /** The console message associated with this constant, potentially containing {@code %s} placeholders. */
     @Getter
     private String message;
 
+    /**
+     * Constructs a {@code ConsoleMessage} constant with the provided message.
+     *
+     * @param message the console message, prefixed via {@link ConsolePrefix}
+     */
     ConsoleMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Formats the message of this constant by injecting the given arguments into its {@code %s} placeholders.
+     *
+     * @param args the arguments to inject into the message placeholders
+     * @return the formatted message, with trailing whitespace stripped
+     * @see String#format(String, Object...)
+     */
     public String format(Object... args) {
         return String.format(message, args).stripTrailing();
     }

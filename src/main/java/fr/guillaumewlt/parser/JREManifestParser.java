@@ -2,6 +2,7 @@ package fr.guillaumewlt.parser;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.JREFileInfos;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 import org.json.JSONObject;
 
@@ -47,7 +48,7 @@ public class JREManifestParser {
                 }
             }
         } catch (IOException e) {
-            throw new LauncherException("Error while parsing JSON file", e);
+            throw new LauncherException(ConsoleMessage.JREMANIFEST_PARSER_PARSING_ERR.format(e.getMessage()));
         }
         return jreFilesInfos;
     }

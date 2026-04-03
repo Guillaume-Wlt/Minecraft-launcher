@@ -1,5 +1,7 @@
 package fr.guillaumewlt.processing;
 
+import fr.guillaumewlt.utils.console.ConsoleMessage;
+
 public class DownloadProgress {
 
     private long totalSize;
@@ -7,7 +9,7 @@ public class DownloadProgress {
 
     public DownloadProgress(long totalSize) {
         if (totalSize <= 0) {
-            throw new IllegalArgumentException("totalSize must be grater than 0.");
+            throw new IllegalArgumentException(ConsoleMessage.DOWNLOAD_PROGRESS_SIZE_ERR.getMessage());
         }
         this.totalSize = totalSize;
         this.bytesRead = 0;
@@ -22,10 +24,10 @@ public class DownloadProgress {
         int empty = 20 - filled;
 
         String bar = "█".repeat(filled) + "░".repeat(empty);
-        System.out.print("\r" + filename + " [" + bar + "] " + percent + "%");
+        System.out.print(ConsoleMessage.DOWNLOAD_PROGRESS_UPDATE_MESSAGE.format(filename, bar, percent));
+    }
 
-        if (percent >= 100) {
-            System.out.println();
-        }
+    public void complete() {
+        System.out.println();
     }
 }
