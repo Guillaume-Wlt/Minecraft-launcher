@@ -12,42 +12,42 @@ The CLI version is fully functional. See the release page for installation instr
 
 > **In progress** — The JRE auto-download pipeline is fully implemented and wired into the workflow. The launcher downloads, parses, and installs the Mojang-provided JRE and resolves the Java executable path automatically. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) now correctly map assets to a virtual directory for sound support. Some compatibility issues remain with pre-1.6 versions, along with minor known bugs.
 
-| Feature | Status |
-|---|---|
-| Download manifest | Done |
-| Version selection (user input) | Done |
-| Download version JSON | Done |
-| Interpret version JSON | Done |
-| Interpret & download client `.jar` (SHA-1) | Done |
-| Interpret & download libraries (SHA-1, OS filter) | Done |
-| Native libraries extraction into `bin/<version>/` | Done |
-| `${arch}` placeholder resolution in native classifiers | Done |
-| Classpath filtering (natives excluded) | Done |
-| Interpret assets index | Done |
-| Download assets index JSON | Done |
-| Interpret assets list | Done |
-| Download game assets (textures, sounds…) | Done |
-| Build classpath from libraries + client JAR | Done |
-| Collect user info (username, RAM) via CLI | Done |
-| Launch game client via ProcessBuilder | Done |
-| Dynamic `mainClass` resolution from version JSON | Done |
-| Parse `javaVersion.component` field from version JSON | Done |
-| Download Mojang runtime manifest (`all.json`) | Done |
-| Parse runtime manifest to extract JRE component URL | Done |
-| Download detailed JRE manifest (file list) | Done |
-| Parse detailed JRE manifest | Done |
-| Download JRE files into `runtime/<component>/` | Done |
-| Resolve Java executable path from downloaded JRE | Done |
-| Legacy assets virtual directory mapping (sound on 1.6.x / 1.7.x) | Done |
-| 1.13+ library parsing (OS-filtered natives, rules evaluation) | Done |
-| Compatibility with pre-1.6 versions (full) | In progress |
-| RAM input validation against system available memory | To do |
-| Error recovery — retry failed steps instead of stopping | To do |
-| Java Swing GUI — [Implementation guide](GUI_SWING_GUIDE.md) | To do |
-| Mojang / Microsoft authentication | To do |
-| Auto-update system | Long term |
-| LZMA compression for JRE file downloads (bandwidth optimisation) | Long term |
-| Log filtering system (INFO, DEBUG, ERROR-ONLY, …) | Long term |
+| Feature | Status      |
+|---|-------------|
+| Download manifest | Done        |
+| Version selection (user input) | Done        |
+| Download version JSON | Done        |
+| Interpret version JSON | Done        |
+| Interpret & download client `.jar` (SHA-1) | Done        |
+| Interpret & download libraries (SHA-1, OS filter) | Done        |
+| Native libraries extraction into `bin/<version>/` | Done        |
+| `${arch}` placeholder resolution in native classifiers | Done        |
+| Classpath filtering (natives excluded) | Done        |
+| Interpret assets index | Done        |
+| Download assets index JSON | Done        |
+| Interpret assets list | Done        |
+| Download game assets (textures, sounds…) | Done        |
+| Build classpath from libraries + client JAR | Done        |
+| Collect user info (username, RAM) via CLI | Done        |
+| Launch game client via ProcessBuilder | Done        |
+| Dynamic `mainClass` resolution from version JSON | Done        |
+| Parse `javaVersion.component` field from version JSON | Done        |
+| Download Mojang runtime manifest (`all.json`) | Done        |
+| Parse runtime manifest to extract JRE component URL | Done        |
+| Download detailed JRE manifest (file list) | Done        |
+| Parse detailed JRE manifest | Done        |
+| Download JRE files into `runtime/<component>/` | Done        |
+| Resolve Java executable path from downloaded JRE | Done        |
+| Legacy assets virtual directory mapping (sound on 1.6.x / 1.7.x) | Done        |
+| 1.13+ library parsing (OS-filtered natives, rules evaluation) | Done        |
+| Compatibility with pre-1.6 versions (full) | Done        |
+| Java Swing GUI — [Implementation guide](GUI_SWING_GUIDE.md) | In Progress |
+| RAM input validation against system available memory | To do       |
+| Error recovery — retry failed steps instead of stopping | To do       |
+| Mojang / Microsoft authentication | To do       |
+| Auto-update system | Long term   |
+| LZMA compression for JRE file downloads (bandwidth optimisation) | Long term   |
+| Log filtering system (INFO, DEBUG, ERROR-ONLY, …) | Long term   |
 
 ### Known issues
 
