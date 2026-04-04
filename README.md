@@ -151,5 +151,5 @@ mvn package
 ### Run
 
 ```bash
-java -jar target/minecraft-launcher.jar
+java -jar target/minecraft-launcher-<version>.jar
 ```
