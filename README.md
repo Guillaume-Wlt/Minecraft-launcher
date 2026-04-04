@@ -4,13 +4,13 @@ A Minecraft launcher developed in Java (Swing), allowing to download and launch 
 
 ## Latest Release
 
-**[v1.0 — First Stable Release](https://github.com/Guillaume-Wlt/Minecraft-launcher/releases/tag/v1.0)**
+**[v1.2 — Current Release](https://github.com/Guillaume-Wlt/Minecraft-launcher/releases/tag/v1.2)** *(CLI only)*
 
 The CLI version is fully functional. See the release page for installation instructions.
 
 ## Project Status
 
-> **In progress** — The JRE auto-download pipeline is fully implemented and wired into the workflow. The launcher downloads, parses, and installs the Mojang-provided JRE and resolves the Java executable path automatically. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) now correctly map assets to a virtual directory for sound support. Some compatibility issues remain with pre-1.6 versions, along with minor known bugs.
+> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. Work is now focused on the **Java Swing GUI**, which will replace the CLI input in a future release.
 
 | Feature | Status      |
 |---|-------------|
@@ -41,7 +41,8 @@ The CLI version is fully functional. See the release page for installation instr
 | Legacy assets virtual directory mapping (sound on 1.6.x / 1.7.x) | Done        |
 | 1.13+ library parsing (OS-filtered natives, rules evaluation) | Done        |
 | Compatibility with pre-1.6 versions (full) | Done        |
-| Java Swing GUI — [Implementation guide](GUI_SWING_GUIDE.md) | In Progress |
+| Java Swing GUI — main window, menu bar, content & console panels | In Progress |
+| Swing GUI — version selection & launch form | In Progress |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
 | Mojang / Microsoft authentication | To do       |
@@ -61,6 +62,7 @@ The CLI version is fully functional. See the release page for installation instr
 | Maven | - | Build management |
 | Lombok | 1.18.44 | Boilerplate reduction |
 | org.json | 20251224 | JSON parsing |
+| FlatLaf | 3.5.4 | Swing dark/light theme |
 | Maven Shade Plugin | 3.6.0 | Fat JAR generation |
 | JUnit Jupiter | 5.11.0 | Unit & integration testing |
 | Maven Surefire Plugin | 3.2.5 | Test execution via Maven |
@@ -71,45 +73,47 @@ The project is organised in distinct layers:
 
 ```
 fr.guillaumewlt/
-├── workflow/         # Workflow orchestration (state machine)
+├── workflow/             # Workflow orchestration (state machine, context)
 ├── processing/
-│   └── steps/        # Processing steps (init, download, interpret…)
-├── downloads/        # File download logic
-├── parser/           # Mojang JSON response parsing
-├── model/            # Record classes (data holders)
-├── utils/            # Utilities (paths, URLs, console messages…)
-└── exceptionhandler/ # Error handling
+│   └── steps/            # Processing steps (init, download, interpret…)
+├── downloads/            # File download logic
+├── parser/               # Mojang JSON response parsing
+├── model/                # Record classes (data holders)
+├── utils/                # Utilities (paths, URLs, console messages…)
+├── extractor/            # Native libraries extraction
+├── ui/
+│   ├── MainWindow.java   # Root JFrame
+│   ├── builders/         # WindowBuilder, PanelBuilder (factory helpers)
+│   ├── components/       # Reusable components (MenuBar…)
+│   ├── panels/           # Content panels (ContentPanel…)
+│   └── windows/          # Secondary windows (ConsoleWindow…)
+└── exceptionhandler/     # Error handling
 ```
 
 ### Workflow
 
-The launcher follows a step chain driven by `WorkflowRunner`:
+The launcher follows a sequential step chain driven by `WorkflowRunner`. Steps are grouped below by phase:
 
-```
-INIT
- └─> DOWNLOAD_MANIFEST
-      └─> INTERPRET_MANIFEST                  (version selection)
-           └─> DOWNLOAD_VERSION_JSON
-                └─> INTERPRET_VERSION_JSON
-                     └─> INTERPRET_CLIENT_JAR_INFOS
-                          └─> DOWNLOAD_CLIENT_JAR
-                               └─> INTERPRET_VERSION_LIBRARIES_INFOS
-                                    └─> DOWNLOAD_VERSION_LIBRARIES
-                                         └─> EXTRACT_NATIVES_LIBRARIES
-                                              └─> INTERPRET_CLIENT_ASSETS_INDEX
-                                                   └─> DOWNLOAD_CLIENT_ASSETS_INDEX
-                                                        └─> INTERPRET_CLIENT_ASSETS_INFOS
-                                                             └─> DOWNLOAD_CLIENT_ASSETS
-                                                                  └─> DOWNLOAD_RUNTIME_JSON      <- done
-                                                                       └─> INTERPRET_RUNTIME_JSON <- done
-                                                                            └─> DOWNLOAD_JRE_MANIFEST  <- done
-                                                                                 └─> INTERPRET_JRE_MANIFEST  <- done
-                                                                                      └─> DOWNLOAD_JRE_FILES      <- done
-                                                                                           └─> CLASSPATH_BUILDING
-                                                                                                └─> REQUEST_INFOS
-                                                                                                     └─> STARTING_CLIENT
-                                                                                                          └─> END
-```
+**1. Initialisation**
+`INIT` → `DOWNLOAD_MANIFEST` → `INTERPRET_MANIFEST`
+
+**2. Version**
+`DOWNLOAD_VERSION_JSON` → `INTERPRET_VERSION_JSON`
+
+**3. Client JAR**
+`INTERPRET_CLIENT_JAR_INFOS` → `DOWNLOAD_CLIENT_JAR`
+
+**4. Libraries**
+`INTERPRET_VERSION_LIBRARIES_INFOS` → `DOWNLOAD_VERSION_LIBRARIES` → `EXTRACT_NATIVES_LIBRARIES`
+
+**5. Assets**
+`INTERPRET_CLIENT_ASSETS_INDEX` → `DOWNLOAD_CLIENT_ASSETS_INDEX` → `INTERPRET_CLIENT_ASSETS_INFOS` → `DOWNLOAD_CLIENT_ASSETS`
+
+**6. Java Runtime (JRE)**
+`DOWNLOAD_RUNTIME_JSON` → `INTERPRET_RUNTIME_JSON` → `DOWNLOAD_JRE_MANIFEST` → `INTERPRET_JRE_MANIFEST` → `DOWNLOAD_JRE_FILES`
+
+**7. Launch**
+`CLASSPATH_BUILDING` → `REQUEST_INFOS` → `STARTING_CLIENT` → `END`
 
 ## Generated Folder Structure
 
