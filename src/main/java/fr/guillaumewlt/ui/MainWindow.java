@@ -9,7 +9,7 @@ public class MainWindow {
     public void show() {
         JFrame frame = WindowBuilder.builder()
                 .title("Minecraft Launcher")
-                .size(500,400)
+                .size(900,550)
                 .closeOperation(JFrame.EXIT_ON_CLOSE)
                 .icon("/launcher-logo.png")
                 .alwaysOnTop(true)
