@@ -3,8 +3,6 @@ package fr.guillaumewlt.workflow;
 import fr.guillaumewlt.processing.steps.*;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 
-import java.util.Scanner;
-
 public class WorkflowRunner {
 
     private final LauncherContext context =  new LauncherContext();
@@ -12,7 +10,6 @@ public class WorkflowRunner {
 
     public WorkflowRunner() {
         currentStep = ProgramStep.INIT;
-        context.setScanner(new Scanner(System.in));
     }
 
     public void run() {
@@ -31,6 +28,11 @@ public class WorkflowRunner {
                 case INTERPRET_MANIFEST:
                     changeStepMessage(currentStep);
                     new InterpretManifestProcess(context).process(); // Interpret Manifest & Selecting version here
+                    currentStep = ProgramStep.SHOW_UI;
+                    break;
+                case SHOW_UI:
+                    changeStepMessage(currentStep);
+                    new ShowUIProcess(context).process(); // Start the UI process // Wait for informations to be fill to continue
                     currentStep = ProgramStep.DOWNLOAD_VERSION_JSON;
                     break;
                 case DOWNLOAD_VERSION_JSON:

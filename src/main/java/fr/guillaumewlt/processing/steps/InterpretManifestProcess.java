@@ -1,9 +1,10 @@
 package fr.guillaumewlt.processing.steps;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.model.SelectedVersion;
 import fr.guillaumewlt.parser.ManifestParser;
 import fr.guillaumewlt.workflow.LauncherContext;
+
+import java.util.List;
 
 public class InterpretManifestProcess extends Processes {
 
@@ -14,8 +15,8 @@ public class InterpretManifestProcess extends Processes {
     @Override
     public void process() {
         try {
-            SelectedVersion version = new ManifestParser(context).jsonparser();
-            context.setSelectedVersion(version);
+            List<String> versions = new ManifestParser(context).getVersions();
+            context.setVersions(versions);
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

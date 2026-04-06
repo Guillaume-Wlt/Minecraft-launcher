@@ -8,14 +8,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Scanner;
 
 @Getter
 @Setter
 public class LauncherContext {
 
-    private Scanner scanner;
-
+    // ----------------------------------------------------------UI Data
+    private List<String> versions;
+    private String username;
+    private String minRam;
+    private String maxRam;
+    // ----------------------------------------------------------Workflow Data
     private SelectedVersion selectedVersion;
     private ClientJarInfos clientJarInfos;
     private VersionRawData versionRawData;
@@ -27,10 +30,8 @@ public class LauncherContext {
     private List<AssetInfos> assetsInfos;
     private List<JREFileInfos> jreFilesInfos;
 
+    // ----------------------------------------------------------Process Builder Data
     private String mainClassPath;
     private String classPath;
-    private String username;
-    private String minRam;
-    private String maxRam;
     private boolean virtualAssets;
 }

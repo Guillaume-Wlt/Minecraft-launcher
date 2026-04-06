@@ -11,34 +11,47 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManifestParser {
 
     private final LauncherContext context;
+    private String content;
+    private JSONObject manifest;
+    private JSONArray versions;
 
     public ManifestParser(LauncherContext context) {
         this.context = context;
-    }
-
-    public SelectedVersion jsonparser() {
-        System.out.print(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_MESSAGE.getMessage());
-        String selectedVersion = context.getScanner().nextLine(); // Selecting version here
         try {
-            String content = Files.readString(Path.of(FilePathUtils.getManifestPath(context.getLauncherDirs())));
-            JSONObject manifest = new JSONObject(content);
-            JSONArray versions = manifest.getJSONArray("versions");
-            for (int i = 0; i < versions.length(); i++) {
-                JSONObject version = versions.getJSONObject(i);
-                String id = version.getString("id");
-                if (id.equals(selectedVersion)) {
-                    String url = version.getString("url");
-                    System.out.println(ConsoleMessage.MANIFEST_PARSER_URL_SET_MESSAGE.format(url));
-                    return new SelectedVersion(selectedVersion, url);
-                }
-            }
-            throw new LauncherException(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR.format(selectedVersion));
+            this.content = Files.readString(Path.of(FilePathUtils.getManifestPath(context.getLauncherDirs())));
+            this.manifest = new JSONObject(content);
+            this.versions = manifest.getJSONArray("versions");
         } catch (IOException e) {
             throw new LauncherException(e.getMessage());
         }
+    }
+
+    public List<String> getVersions() {
+        List<String> versionsList = new ArrayList<>();
+        for (int i = 0; i < versions.length(); i++) {
+            JSONObject version = versions.getJSONObject(i);
+            String id = version.getString("id");
+            versionsList.add(id);
+        }
+        return versionsList;
+    }
+
+    public SelectedVersion jsonparser(String selectedVersion) {
+        for (int i = 0; i < versions.length(); i++) {
+            JSONObject version = versions.getJSONObject(i);
+            String id = version.getString("id");
+            if (id.equals(selectedVersion)) {
+                String url = version.getString("url");
+                System.out.println(ConsoleMessage.MANIFEST_PARSER_URL_SET_MESSAGE.format(url));
+                return new SelectedVersion(selectedVersion, url);
+            }
+        }
+        throw new LauncherException(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR.format(selectedVersion));
     }
 }

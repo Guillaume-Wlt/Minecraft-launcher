@@ -3,6 +3,8 @@ package fr.guillaumewlt.ui.components;
 import fr.guillaumewlt.ui.windows.ConsoleWindow;
 
 import javax.swing.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 public class MenuBar extends JMenuBar {
 
@@ -35,6 +37,11 @@ public class MenuBar extends JMenuBar {
     private JMenuItem exitMenuItem() {
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(e -> System.exit(0));
+        /*
+        * VK_Q - La touche Q
+        * CTRL_DOWN_MASK - La touche CTRL
+        */
+        exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         return exitMenuItem;
     }
 }

@@ -14,6 +14,9 @@ public enum ProgramStep {
     /** Download the Mojang version manifest listing all available versions. */
     DOWNLOAD_MANIFEST("=== Downloading manifest..."),
 
+    /** Process to start the UI of the application. */
+    SHOW_UI("=== Showing UI..."),
+
     /** Parse the manifest and prompt the user to select a version. */
     INTERPRET_MANIFEST("=== Interpreting manifest..."),
 
