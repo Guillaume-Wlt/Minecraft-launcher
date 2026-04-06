@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. Work is now focused on the **Java Swing GUI**, which will replace the CLI input in a future release.
+> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI.
 
 | Feature | Status      |
 |---|-------------|
@@ -41,8 +41,13 @@ The CLI version is fully functional. See the release page for installation instr
 | Legacy assets virtual directory mapping (sound on 1.6.x / 1.7.x) | Done        |
 | 1.13+ library parsing (OS-filtered natives, rules evaluation) | Done        |
 | Compatibility with pre-1.6 versions (full) | Done        |
-| Java Swing GUI — main window, menu bar, content & console panels | In Progress |
-| Swing GUI — version selection & launch form | In Progress |
+| Java Swing GUI — main window, menu bar, content & bottom panels | Done        |
+| Swing GUI — version combobox populated from manifest | Done        |
+| Swing GUI — username input with validation | Done        |
+| Swing GUI — Play button triggering workflow via CountDownLatch | Done        |
+| Swing GUI — workflow integrated as `SHOW_UI` step | Done        |
+| RAM input via GUI | In Progress |
+| Progress bar during downloads | In Progress |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
 | Mojang / Microsoft authentication | To do       |
@@ -85,7 +90,8 @@ fr.guillaumewlt/
 │   ├── MainWindow.java   # Root JFrame
 │   ├── builders/         # WindowBuilder, PanelBuilder (factory helpers)
 │   ├── components/       # Reusable components (MenuBar…)
-│   ├── panels/           # Content panels (ContentPanel…)
+│   ├── panels/           # Content panels (ContentPanel, BottomPanel, ImagePanel…)
+│   ├── eventhandler/     # UI event handlers (PlayBtnHandler…)
 │   └── windows/          # Secondary windows (ConsoleWindow…)
 └── exceptionhandler/     # Error handling
 ```
@@ -95,7 +101,7 @@ fr.guillaumewlt/
 The launcher follows a sequential step chain driven by `WorkflowRunner`. Steps are grouped below by phase:
 
 **1. Initialisation**
-`INIT` → `DOWNLOAD_MANIFEST` → `INTERPRET_MANIFEST`
+`INIT` → `DOWNLOAD_MANIFEST` → `INTERPRET_MANIFEST` → `SHOW_UI`
 
 **2. Version**
 `DOWNLOAD_VERSION_JSON` → `INTERPRET_VERSION_JSON`
