@@ -1,9 +1,10 @@
 package fr.guillaumewlt.utils.console;
 
+import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.assets.AssetInfos;
 import fr.guillaumewlt.model.assets.AssetsIndex;
 import fr.guillaumewlt.processing.steps.Processes;
-import lombok.Getter;
+import fr.guillaumewlt.utils.ConsoleUtils;
 
 /**
  * Enum centralizing all console messages of the application.
@@ -31,9 +32,9 @@ public enum ConsoleMessage {
      *   | %s : the unknown {@link fr.guillaumewlt.workflow.ProgramStep} value <br>
      * - Ending message -> Message for when the program stops <br>
      */
-    WORKFLOW_RUNNER_CHANGE_STEP_MESSAGE(ConsolePrefix.INFO.getLabel() + "%s"),
+    WORKFLOW_RUNNER_CHANGE_STEP_MESSAGE(ConsolePrefix.STEP_STATUS.getLabel() + "%s"),
     WORKFLOW_RUNNER_UNKNOWN_STEP_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Unknown step: %s"),
-    WORKFLOW_RUNNER_ENDING_MESSAGE(ConsolePrefix.INFO.getLabel() + "Workflow Ending... >> Starting Game"),
+    WORKFLOW_RUNNER_ENDING_MESSAGE(ConsolePrefix.INFO.getLabel() + "Workflow Ending... >> Game Closed!"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.processing.CheckFoldersExistence}<br>
@@ -337,7 +338,7 @@ public enum ConsoleMessage {
      *   | %s : the exception error message <br>
      */
     ASSETSINFOS_PARSER_LOADING_POINT_PATH_MESSAGE(ConsolePrefix.INFO.getLabel() + "Assets Info Parser Load Point Path >> %s"),
-    ASSETSINFOS_PARSER_LOADING_POINT_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets Info Parser Load Point Parsing error : %s"),
+    ASSETSINFOS_PARSER_LOADING_POINT_PARSING_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Assets Info Parser Load Point Parsing error : %s >> %s"),
 
     /**
      * Create Message for {@link fr.guillaumewlt.downloads.AssetsObjectsDownload} <br>
@@ -460,8 +461,6 @@ public enum ConsoleMessage {
     REQUESTINFOS_MINIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Minimum ram set to %sMo %s"),
     REQUESTINFOS_MAXIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Maximum Ram set to %sGo %s"),;
 
-    /** The console message associated with this constant, potentially containing {@code %s} placeholders. */
-    @Getter
     private String message;
 
     /**
@@ -473,14 +472,56 @@ public enum ConsoleMessage {
         this.message = message;
     }
 
-    /**
-     * Formats the message of this constant by injecting the given arguments into its {@code %s} placeholders.
-     *
-     * @param args the arguments to inject into the message placeholders
-     * @return the formatted message, with trailing whitespace stripped
-     * @see String#format(String, Object...)
-     */
-    public String format(Object... args) {
+    public void outPrint(Object... args) {
+        if (args.length == 0) {
+            ConsoleUtils.out.print(this.message);
+            System.out.print(this.message);
+        } else {
+            ConsoleUtils.out.print(this.format(args));
+            System.out.print(this.format(args));
+        }
+    }
+
+    public void outPrintln(Object... args) {
+        if (args.length == 0) {
+            ConsoleUtils.out.println(this.message);
+            System.out.println(this.message);
+        } else {
+            ConsoleUtils.out.println(this.format(args));
+            System.out.println(this.format(args));
+        }
+    }
+
+    public void errPrint(Object... args) {
+        if (args.length == 0) {
+            ConsoleUtils.err.print(this.message);
+            System.err.print(this.message);
+        } else {
+            ConsoleUtils.err.print(this.format(args));
+            System.err.print(this.format(args));
+        }
+    }
+
+    public void errPrintln(Object... args) {
+        if (args.length == 0) {
+            ConsoleUtils.err.println(this.message);
+            System.err.println(this.message);
+        } else {
+            ConsoleUtils.err.println(this.format(args));
+            System.err.println(this.format(args));
+        }
+    }
+
+    public void throwException(Object... args) {
+        String msg = args.length == 0 ? this.message : this.format(args);
+        throw new LauncherException(msg);
+    }
+
+    private String format(Object... args) {
         return String.format(message, args).stripTrailing();
+    }
+
+    private String getMessage() {
+        return message;
     }
 }

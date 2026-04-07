@@ -2,6 +2,7 @@ package fr.guillaumewlt.ui;
 
 import fr.guillaumewlt.ui.builders.WindowBuilder;
 import fr.guillaumewlt.ui.components.MenuBar;
+import fr.guillaumewlt.ui.eventhandler.MainWindowsHandler;
 import fr.guillaumewlt.ui.panels.ContentPanel;
 import fr.guillaumewlt.workflow.LauncherContext;
 
@@ -27,6 +28,7 @@ public class MainWindow {
                 .alwaysOnTop(false)
                 .resizable(true)
                 .content(new ContentPanel(context, latch))
+                .windowListener(new MainWindowsHandler())
                 .build();
         frame.setJMenuBar(new MenuBar(frame));
         frame.setLocationRelativeTo(null);

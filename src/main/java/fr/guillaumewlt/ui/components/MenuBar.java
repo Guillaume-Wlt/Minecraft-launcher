@@ -12,6 +12,7 @@ public class MenuBar extends JMenuBar {
 
     public MenuBar(JFrame parent) {
         JMenu fileMenu = new JMenu("File");
+        fileMenu.add(settingsMenuItem());
         fileMenu.add(exitMenuItem());
         add(fileMenu);
 
@@ -20,18 +21,14 @@ public class MenuBar extends JMenuBar {
         add(terminalMenu);
     }
 
-    private JMenuItem terminalMenuItem(JFrame parent) {
-        JMenuItem terminalMenuItem = new JMenuItem("Console");
-        terminalMenuItem.addActionListener(e -> {
-            if (consoleWindow == null) {
-                consoleWindow = new ConsoleWindow(parent);
-            }
-            if (!consoleWindow.isVisible()) {
-                consoleWindow.setVisible(true);
-            }
-            consoleWindow.toFront();
+    // ----------------------------------------------------------File Items
+
+    private JMenuItem settingsMenuItem() {
+        JMenuItem settingsMenuItem = new JMenuItem("Settings");
+        settingsMenuItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "To be implemented!", "Settings", JOptionPane.INFORMATION_MESSAGE);
         });
-        return terminalMenuItem;
+        return settingsMenuItem;
     }
 
     private JMenuItem exitMenuItem() {
@@ -43,5 +40,21 @@ public class MenuBar extends JMenuBar {
         */
         exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         return exitMenuItem;
+    }
+
+    // ----------------------------------------------------------Terminal Items
+
+    private JMenuItem terminalMenuItem(JFrame parent) {
+        JMenuItem terminalMenuItem = new JMenuItem("Console");
+        terminalMenuItem.addActionListener(e -> {
+            if (consoleWindow == null) {
+                consoleWindow = ConsoleWindow.getInstance(parent);
+            }
+            if (!consoleWindow.isVisible()) {
+                consoleWindow.setVisible(true);
+            }
+            consoleWindow.toFront();
+        });
+        return terminalMenuItem;
     }
 }

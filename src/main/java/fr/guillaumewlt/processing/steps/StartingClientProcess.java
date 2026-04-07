@@ -1,16 +1,21 @@
 package fr.guillaumewlt.processing.steps;
 
+import fr.guillaumewlt.utils.ConsoleUtils;
+import fr.guillaumewlt.utils.ProgressBarUtils;
 import fr.guillaumewlt.workflow.LauncherContext;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Étape de lancement du client Minecraft.
  * <p>
  * Construit et exécute la commande Java permettant de démarrer le jeu via {@link ProcessBuilder}.
- * Le processus hérite des flux I/O du launcher (stdout/stderr redirigés vers la console),
- * et le launcher attend la fin du processus avant de se terminer.
+ * Les flux stdout et stderr du processus sont lus dans deux threads dédiés et redirigés
+ * simultanément vers la console système et vers la {@link fr.guillaumewlt.ui.windows.ConsoleWindow} du launcher.
+ * Le thread du workflow est bloqué via {@code process.waitFor()} jusqu'à la fermeture du jeu.
  */
 public class StartingClientProcess extends Processes {
 
@@ -78,10 +83,32 @@ public class StartingClientProcess extends Processes {
             // Définit le répertoire de travail du processus (là où le jeu cherche ses fichiers)
             pb.directory(new File(context.getLauncherDirs().launcherDir().path()));
             // Redirige stdout/stderr du jeu vers la console du launcher
-            pb.inheritIO();
-            // Bloque le launcher jusqu'à la fermeture du jeu
-            pb.start().waitFor();
+            pb.redirectErrorStream(false);
+            // Process créer à partir du démarrage du processBuilder
+            Process process = pb.start();
 
+            ProgressBarUtils.update(100, "Client Started - Good Game!");
+
+            // Récupère les outputs pour les display dans la console System et dans la console du launcher
+            new Thread(() -> {
+               new BufferedReader(new InputStreamReader(process.getInputStream()))
+                   .lines()
+                   .forEach(line -> {
+                       System.out.println(line);
+                       ConsoleUtils.out.println(line);
+                   });
+            }).start();
+            // Récupère les erreurs pour les display dans la console System et dans la console du launcher
+            new Thread(() -> {
+                new BufferedReader(new InputStreamReader(process.getErrorStream()))
+                    .lines()
+                    .forEach(line -> {
+                        System.err.println(line);
+                        ConsoleUtils.err.println(line);
+                    });
+            }).start();
+
+            process.waitFor(); // Attend que le process se ferme.
         } catch (IOException | InterruptedException e) {
             stop(e.getMessage(), 1);
         }

@@ -16,7 +16,7 @@ public class ClassPathBuildingProcess extends Processes{
         try {
             String classPath = FilePathUtils.buildClassPath(context, context.getLauncherDirs());
             context.setClassPath(classPath);
-            System.out.println(ConsoleMessage.CLASSPATH_BUILDING_MESSAGE.format(classPath));
+            ConsoleMessage.CLASSPATH_BUILDING_MESSAGE.outPrintln(classPath);
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }

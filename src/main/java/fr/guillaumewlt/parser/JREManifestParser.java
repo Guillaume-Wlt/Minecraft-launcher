@@ -1,6 +1,5 @@
 package fr.guillaumewlt.parser;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.JREFileInfos;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -48,7 +47,7 @@ public class JREManifestParser {
                 }
             }
         } catch (IOException e) {
-            throw new LauncherException(ConsoleMessage.JREMANIFEST_PARSER_PARSING_ERR.format(e.getMessage()));
+            ConsoleMessage.JREMANIFEST_PARSER_PARSING_ERR.throwException(e.getMessage());
         }
         return jreFilesInfos;
     }

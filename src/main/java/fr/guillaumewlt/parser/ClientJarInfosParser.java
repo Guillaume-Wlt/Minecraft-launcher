@@ -1,6 +1,5 @@
 package fr.guillaumewlt.parser;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.ClientJarInfos;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -12,7 +11,7 @@ public class ClientJarInfosParser {
 
     public ClientJarInfosParser(LauncherContext context) {
         if (context.getVersionRawData() == null || context.getVersionRawData().clientData() == null) {
-            throw new LauncherException(ConsoleMessage.VERSIONRAWDATA_RECORD_CLIENT_JSON_OBJECT_NULL_ERR.getMessage());
+            ConsoleMessage.VERSIONRAWDATA_RECORD_CLIENT_JSON_OBJECT_NULL_ERR.throwException();
         }
         clientObj = context.getVersionRawData().clientData();
     }
@@ -22,9 +21,9 @@ public class ClientJarInfosParser {
         String versionHash = clientObj.getString("sha1");
         long clientSize = clientObj.getLong("size");
 
-        System.out.println(ConsoleMessage.CLIENT_JAR_INFOS_PARSER_URL_MESSAGE.format(downloadURL));
-        System.out.println(ConsoleMessage.CLIENT_JAR_INFOS_PARSER_HASH_MESSAGE.format(versionHash));
-        System.out.println(ConsoleMessage.CLIENT_JAR_INFOS_PARSER_SIZE_MESSAGE.format(clientSize / 1024 / 1024));
+        ConsoleMessage.CLIENT_JAR_INFOS_PARSER_URL_MESSAGE.outPrintln(downloadURL);
+        ConsoleMessage.CLIENT_JAR_INFOS_PARSER_HASH_MESSAGE.outPrintln(versionHash);
+        ConsoleMessage.CLIENT_JAR_INFOS_PARSER_SIZE_MESSAGE.outPrintln(clientSize / 1024 / 1024);
 
         return new ClientJarInfos(downloadURL, versionHash, clientSize);
     }

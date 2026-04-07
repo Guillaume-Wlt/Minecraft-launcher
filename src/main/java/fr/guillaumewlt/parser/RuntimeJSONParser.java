@@ -60,7 +60,7 @@ public class RuntimeJSONParser {
 
             JSONArray componentArray = osEntry.getJSONArray(component);
             if (componentArray.isEmpty()) {
-                throw new LauncherException(ConsoleMessage.RUNTIMEJSON_PARSER_COMPONENTARRAY_EMPTY_ERR.format(component));
+                ConsoleMessage.RUNTIMEJSON_PARSER_COMPONENTARRAY_EMPTY_ERR.throwException(component);
             }
             JSONObject entry = componentArray.getJSONObject(0);
             JSONObject manifest = entry.getJSONObject("manifest");
@@ -72,15 +72,17 @@ public class RuntimeJSONParser {
             String jreName = version.getString("name");
             String jreReleaseDate = version.getString("released");
 
-            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_NAME_MESSAGE.format(component));
-            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_HASH_MESSAGE.format(sha1));
-            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_SIZE_MESSAGE.format(size));
-            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_URL_MESSAGE.format(url));
-            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_JRE_NAME_MESSAGE.format(jreName));
-            System.out.println(ConsoleMessage.RUNTIMEJSON_PARSER_JRE_RELEASED_DATE_MESSAGE.format(jreReleaseDate));
+            ConsoleMessage.RUNTIMEJSON_PARSER_NAME_MESSAGE.outPrintln(component);
+            ConsoleMessage.RUNTIMEJSON_PARSER_HASH_MESSAGE.outPrintln(sha1);
+            ConsoleMessage.RUNTIMEJSON_PARSER_SIZE_MESSAGE.outPrintln(size);
+            ConsoleMessage.RUNTIMEJSON_PARSER_URL_MESSAGE.outPrintln(url);
+            ConsoleMessage.RUNTIMEJSON_PARSER_JRE_NAME_MESSAGE.outPrintln(jreName);
+            ConsoleMessage.RUNTIMEJSON_PARSER_JRE_RELEASED_DATE_MESSAGE.outPrintln(jreReleaseDate);
+
             return new RuntimeRawData(component, sha1, size, url, jreName, jreReleaseDate);
         } catch (IOException e) {
-            throw new LauncherException(ConsoleMessage.RUNTIMEJSON_PARSER_PARSING_ERR.format(e.getMessage()));
+            ConsoleMessage.RUNTIMEJSON_PARSER_PARSING_ERR.throwException(e.getMessage());
+            return null; // Jamais atteint
         }
     }
 }

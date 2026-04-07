@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 
@@ -38,7 +37,7 @@ public class JREManifestDownload extends Downloads{
                 byte[] localContent = Files.readAllBytes(localFile.toPath());
                 String localHash = computeMD5(localContent);
                 if (localHash.equals(remoteHash)) {
-                    System.out.println(ConsoleMessage.JREMANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE.getMessage());
+                    ConsoleMessage.JREMANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE.outPrintln();
                     return true;
                 }
             }
@@ -46,11 +45,12 @@ public class JREManifestDownload extends Downloads{
             localFile.getParentFile().mkdirs();
             try (FileOutputStream fos = new FileOutputStream(localFile)) {
                 fos.write(remoteContent);
-                System.out.println(ConsoleMessage.JREMANIFEST_DOWNLOAD_SUCCESSFUL.getMessage());
+                ConsoleMessage.JREMANIFEST_DOWNLOAD_SUCCESSFUL.outPrintln();
                 return true;
             }
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException(ConsoleMessage.JREMANIFEST_DOWNLOAD_ERR.format(e.getMessage()));
+            ConsoleMessage.JREMANIFEST_DOWNLOAD_ERR.throwException(e.getMessage());
+            return false;
         }
     }
 }

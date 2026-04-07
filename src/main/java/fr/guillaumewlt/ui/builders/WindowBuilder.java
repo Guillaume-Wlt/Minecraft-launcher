@@ -4,6 +4,7 @@ import fr.guillaumewlt.exceptionhandler.LauncherException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowListener;
 import java.net.URL;
 
 public class WindowBuilder {
@@ -24,6 +25,7 @@ public class WindowBuilder {
         private String iconPath = null;
         private JMenuBar menuBar;
         private JComponent content;
+        public WindowListener windowListener = null;
 
 
         public Builder title(String title) {
@@ -69,6 +71,11 @@ public class WindowBuilder {
             return this;
         }
 
+        public Builder windowListener(WindowListener windowListener) {
+            this.windowListener = windowListener;
+            return this;
+        }
+
         public JFrame build() {
             JFrame frame = new JFrame(title);
             frame.setSize(width, height);
@@ -92,6 +99,10 @@ public class WindowBuilder {
 
             if (content != null) {
                 frame.setContentPane(content);
+            }
+
+            if (windowListener != null) {
+                frame.addWindowListener(windowListener);
             }
 
             return frame;

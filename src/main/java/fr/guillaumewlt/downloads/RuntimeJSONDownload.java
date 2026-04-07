@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.utils.LauncherUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -35,18 +34,19 @@ public class RuntimeJSONDownload extends Downloads{
                 byte[] localContent = Files.readAllBytes(localFile.toPath());
                 String localHash = computeMD5(localContent);
                 if (localHash.equals(remoteHash)) {
-                    System.out.println(ConsoleMessage.RUNTIMEJSON_DOWNLOAD_ALREADY_UP_TO_DATE.getMessage());
+                    ConsoleMessage.RUNTIMEJSON_DOWNLOAD_ALREADY_UP_TO_DATE.outPrintln();
                     return true;
                 }
             }
 
             try (FileOutputStream fos = new FileOutputStream(localFile)) {
                 fos.write(remoteContent);
-                System.out.println(ConsoleMessage.RUNTIMEJSON_DOWNLOAD_SUCCESSFUL.getMessage());
+                ConsoleMessage.RUNTIMEJSON_DOWNLOAD_SUCCESSFUL.outPrintln();
                 return true;
             }
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException(ConsoleMessage.RUNTIMEJSON_DOWNLOAD_ERR.format(e.getMessage()));
+            ConsoleMessage.RUNTIMEJSON_DOWNLOAD_ERR.throwException(e.getMessage());
+            return false;
         }
     }
 }

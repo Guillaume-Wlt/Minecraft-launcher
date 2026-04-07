@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.processing.CheckFoldersExistence;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
@@ -29,7 +28,7 @@ public class VersionJSONDownload extends Downloads {
             this.versionsDir = context.getLauncherDirs().versionsDir().path(); // versionDir -> [...]/launcher/versions/
             this.selectedVersionDir = DirectoryPathUtils.getSelectedVersionDir(context.getLauncherDirs(), versionName); // selectedVersionDir -> [...]/launcher/versions/<selected_version>/
         } else {
-            throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
+            ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.throwException();
         }
     }
 
@@ -50,19 +49,20 @@ public class VersionJSONDownload extends Downloads {
                 String localHash = computeMD5(localContent);
 
                 if (localHash.equals(remoteHash)) {
-                    System.out.println(ConsoleMessage.VERSION_JSON_DOWNLOAD_ALREADY_UP_TO_DATE.getMessage());
+                    ConsoleMessage.VERSION_JSON_DOWNLOAD_ALREADY_UP_TO_DATE.outPrintln();
                     return true;
                 }
             }
 
             try (FileOutputStream fos = new FileOutputStream(selectedVersionDir + versionName + ".json")) {
                 fos.write(remoteContent);
-                System.out.println(ConsoleMessage.VERSION_JSON_DOWNLOAD_SUCCESSFUL.getMessage());
+                ConsoleMessage.VERSION_JSON_DOWNLOAD_SUCCESSFUL.outPrintln();
                 return true;
             }
 
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException(ConsoleMessage.VERSION_JSON_DOWNLOAD_ERR.format(e.getMessage()));
+            ConsoleMessage.VERSION_JSON_DOWNLOAD_ERR.throwException(e.getMessage());
+            return false;
         }
     }
 

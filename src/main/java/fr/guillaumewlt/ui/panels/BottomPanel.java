@@ -1,7 +1,8 @@
 package fr.guillaumewlt.ui.panels;
 
-import fr.guillaumewlt.ui.builders.PanelBuilder;
+import fr.guillaumewlt.ui.components.ShimmerProgressBarUI;
 import fr.guillaumewlt.ui.eventhandler.PlayBtnHandler;
+import fr.guillaumewlt.utils.ProgressBarUtils;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 import javax.swing.*;
@@ -39,10 +40,14 @@ public class BottomPanel extends JPanel {
         playBtn.addActionListener(new PlayBtnHandler(context, latch, versionCombo, usernameField));
 
         progressBar = new JProgressBar(0, 100);
+        progressBar.setUI(new ShimmerProgressBarUI());
+        progressBar.setForeground(new Color(0, 170, 0));
+        progressBar.setOpaque(false);
         progressBar.setStringPainted(true);
         progressBar.setString("");
         progressBar.setPreferredSize(new Dimension(0, 22));
         progressBar.setVisible(false);
+        ProgressBarUtils.register(progressBar);
 
         add(progressBar,    BorderLayout.NORTH);
         add(buildMainRow(), BorderLayout.CENTER);
@@ -70,10 +75,15 @@ public class BottomPanel extends JPanel {
 
     private void populateVersionCombo() {
         List<String> versions = context.getVersions();
+        boolean latestVersion = false;
         for (String version : versions) {
             String v = version.toLowerCase();
             if (!Character.isDigit(v.charAt(0))) continue; // Si la version de commence pas par un Chiffre -> Skip
             if (v.contains("w") || v.contains("snapshot") || v.contains("pre") || v.contains("rc")) continue; // Si la version contient ces mentions -> Skip
+            if (!latestVersion) {
+                version += " (Latest)";
+                latestVersion = true;
+            }
             versionCombo.addItem(version);
         }
     }
@@ -91,14 +101,5 @@ public class BottomPanel extends JPanel {
         JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         wrapper.add(inner);
         return wrapper;
-    }
-
-    // ----------------------------------------------------------ProgressBar
-
-    public JPanel buildProgressBar() {
-        JPanel progressBarPanel = PanelBuilder.builder()
-                .visible(false)
-                .build();
-        return progressBarPanel;
     }
 }

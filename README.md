@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI.
+> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI. A **ConsoleWindow** displays launcher and game logs in real time with colour-coded output. A **workflow progress bar** with shimmer animation tracks each step after Play is clicked.
 
 | Feature | Status      |
 |---|-------------|
@@ -46,8 +46,14 @@ The CLI version is fully functional. See the release page for installation instr
 | Swing GUI — username input with validation | Done        |
 | Swing GUI — Play button triggering workflow via CountDownLatch | Done        |
 | Swing GUI — workflow integrated as `SHOW_UI` step | Done        |
+| Swing GUI — Play button grayed out and labeled "Launched" while game is running, restored on window close | To do       |
+| Swing GUI — ConsoleWindow (singleton) displaying launcher & game logs in real time | Done        |
+| Swing GUI — ConsoleUtils queue-based batching (100ms flush, no EDT flooding) | Done        |
+| Swing GUI — Console colour coding (timestamps green, errors red + stack trace, steps blue) | Done        |
+| Swing GUI — Minecraft stdout/stderr redirected to ConsoleWindow | Done        |
+| Swing GUI — Workflow progress bar with shimmer animation (visible after Play) | Done        |
+| Swing GUI — Progress bar tracks workflow steps with percentage after SHOW_UI | Done        |
 | RAM input via GUI | In Progress |
-| Progress bar during downloads | In Progress |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
 | Mojang / Microsoft authentication | To do       |

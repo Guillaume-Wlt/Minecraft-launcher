@@ -2,6 +2,7 @@ package fr.guillaumewlt.ui.eventhandler;
 
 import fr.guillaumewlt.model.SelectedVersion;
 import fr.guillaumewlt.parser.ManifestParser;
+import fr.guillaumewlt.utils.ProgressBarUtils;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 import javax.swing.*;
@@ -40,8 +41,17 @@ public class PlayBtnHandler implements ActionListener {
 
             context.setUsername(username);
 
+            JButton btn = (JButton) e.getSource();
+            btn.setEnabled(false);
+            btn.setText("LAUNCHED");
+
+            field.setEnabled(false);
+            combo.setEnabled(false);
+
             System.out.println("Selected version: " + selectedVersion.selectedVersion());
             System.out.println("Username : " + context.getUsername());
+
+            ProgressBarUtils.show();
             latch.countDown();
         } catch (Exception ex) {
             ex.printStackTrace();

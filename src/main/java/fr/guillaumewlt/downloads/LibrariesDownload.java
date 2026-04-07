@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.LibraryInfos;
 import fr.guillaumewlt.processing.DownloadProgress;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
@@ -28,7 +27,7 @@ public class LibrariesDownload extends Downloads {
     @Override
     public boolean download() {
         if (libraries == null || libraries.isEmpty()) {
-            throw new LauncherException(ConsoleMessage.LIBRARIESDOWNLOAD_LIBRARIES_LIST_NULL_ERR.getMessage());
+            ConsoleMessage.LIBRARIESDOWNLOAD_LIBRARIES_LIST_NULL_ERR.throwException();
         }
 
         for (LibraryInfos library : libraries) {
@@ -40,9 +39,9 @@ public class LibrariesDownload extends Downloads {
             try {
                 if (localLibraryFile.exists())  {
                     String localLibraryFileHash = computeSHA1(localLibraryFile.toPath());
-                    System.out.println(ConsoleMessage.LIBRARIESDOWNLOAD_LOCAL_LIBRARY_FILE_HASH_MESSAGE.format(localLibraryFileHash));
+                    ConsoleMessage.LIBRARIESDOWNLOAD_LOCAL_LIBRARY_FILE_HASH_MESSAGE.outPrintln(localLibraryFileHash);
                     if (localLibraryFileHash.equals(library.sha1())) {
-                        System.out.println(ConsoleMessage.LIBRARIESDOWNLOAD_ALREAY_UP_TO_DATE.format(library.name()));
+                        ConsoleMessage.LIBRARIESDOWNLOAD_ALREAY_UP_TO_DATE.outPrintln(library.name());
                         continue;
                     }
                 }
@@ -65,11 +64,11 @@ public class LibrariesDownload extends Downloads {
                 String downloadedHash = computeSHA1(destination);
                 if (!downloadedHash.equals(library.sha1())) {
                     Files.delete(destination);
-                    throw new LauncherException(ConsoleMessage.LIBRARIESDOWNLOAD_CORRUPT_ERR.format(library.name()));
+                    ConsoleMessage.LIBRARIESDOWNLOAD_CORRUPT_ERR.throwException(library.name());
                 }
-                System.out.println(ConsoleMessage.LIBRARIESDOWNLOAD_SUCCESSFUL.format(library.name()));
+                ConsoleMessage.LIBRARIESDOWNLOAD_SUCCESSFUL.outPrintln(library.name());
             } catch (IOException | NoSuchAlgorithmException e) {
-                throw new LauncherException(ConsoleMessage.LIBRARIESDOWNLOAD_ERR.format(library.name(), e.getMessage()));
+                ConsoleMessage.LIBRARIESDOWNLOAD_ERR.throwException(library.name(), e.getMessage());
             }
         }
         return true;

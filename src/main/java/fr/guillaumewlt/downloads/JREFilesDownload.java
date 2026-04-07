@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.JREFileInfos;
 import fr.guillaumewlt.processing.DownloadProgress;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
@@ -28,7 +27,7 @@ public class JREFilesDownload extends Downloads{
     @Override
     public boolean download() {
         if (jreFilesInfos == null || jreFilesInfos.isEmpty()) {
-            throw new LauncherException(ConsoleMessage.JREFILES_DOWNLOAD_JRE_FILES_LIST_EMPTY_ERR.getMessage());
+            ConsoleMessage.JREFILES_DOWNLOAD_JRE_FILES_LIST_EMPTY_ERR.throwException();
         }
 
         for (JREFileInfos jreFileInfos : jreFilesInfos) {
@@ -50,9 +49,9 @@ public class JREFilesDownload extends Downloads{
             try {
                 if (localJREFile.exists()) {
                     String localJREFileHash = computeSHA1(localJREFile.toPath());
-                    System.out.println(ConsoleMessage.JREFILES_DOWNLOAD_LOCAL_JRE_FILE_MESSAGE.format(localJREFileHash));
+                    ConsoleMessage.JREFILES_DOWNLOAD_LOCAL_JRE_FILE_MESSAGE.outPrintln(localJREFileHash);
                     if (localJREFileHash.equals(jreFileInfos.sha1())) {
-                        System.out.println(ConsoleMessage.JREFILES_DOWNLOAD_ALREADY_UP_TO_DATE.format(jreFileInfos.path()));
+                        ConsoleMessage.JREFILES_DOWNLOAD_ALREADY_UP_TO_DATE.outPrintln(jreFileInfos.path());
                         continue;
                     }
                 }
@@ -80,10 +79,10 @@ public class JREFilesDownload extends Downloads{
                 String downloadedHash = computeSHA1(destination);
                 if (!downloadedHash.equals(jreFileInfos.sha1())) {
                     Files.delete(destination);
-                    throw new LauncherException(ConsoleMessage.JREFILES_DOWNLOAD_CORRUPTED_FILE_ERR.format(jreFileInfos.path()));
+                    ConsoleMessage.JREFILES_DOWNLOAD_CORRUPTED_FILE_ERR.throwException(jreFileInfos.path());
                 }
             } catch (IOException | NoSuchAlgorithmException e) {
-                throw new LauncherException(ConsoleMessage.JREFILES_DOWNLOAD_ERR.format(jreFileInfos.path(), e.getMessage()));
+                ConsoleMessage.JREFILES_DOWNLOAD_ERR.throwException(jreFileInfos.path(), e.getMessage());
             }
         }
         return true;

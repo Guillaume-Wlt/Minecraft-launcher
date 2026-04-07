@@ -1,6 +1,5 @@
 package fr.guillaumewlt.processing;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 
 import java.io.File;
@@ -15,11 +14,11 @@ public class CheckFoldersExistence {
         if (!folder.exists()) {
             boolean created = folder.mkdirs();
             if (!created) {
-                throw new LauncherException(ConsoleMessage.CHECK_FOLDER_EXISTENCE_ERR.format(folder.getName(), folder.getPath()));
+                ConsoleMessage.CHECK_FOLDER_EXISTENCE_ERR.throwException(folder.getName(), folder.getPath());
             }
-            System.out.println(ConsoleMessage.CHECK_FOLDER_EXISTENCE_CREATED.format(folder.getName(), folder.getPath()));
+            ConsoleMessage.CHECK_FOLDER_EXISTENCE_CREATED.outPrintln(folder.getName(), folder.getPath());
         } else {
-            System.out.println(ConsoleMessage.CHECK_FOLDER_EXISTENCE_EXIST.format(folder.getName(), folder.getPath()));
+            ConsoleMessage.CHECK_FOLDER_EXISTENCE_EXIST.outPrintln(folder.getName(), folder.getPath());
         }
     }
 }

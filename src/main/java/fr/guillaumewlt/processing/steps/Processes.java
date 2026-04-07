@@ -14,7 +14,7 @@ public abstract class Processes {
     public abstract void process();
 
     protected void stop(String reason, int exitCode) {
-        System.out.println(ConsoleMessage.PROCESSES_FATAL_ERR.format(reason));
+        ConsoleMessage.PROCESSES_FATAL_ERR.errPrintln(reason);
         System.exit(exitCode);
     }
 }

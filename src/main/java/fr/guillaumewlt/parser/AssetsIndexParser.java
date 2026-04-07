@@ -21,11 +21,12 @@ public class AssetsIndexParser {
         long totalSize = assetsIndex.getLong("totalSize");
         String url = assetsIndex.getString("url");
 
-        System.out.println(ConsoleMessage.ASSETSINDEX_PARSER_ID_MESSAGE.format(id));
-        System.out.println(ConsoleMessage.ASSETSINDEX_PARSER_HASH_MESSAGE.format(sha1));
-        System.out.println(ConsoleMessage.ASSETSINDEX_PARSER_SIZE_MESSAGE.format(size));
-        System.out.println(ConsoleMessage.ASSETSINDEX_PARSER_TOTALSIZE_MESSAGE.format(totalSize));
-        System.out.println(ConsoleMessage.ASSETSINDEX_PARSER_URL_MESSAGE.format(url));
+        ConsoleMessage.ASSETSINDEX_PARSER_ID_MESSAGE.outPrintln(id);
+        ConsoleMessage.ASSETSINDEX_PARSER_HASH_MESSAGE.outPrintln(sha1);
+        ConsoleMessage.ASSETSINDEX_PARSER_SIZE_MESSAGE.outPrintln(size);
+        ConsoleMessage.ASSETSINDEX_PARSER_TOTALSIZE_MESSAGE.outPrintln(totalSize);
+        ConsoleMessage.ASSETSINDEX_PARSER_URL_MESSAGE.outPrintln(url);
+
         return new AssetsIndex(id, sha1, size, totalSize, url);
     }
 }

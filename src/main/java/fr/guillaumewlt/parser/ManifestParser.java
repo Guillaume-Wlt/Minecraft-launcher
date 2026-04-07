@@ -48,10 +48,11 @@ public class ManifestParser {
             String id = version.getString("id");
             if (id.equals(selectedVersion)) {
                 String url = version.getString("url");
-                System.out.println(ConsoleMessage.MANIFEST_PARSER_URL_SET_MESSAGE.format(url));
+                ConsoleMessage.MANIFEST_PARSER_URL_SET_MESSAGE.outPrintln(url);
                 return new SelectedVersion(selectedVersion, url);
             }
         }
-        throw new LauncherException(ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR.format(selectedVersion));
+        ConsoleMessage.MANIFEST_PARSER_SCANNER_INPUT_VERSION_NOT_FOUND_ERR.throwException(selectedVersion);
+        return null;
     }
 }

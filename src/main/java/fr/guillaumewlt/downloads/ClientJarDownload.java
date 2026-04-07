@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.processing.DownloadProgress;
 import fr.guillaumewlt.utils.DirectoryPathUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
@@ -43,10 +42,10 @@ public class ClientJarDownload extends Downloads{
 
             if (localClientJar.exists()){
                 String localClientJarHash = computeSHA1(localClientJar.toPath());
-                System.out.println(ConsoleMessage.CLIENT_JAR_DOWNLOAD_LOCAL_CLIENT_HASH_MESSAGE.format(localClientJarHash));
+                ConsoleMessage.CLIENT_JAR_DOWNLOAD_LOCAL_CLIENT_HASH_MESSAGE.outPrintln(localClientJarHash);
 
                 if (localClientJarHash.equals(selectedClientJarHash)){
-                    System.out.println(ConsoleMessage.CLIENT_JAR_DOWNLOAD_CLIENT_ALREADY_UP_TO_DATE.getMessage());
+                    ConsoleMessage.CLIENT_JAR_DOWNLOAD_CLIENT_ALREADY_UP_TO_DATE.outPrintln();
                     return true;
                 }
             }
@@ -70,29 +69,30 @@ public class ClientJarDownload extends Downloads{
             String downloadedHash = computeSHA1(destination);
             if (!downloadedHash.equals(selectedClientJarHash)) {
                 Files.delete(destination); // supprime le fichier corrompu
-                throw new LauncherException(ConsoleMessage.CLIENT_JAR_DOWNLOAD_CLIENT_JAR_CORRUPTED_ERR.getMessage());
+                ConsoleMessage.CLIENT_JAR_DOWNLOAD_CLIENT_JAR_CORRUPTED_ERR.throwException();
             }
 
-            System.out.println(ConsoleMessage.CLIENT_JAR_DOWNLOAD_SUCCESSFUL.format(selectedVersionName));
+            ConsoleMessage.CLIENT_JAR_DOWNLOAD_SUCCESSFUL.outPrint(selectedVersionName);
             return true;
 
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException(ConsoleMessage.CLIENT_JAR_DOWNLOAD_ERR.format(e.getMessage()));
+            ConsoleMessage.CLIENT_JAR_DOWNLOAD_ERR.throwException(e.getMessage());
+            return false;
         }
     }
 
     private void checkRequirements() {
         if (selectedClientJarURL == null) {
-            throw new LauncherException(ConsoleMessage.CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR.getMessage());
+            ConsoleMessage.CLIENTJARINFOS_RECORD_SELECTED_CLIENT_URL_NULL_ERR.throwException();
         }
     }
 
     private void defineSelectedClientJarName() {
         if (selectedVersionDir == null) {
-            throw new LauncherException(ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.getMessage());
+            ConsoleMessage.DIRECTORYPATH_UTILS_SELECTED_VERSION_DIR_PATH_NULL_ERR.throwException();
         }
         if (selectedVersionName == null) {
-            throw new LauncherException(ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.getMessage());
+            ConsoleMessage.SELECTEDVERSION_RECORD_NAME_NULL_ERR.throwException();
         }
         selectedClientJarPath = selectedVersionDir + selectedVersionName + ".jar";
     }

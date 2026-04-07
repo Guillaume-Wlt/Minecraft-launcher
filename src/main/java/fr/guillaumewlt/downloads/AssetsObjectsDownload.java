@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.assets.AssetInfos;
 import fr.guillaumewlt.processing.DownloadProgress;
 import fr.guillaumewlt.utils.LauncherUtils;
@@ -31,7 +30,7 @@ public class AssetsObjectsDownload extends Downloads{
     @Override
     public boolean download() {
         if (assets == null || assets.isEmpty()) {
-            throw new LauncherException(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_ASSETS_LIST_NULL_ERR.getMessage());
+            ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_ASSETS_LIST_NULL_ERR.throwException();
         }
 
         for (AssetInfos asset : assets) {
@@ -43,9 +42,9 @@ public class AssetsObjectsDownload extends Downloads{
             try {
                 if (localAssetFile.exists()) {
                     String localAssetHash = computeSHA1(localAssetFile.toPath());
-                    System.out.println(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_LOCAL_ASSET_FILE_HASH_MESSAGE.format(localAssetHash));
+                    ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_LOCAL_ASSET_FILE_HASH_MESSAGE.outPrintln(localAssetHash);
                     if (localAssetHash.equals(asset.hash())) {
-                        System.out.println(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_ASSET_ALREADY_UP_TO_DATE.getMessage());
+                        ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_ASSET_ALREADY_UP_TO_DATE.outPrintln();
                         continue;
                     }
                 }
@@ -68,11 +67,11 @@ public class AssetsObjectsDownload extends Downloads{
                 String downloadedHash = computeSHA1(destination);
                 if (!downloadedHash.equals(asset.hash())) {
                     Files.delete(destination);
-                    throw new LauncherException(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_CORRUPTED_ERR.format(asset.name()));
+                    ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_CORRUPTED_ERR.throwException(asset.name());
                 }
-                System.out.println(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_SUCCESSFUL.getMessage());
+                ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_SUCCESSFUL.outPrintln();
             } catch (IOException | NoSuchAlgorithmException e) {
-                throw new LauncherException(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_ERR.format(e.getMessage()), e);
+                ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_ERR.throwException(e.getMessage());
             }
         }
 
@@ -87,7 +86,7 @@ public class AssetsObjectsDownload extends Downloads{
                     try {
                         Files.copy(src, dst);
                     } catch (IOException e) {
-                        throw new LauncherException(ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_COPY_VIRTUAL_ASSETS_ERROR.format(e.getMessage()));
+                        ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_COPY_VIRTUAL_ASSETS_ERROR.throwException(e.getMessage());
                     }
                 }
             }

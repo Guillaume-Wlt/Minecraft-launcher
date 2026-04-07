@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 
@@ -34,10 +33,10 @@ public class AssetsIndexDownload extends Downloads{
 
             if (localFile.exists()){
                 String localFileHash = computeSHA1(localPath);
-                System.out.println(ConsoleMessage.ASSETSINDEX_DOWNLOAD_LOCAL_FILE_HASH_MESSAGE.format(localFileHash));
+                ConsoleMessage.ASSETSINDEX_DOWNLOAD_LOCAL_FILE_HASH_MESSAGE.outPrintln(localFileHash);
 
                 if (localFileHash.equals(sha1)) {
-                    System.out.println(ConsoleMessage.ASSETSINDEX_DOWNLOAD_FILE_ALREADY_UP_TO_DATE.getMessage());
+                    ConsoleMessage.ASSETSINDEX_DOWNLOAD_FILE_ALREADY_UP_TO_DATE.outPrintln();
                     return true;
                 }
             }
@@ -50,24 +49,25 @@ public class AssetsIndexDownload extends Downloads{
             String downloadedFileHash = computeSHA1(localPath);
             if (!downloadedFileHash.equals(sha1)) {
                 Files.delete(localPath);
-                throw new LauncherException(ConsoleMessage.ASSETSINDEX_DOWNLOAD_FILE_CORRUPTED_ERR.getMessage());
+                ConsoleMessage.ASSETSINDEX_DOWNLOAD_FILE_CORRUPTED_ERR.throwException();
             }
-            System.out.println(ConsoleMessage.ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_SUCCESSFUL.getMessage());
+            ConsoleMessage.ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_SUCCESSFUL.outPrintln();
             return true;
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException(ConsoleMessage.ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_ERR.format(e.getMessage()));
+            ConsoleMessage.ASSETSINDEX_DOWNLOAD_FILE_DOWNLOAD_ERR.throwException(e.getMessage());
+            return false;
         }
     }
 
     private void checkRequirements() {
         if (context.getLauncherDirs().launcherDir().path() == null) {
-            throw new LauncherException(ConsoleMessage.LAUNCHERDIRS_LAUNCHER_DIR_NULL_ERR.getMessage());
+            ConsoleMessage.LAUNCHERDIRS_LAUNCHER_DIR_NULL_ERR.throwException();
         }
         if (context.getAssetsIndex().id() == null) {
-            throw new LauncherException(ConsoleMessage.ASSETSINDEX_RECORD_ID_NULL_ERR.getMessage());
+            ConsoleMessage.ASSETSINDEX_RECORD_ID_NULL_ERR.throwException();
         }
         if (context.getLauncherDirs().assetsIndexesDir().path() == null) {
-            throw new LauncherException(ConsoleMessage.LAUNCHERDIRS_ASSETS_INDEXES_DIR_NULL_ERR.getMessage());
+            ConsoleMessage.LAUNCHERDIRS_ASSETS_INDEXES_DIR_NULL_ERR.throwException();
         }
         this.localPath = Path.of(context.getLauncherDirs().assetsIndexesDir().path() + context.getAssetsIndex().id() + ".json");
     }

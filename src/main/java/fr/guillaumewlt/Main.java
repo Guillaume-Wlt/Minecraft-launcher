@@ -10,6 +10,6 @@ public class Main {
     public static void main(String[] args) {
         JFrame.setDefaultLookAndFeelDecorated(true);
         FlatDarkLaf.setup(); //thème sombre
-        new WorkflowRunner().run(); // Start the workflow
+        new Thread(() -> new WorkflowRunner().run()).start(); // Start the workflow
     }
 }

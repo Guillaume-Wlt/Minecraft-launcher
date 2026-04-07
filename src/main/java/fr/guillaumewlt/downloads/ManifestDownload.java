@@ -1,6 +1,5 @@
 package fr.guillaumewlt.downloads;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.utils.LauncherUtils;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -42,7 +41,7 @@ public class ManifestDownload extends Downloads {
                 String localHash = computeMD5(localContent);
 
                 if (localHash.equals(remoteHash)) {
-                    System.out.println(ConsoleMessage.MANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE.getMessage());
+                    ConsoleMessage.MANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE.outPrintln();
                     return true;
                 }
             }
@@ -50,12 +49,13 @@ public class ManifestDownload extends Downloads {
             // Fichier différent ou inexistant → télécharge
             try (FileOutputStream fos = new FileOutputStream(versionsDir + fileName)) {
                 fos.write(remoteContent);
-                System.out.println(ConsoleMessage.MANIFEST_DOWNLOAD_SUCCESSFUL.getMessage());
+                ConsoleMessage.MANIFEST_DOWNLOAD_SUCCESSFUL.outPrintln();
                 return true;
             }
 
         } catch (IOException | NoSuchAlgorithmException e) {
-            throw new LauncherException(ConsoleMessage.MANIFEST_DOWNLOAD_ERR.format(e.getMessage()));
+            ConsoleMessage.MANIFEST_DOWNLOAD_ERR.throwException(e.getMessage());
+            return false;
         }
     }
 }

@@ -36,14 +36,16 @@ public class VersionJSONParser {
             String mainClass = versionJSON.optString("mainClass", "net.minecraft.client.main.Main");
             String javaVersion = versionJSON.optJSONObject("javaVersion", new JSONObject()).optString("component", "jre-legacy");
 
-            System.out.println(ConsoleMessage.VERSION_JSON_PARSER_CLIENT_JAR_INFOS_MESSAGE.getMessage());
-            System.out.println(ConsoleMessage.VERSION_JSON_PARSER_LIBRARIES_INFOS_MESSAGE.getMessage());
-            System.out.println(ConsoleMessage.VERSION_JSON_PARSER_ASSETS_INFOS_MESSAGE.getMessage());
+            ConsoleMessage.VERSION_JSON_PARSER_CLIENT_JAR_INFOS_MESSAGE.outPrintln();
+            ConsoleMessage.VERSION_JSON_PARSER_LIBRARIES_INFOS_MESSAGE.outPrintln();
+            ConsoleMessage.VERSION_JSON_PARSER_ASSETS_INFOS_MESSAGE.outPrintln();
+
             System.out.println("MainClass >> OK");
             System.out.println("Java Version >> OK");
             return new VersionRawData(client, libraries, assets, mainClass, javaVersion);
         } catch (IOException e) {
-            throw new LauncherException(ConsoleMessage.VERSION_JSON_PARSER_PARSING_ERR.format(e.getMessage()));
+            ConsoleMessage.VERSION_JSON_PARSER_PARSING_ERR.throwException(e.getMessage());
+            return null;
         }
     }
 }

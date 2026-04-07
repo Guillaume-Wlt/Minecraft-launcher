@@ -2,6 +2,8 @@ package fr.guillaumewlt.utils.console;
 
 public enum ConsolePrefix {
     INFO("[INFO] "),
+    MESSAGE("[MESSAGE] "),
+    STEP_STATUS("[STEP_STATUS] "),
     INPUT("[INPUT] "),
     OUTPUT("[OUTPUT] "),
     ERROR("[ERROR] Error message >> "),

@@ -13,27 +13,27 @@ public class RequestInfosProcess extends Processes{
     @Override
     public void process() {
         try {
-            System.out.println(ConsoleMessage.REQUESTINFOS_USERNAME_INPUT_MESSAGE.getMessage());
+            ConsoleMessage.REQUESTINFOS_USERNAME_INPUT_MESSAGE.outPrintln();
             String username = context.getUsername();
             if (username == null || username.isEmpty()) {
                 username = "Player";
             }
-            System.out.println(ConsoleMessage.REQUESTINFOS_USERNAME_MESSAGE.format(username));
-            System.out.println(ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_INPUT_MESSAGE.getMessage());
+            ConsoleMessage.REQUESTINFOS_USERNAME_MESSAGE.outPrintln(username);
+            ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_INPUT_MESSAGE.outPrintln();
             String minRam = context.getMinRam();
             if (minRam == null || minRam.isEmpty() || minRam.equals("512")) {
                 minRam = "512";
-                System.out.println(ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_MESSAGE.format(minRam, "(default)"));
+                ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_MESSAGE.outPrintln(minRam, "(default)");
             } else {
-                System.out.println(ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_MESSAGE.format(minRam, ""));
+                ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_MESSAGE.outPrintln(minRam, "");
             }
-            System.out.println(ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_INPUT_MESSAGE.getMessage());
+            ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_INPUT_MESSAGE.outPrintln();
             String maxRam = context.getMaxRam();
             if (maxRam == null || maxRam.isEmpty() || maxRam.equals("2")) {
                 maxRam = "2";
-                System.out.println(ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_MESSAGE.format(maxRam, "(default)"));
+                ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_MESSAGE.outPrintln(maxRam, "(default)");
             } else {
-                System.out.println(ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_MESSAGE.format(maxRam, ""));
+                ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_MESSAGE.outPrintln(maxRam, "");
             }
             context.setUsername(username);
             context.setMinRam(minRam);

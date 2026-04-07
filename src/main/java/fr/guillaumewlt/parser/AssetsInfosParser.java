@@ -1,6 +1,5 @@
 package fr.guillaumewlt.parser;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.model.assets.AssetInfos;
 import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -20,14 +19,14 @@ public class AssetsInfosParser {
     public AssetsInfosParser(LauncherContext context) {
         this.context = context;
         if (context.getAssetsIndex() == null || context.getAssetsIndex().id() == null) {
-            throw new LauncherException(ConsoleMessage.ASSETSINDEX_RECORD_ID_NULL_ERR.getMessage());
+            ConsoleMessage.ASSETSINDEX_RECORD_ID_NULL_ERR.throwException();
         }
         assetsIndexPath = context.getLauncherDirs().assetsIndexesDir().path() + context.getAssetsIndex().id() + ".json";
     }
 
     public List<AssetInfos> jsonParser() {
         List<AssetInfos> assetsInfos = new ArrayList<>();
-        System.out.println(ConsoleMessage.ASSETSINFOS_PARSER_LOADING_POINT_PATH_MESSAGE.format(assetsIndexPath));
+        ConsoleMessage.ASSETSINFOS_PARSER_LOADING_POINT_PATH_MESSAGE.outPrintln(assetsIndexPath);
         try {
             String content = Files.readString(Path.of(assetsIndexPath));
             JSONObject jsonObject = new JSONObject(content);
@@ -46,7 +45,7 @@ public class AssetsInfosParser {
                 assetsInfos.add(new AssetInfos(name, hash, size));
             }
         } catch (IOException e) {
-            throw new LauncherException(ConsoleMessage.ASSETSINFOS_PARSER_LOADING_POINT_PARSING_ERR.format(assetsIndexPath), e);
+            ConsoleMessage.ASSETSINFOS_PARSER_LOADING_POINT_PARSING_ERR.throwException(assetsIndexPath, e.getMessage());
         }
         return assetsInfos;
     }
