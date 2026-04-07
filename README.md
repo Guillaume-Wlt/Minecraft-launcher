@@ -46,14 +46,18 @@ The CLI version is fully functional. See the release page for installation instr
 | Swing GUI — username input with validation | Done        |
 | Swing GUI — Play button triggering workflow via CountDownLatch | Done        |
 | Swing GUI — workflow integrated as `SHOW_UI` step | Done        |
-| Swing GUI — Play button grayed out and labeled "Launched" while game is running, restored on window close | To do       |
 | Swing GUI — ConsoleWindow (singleton) displaying launcher & game logs in real time | Done        |
 | Swing GUI — ConsoleUtils queue-based batching (100ms flush, no EDT flooding) | Done        |
 | Swing GUI — Console colour coding (timestamps green, errors red + stack trace, steps blue) | Done        |
 | Swing GUI — Minecraft stdout/stderr redirected to ConsoleWindow | Done        |
 | Swing GUI — Workflow progress bar with shimmer animation (visible after Play) | Done        |
 | Swing GUI — Progress bar tracks workflow steps with percentage after SHOW_UI | Done        |
-| RAM input via GUI | In Progress |
+| Swing GUI — Play button grayed out and labeled "Launched" while game is running, restored on window close | In Progress |
+| Swing GUI — Settings window — min/max RAM input fields | To do       |
+| Swing GUI — Settings window — "Open launcher folder" button | To do       |
+| Swing GUI — Settings window — "Save" button persisting settings to `config/settings.json` | To do       |
+| Swing GUI — Settings — `config/` directory created during `INIT` step alongside other launcher dirs | To do       |
+| Swing GUI — Settings — `settings.json` loaded on startup and applied to workflow context | To do       |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
 | Mojang / Microsoft authentication | To do       |
