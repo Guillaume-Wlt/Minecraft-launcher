@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI. A **ConsoleWindow** displays launcher and game logs in real time with colour-coded output. A **workflow progress bar** with shimmer animation tracks each step after Play is clicked.
+> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI. A **ConsoleWindow** displays launcher and game logs in real time with colour-coded output. A **workflow progress bar** with shimmer animation tracks each step after Play is clicked. The console sidebar now includes **clear**, **go to bottom**, and **copy to clipboard** buttons. A **SettingsWindow** singleton has been scaffolded.
 
 | Feature | Status      |
 |---|-------------|
@@ -53,6 +53,11 @@ The CLI version is fully functional. See the release page for installation instr
 | Swing GUI — Workflow progress bar with shimmer animation (visible after Play) | Done        |
 | Swing GUI — Progress bar tracks workflow steps with percentage after SHOW_UI | Done        |
 | Swing GUI — Play button grayed out and labeled "Launched" while game is running, restored on window close | In Progress |
+| Swing GUI — Console sidebar — clear console button | Done        |
+| Swing GUI — Console sidebar — go to bottom button | Done        |
+| Swing GUI — Console sidebar — copy console to clipboard button | Done        |
+| Swing GUI — ButtonHandler centralised (replaces PlayBtnHandler) with setter-injected dependencies | Done        |
+| Swing GUI — SettingsWindow singleton scaffolded | Done        |
 | Swing GUI — Settings window — min/max RAM input fields | To do       |
 | Swing GUI — Settings window — "Open launcher folder" button | To do       |
 | Swing GUI — Settings window — "Save" button persisting settings to `config/settings.json` | To do       |
@@ -101,8 +106,8 @@ fr.guillaumewlt/
 │   ├── builders/         # WindowBuilder, PanelBuilder (factory helpers)
 │   ├── components/       # Reusable components (MenuBar…)
 │   ├── panels/           # Content panels (ContentPanel, BottomPanel, ImagePanel…)
-│   ├── eventhandler/     # UI event handlers (PlayBtnHandler…)
-│   └── windows/          # Secondary windows (ConsoleWindow…)
+│   ├── eventhandler/     # UI event handlers (ButtonHandler…)
+│   └── windows/          # Secondary windows (ConsoleWindow, SettingsWindow…)
 └── exceptionhandler/     # Error handling
 ```
 

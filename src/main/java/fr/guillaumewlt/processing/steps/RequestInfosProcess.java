@@ -13,13 +13,11 @@ public class RequestInfosProcess extends Processes{
     @Override
     public void process() {
         try {
-            ConsoleMessage.REQUESTINFOS_USERNAME_INPUT_MESSAGE.outPrintln();
             String username = context.getUsername();
             if (username == null || username.isEmpty()) {
                 username = "Player";
             }
             ConsoleMessage.REQUESTINFOS_USERNAME_MESSAGE.outPrintln(username);
-            ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_INPUT_MESSAGE.outPrintln();
             String minRam = context.getMinRam();
             if (minRam == null || minRam.isEmpty() || minRam.equals("512")) {
                 minRam = "512";
@@ -27,7 +25,6 @@ public class RequestInfosProcess extends Processes{
             } else {
                 ConsoleMessage.REQUESTINFOS_MINIMUM_RAM_MESSAGE.outPrintln(minRam, "");
             }
-            ConsoleMessage.REQUESTINFOS_MAXIMUM_RAM_INPUT_MESSAGE.outPrintln();
             String maxRam = context.getMaxRam();
             if (maxRam == null || maxRam.isEmpty() || maxRam.equals("2")) {
                 maxRam = "2";

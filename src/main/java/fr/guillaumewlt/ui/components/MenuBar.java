@@ -1,6 +1,7 @@
 package fr.guillaumewlt.ui.components;
 
 import fr.guillaumewlt.ui.windows.ConsoleWindow;
+import fr.guillaumewlt.ui.windows.SettingsWindow;
 
 import javax.swing.*;
 import java.awt.event.InputEvent;
@@ -9,10 +10,11 @@ import java.awt.event.KeyEvent;
 public class MenuBar extends JMenuBar {
 
     private JDialog consoleWindow;
+    private JDialog settingsWindow;
 
     public MenuBar(JFrame parent) {
         JMenu fileMenu = new JMenu("File");
-        fileMenu.add(settingsMenuItem());
+        fileMenu.add(settingsMenuItem(parent));
         fileMenu.add(exitMenuItem());
         add(fileMenu);
 
@@ -23,10 +25,16 @@ public class MenuBar extends JMenuBar {
 
     // ----------------------------------------------------------File Items
 
-    private JMenuItem settingsMenuItem() {
+    private JMenuItem settingsMenuItem(JFrame parent) {
         JMenuItem settingsMenuItem = new JMenuItem("Settings");
         settingsMenuItem.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "To be implemented!", "Settings", JOptionPane.INFORMATION_MESSAGE);
+            if (settingsWindow == null) {
+                settingsWindow = SettingsWindow.getInstance(parent);
+            }
+            if (!settingsWindow.isVisible()) {
+                settingsWindow.setVisible(true);
+            }
+            settingsWindow.toFront();
         });
         return settingsMenuItem;
     }
