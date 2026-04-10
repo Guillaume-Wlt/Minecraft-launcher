@@ -30,7 +30,7 @@ public class MainWindow {
                 .content(new ContentPanel(context, latch))
                 .windowListener(new MainWindowsHandler())
                 .build();
-        frame.setJMenuBar(new MenuBar(frame));
+        frame.setJMenuBar(new MenuBar(context, frame));
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

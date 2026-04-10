@@ -15,6 +15,8 @@ public class BottomPanel extends JPanel {
     private final LauncherContext context;
     private final CountDownLatch latch;
 
+    private Color backgroundColor;
+
     private JComboBox<String> versionCombo;
     private JButton playBtn;
     private JTextField usernameField;
@@ -26,7 +28,10 @@ public class BottomPanel extends JPanel {
         this.context = context;
         this.latch = latch;
 
+        backgroundColor = Color.decode("#383838");
+
         setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
+        setBackground(backgroundColor);
 
         versionCombo  = new JComboBox<>();
         playBtn       = new JButton("PLAY");
@@ -65,6 +70,7 @@ public class BottomPanel extends JPanel {
 
     private JPanel buildMainRow() {
         JPanel row = new JPanel(new GridLayout(1, 3, 8, 0));
+        row.setBackground(backgroundColor);
         row.add(buildVersionSection());
         row.add(buildPlaySection());
         row.add(buildUsernameSection());
@@ -73,9 +79,11 @@ public class BottomPanel extends JPanel {
 
     private JPanel buildVersionSection() {
         JPanel inner = new JPanel(new BorderLayout(0, 2));
+        inner.setBackground(backgroundColor);
         inner.add(new JLabel("Version :"), BorderLayout.NORTH);
-        inner.add(versionCombo,                 BorderLayout.CENTER);
+        inner.add(versionCombo, BorderLayout.CENTER);
         JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        wrapper.setBackground(backgroundColor);
         wrapper.add(inner);
         return wrapper;
     }
@@ -97,15 +105,18 @@ public class BottomPanel extends JPanel {
 
     private JPanel buildPlaySection() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(backgroundColor);
         panel.add(playBtn);
         return panel;
     }
 
     private JPanel buildUsernameSection() {
         JPanel inner = new JPanel(new BorderLayout(0, 2));
+        inner.setBackground(backgroundColor);
         inner.add(new JLabel("Username :"), BorderLayout.NORTH);
-        inner.add(usernameField,                 BorderLayout.CENTER);
+        inner.add(usernameField, BorderLayout.CENTER);
         JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        wrapper.setBackground(backgroundColor);
         wrapper.add(inner);
         return wrapper;
     }

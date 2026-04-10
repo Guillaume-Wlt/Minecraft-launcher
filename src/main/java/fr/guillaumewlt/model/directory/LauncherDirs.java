@@ -16,6 +16,7 @@ package fr.guillaumewlt.model.directory;
  */
 public record LauncherDirs(
    LauncherDir launcherDir,
+   LauncherDir configDir,
    LauncherDir binDir,
    LauncherDir versionsDir,
    LauncherDir librariesDir,

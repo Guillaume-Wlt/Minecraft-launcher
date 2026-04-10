@@ -30,6 +30,7 @@ public class InitProcess extends Processes {
             }
             LauncherDirs directories = new LauncherDirs(
                     new LauncherDir("Launcher", launcherPath),
+                    new LauncherDir("config", launcherPath + "config/"),
                     new LauncherDir("bin", launcherPath + "bin/"),
                     new LauncherDir("versions", launcherPath + "versions/"),
                     new LauncherDir("libraries", launcherPath + "libraries/"),
@@ -41,6 +42,7 @@ public class InitProcess extends Processes {
             context.setLauncherDirs(directories);
 
             CheckFoldersExistence.checkDirectories(directories.launcherDir().path()); // Create [...]/launcher/
+            CheckFoldersExistence.checkDirectories(directories.configDir().path()); // Create [...]/launcher/config
             CheckFoldersExistence.checkDirectories(directories.binDir().path()); // Create [...]/launcher/bin/
             CheckFoldersExistence.checkDirectories(directories.versionsDir().path()); // Create [...]/launcher/versions/
             CheckFoldersExistence.checkDirectories(directories.librariesDir().path()); // Create [...]/launcher/libraries/

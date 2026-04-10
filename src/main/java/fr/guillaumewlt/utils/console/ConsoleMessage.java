@@ -459,7 +459,7 @@ public enum ConsoleMessage {
     REQUESTINFOS_MAXIMUM_RAM_INPUT_MESSAGE(ConsolePrefix.INPUT.getLabel() + "Enter the maximum of ram (in GigaBytes) (2Go by default) >> "),
     REQUESTINFOS_USERNAME_MESSAGE(ConsolePrefix.INFO.getLabel() + "Username set to %s"),
     REQUESTINFOS_MINIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Minimum ram set to %sMo %s"),
-    REQUESTINFOS_MAXIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Maximum Ram set to %sGo %s"),;
+    REQUESTINFOS_MAXIMUM_RAM_MESSAGE(ConsolePrefix.INFO.getLabel() + "Maximum Ram set to %sMo %s"),;
 
     private String message;
 
