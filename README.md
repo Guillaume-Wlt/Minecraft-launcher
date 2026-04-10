@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI. A **ConsoleWindow** displays launcher and game logs in real time with colour-coded output. A **workflow progress bar** with shimmer animation tracks each step after Play is clicked. The console sidebar now includes **clear**, **go to bottom**, and **copy to clipboard** buttons. A **SettingsWindow** singleton has been scaffolded.
+> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI. A **ConsoleWindow** displays launcher and game logs in real time with colour-coded output. A **workflow progress bar** with shimmer animation tracks each step after Play is clicked. The console sidebar now includes **clear**, **go to bottom**, and **copy to clipboard** buttons. The **SettingsWindow** is fully functional: min/max RAM fields with visual feedback, a **Remember Settings** checkbox, persistence to `config/settings.json`, settings loaded on startup, and a **Check Local files** button opening the launcher directory in the file explorer.
 
 | Feature | Status      |
 |---|-------------|
@@ -57,12 +57,13 @@ The CLI version is fully functional. See the release page for installation instr
 | Swing GUI — Console sidebar — go to bottom button | Done        |
 | Swing GUI — Console sidebar — copy console to clipboard button | Done        |
 | Swing GUI — ButtonHandler centralised (replaces PlayBtnHandler) with setter-injected dependencies | Done        |
-| Swing GUI — SettingsWindow singleton scaffolded | Done        |
-| Swing GUI — Settings window — min/max RAM input fields | To do       |
-| Swing GUI — Settings window — "Open launcher folder" button | To do       |
-| Swing GUI — Settings window — "Save" button persisting settings to `config/settings.json` | To do       |
-| Swing GUI — Settings — `config/` directory created during `INIT` step alongside other launcher dirs | To do       |
-| Swing GUI — Settings — `settings.json` loaded on startup and applied to workflow context | To do       |
+| Swing GUI — SettingsWindow singleton with min/max RAM fields (defaults 512 / 2048 MB) | Done        |
+| Swing GUI — Settings window — visual feedback (✔ indicator) after save | Done        |
+| Swing GUI — Settings window — "Remember Settings" checkbox controlling persistence | Done        |
+| Swing GUI — Settings window — "Save" button applying RAM to context and persisting to `config/settings.json` | Done        |
+| Swing GUI — Settings window — "Check Local files" button opening launcher directory in file explorer | Done        |
+| Swing GUI — Settings — `config/settings.json` written on first save, directory created automatically | Done        |
+| Swing GUI — Settings — `settings.json` loaded on startup and pre-populated in fields | Done        |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
 | Mojang / Microsoft authentication | To do       |
