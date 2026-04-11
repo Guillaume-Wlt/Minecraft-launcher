@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI. A **ConsoleWindow** displays launcher and game logs in real time with colour-coded output. A **workflow progress bar** with shimmer animation tracks each step after Play is clicked. The console sidebar now includes **clear**, **go to bottom**, and **copy to clipboard** buttons. The **SettingsWindow** is fully functional: min/max RAM fields with visual feedback, a **Remember Settings** checkbox, persistence to `config/settings.json`, settings loaded on startup, and a **Check Local files** button opening the launcher directory in the file explorer.
+> **In progress** — The core pipeline is complete and stable. Versions **1.6.4**, **1.7**, **1.8.9** and **1.14.4** are functional. Legacy versions (1.6.x, 1.7.x) correctly map assets to a virtual directory for sound support. The **Java Swing GUI** is now integrated into the workflow — version selection and username input are handled through the UI. A **ConsoleWindow** displays launcher and game logs in real time with colour-coded output. A **workflow progress bar** with shimmer animation tracks each step after Play is clicked. The console sidebar now includes **clear**, **go to bottom**, and **copy to clipboard** buttons. The **SettingsWindow** is fully functional: min/max RAM fields with visual feedback, a **Remember Settings** checkbox, persistence to `config/settings.json`, settings loaded on startup, and a **Check Local files** button opening the launcher directory in the file explorer. The **BottomPanel** now includes a **Remember** checkbox next to the version combo to persist username and version on launch. The `settings.json` write logic now **merges** new keys into existing data instead of overwriting.
 
 | Feature | Status      |
 |---|-------------|
@@ -64,6 +64,8 @@ The CLI version is fully functional. See the release page for installation instr
 | Swing GUI — Settings window — "Check Local files" button opening launcher directory in file explorer | Done        |
 | Swing GUI — Settings — `config/settings.json` written on first save, directory created automatically | Done        |
 | Swing GUI — Settings — `settings.json` loaded on startup and pre-populated in fields | Done        |
+| Swing GUI — BottomPanel — "Remember" checkbox next to version combo persisting username and version | Done        |
+| Swing GUI — `settings.json` write merges new keys into existing data (no overwrite) | Done        |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
 | Mojang / Microsoft authentication | To do       |

@@ -1,7 +1,7 @@
 package fr.guillaumewlt.ui.windows;
 
+import fr.guillaumewlt.parser.SettingsJSONParser;
 import fr.guillaumewlt.ui.eventhandler.ButtonHandler;
-import fr.guillaumewlt.utils.SettingsUtils;
 import fr.guillaumewlt.workflow.LauncherContext;
 import lombok.Setter;
 
@@ -35,12 +35,12 @@ public class SettingsWindow extends JDialog {
     public SettingsWindow(JFrame parent) {
         super(parent, "Settings", false);
 
-        SettingsUtils settingsUtils = new SettingsUtils(context);
-        settingsUtils.readSettings();
-        minRam = settingsUtils.getMinRam();
-        maxRam = settingsUtils.getMaxRam();
+        SettingsJSONParser settingsJSONParser = new SettingsJSONParser(context);
+        settingsJSONParser.readSettings();
+        minRam = settingsJSONParser.getMinRam();
+        maxRam = settingsJSONParser.getMaxRam();
 
-        if (!minRam.equals("512") && !maxRam.equals("2048")) {
+        if (minRam != null && maxRam != null) {
             isSelected = true;
         } else {
             isSelected = false;

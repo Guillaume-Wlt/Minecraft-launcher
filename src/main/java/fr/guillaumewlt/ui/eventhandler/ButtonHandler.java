@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.concurrent.CountDownLatch;
 
 public class ButtonHandler implements ActionListener {
@@ -27,13 +28,15 @@ public class ButtonHandler implements ActionListener {
 
     private JComboBox<String> versionsComboBox;
     private JTextField usernameField;
+    private JCheckBox saveCheckBox;
+
     private JTextPane consolePane;
 
     private JTextField minRamField;
     private JTextField maxRamField;
     private JTextPane minRamStatusPane;
     private JTextPane maxRamStatusPane;
-    private JCheckBox saveCheckBox;
+    private JCheckBox saveSettingsCheckBox;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -43,7 +46,7 @@ public class ButtonHandler implements ActionListener {
             case "playBtn":
                 try {
                     if (context == null || latch == null) return;
-                    if (versionsComboBox == null || usernameField == null) return;
+                    if (versionsComboBox == null || usernameField == null || saveCheckBox == null) return;
                     String version = versionsComboBox.getSelectedItem().toString();
                     String username = usernameField.getText().trim();
 
@@ -65,6 +68,27 @@ public class ButtonHandler implements ActionListener {
 
                     System.out.println("Selected version: " + selectedVersion.selectedVersion());
                     System.out.println("Username : " + context.getUsername());
+
+                    if (saveCheckBox.isSelected()) {
+                        File settingsFile = new File(context.getLauncherDirs().configDir().path() + "settings.json");
+                        try {
+                            JSONObject settings;
+                            if (settingsFile.exists()) {
+                                String content = Files.readString(settingsFile.toPath());
+                                settings = new JSONObject(content);
+                            } else {
+                                settings = new JSONObject();
+                            }
+
+                            try (FileWriter fw = new FileWriter(settingsFile)){
+                                settings.put("version", selectedVersion.selectedVersion());
+                                settings.put("username", context.getUsername());
+                                fw.write(settings.toString());
+                            }
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
 
                     ProgressBarUtils.show();
                     latch.countDown();
@@ -96,7 +120,7 @@ public class ButtonHandler implements ActionListener {
                 }
                 break;
             case "saveSettings":
-                if (context == null || minRamField == null || maxRamField == null || minRamStatusPane == null || maxRamStatusPane == null || saveCheckBox == null) return;
+                if (context == null || minRamField == null || maxRamField == null || minRamStatusPane == null || maxRamStatusPane == null || saveSettingsCheckBox == null) return;
                 String minRam = minRamField.getText().trim();
                 String maxRam = maxRamField.getText().trim();
 
@@ -116,17 +140,24 @@ public class ButtonHandler implements ActionListener {
                 maxRamStatusPane.setForeground(Color.GREEN);
                 maxRamStatusPane.setVisible(true);
 
-                if (saveCheckBox.isSelected()) {
-                    System.out.println("Checkbox selected");
+                if (saveSettingsCheckBox.isSelected()) {
                     File settingsFile = new File(context.getLauncherDirs().configDir().path() + "settings.json");
-                    JSONObject settings = new JSONObject();
-                    settings.put("minRam", minRam);
-                    settings.put("maxRam", maxRam);
-                    settingsFile.getParentFile().mkdirs();
-                    try (FileWriter fw = new FileWriter(settingsFile)) {
-                        fw.write(settings.toString());
+                    try {
+                        JSONObject settings;
+                        if (settingsFile.exists()) {
+                            String content = Files.readString(settingsFile.toPath());
+                            settings = new JSONObject(content);
+                        } else {
+                            settings = new JSONObject();
+                        }
+
+                        try (FileWriter fw = new FileWriter(settingsFile)){
+                            settings.put("minRam", minRam);
+                            settings.put("maxRam", maxRam);
+                            fw.write(settings.toString());
+                        }
                     } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                        ex.printStackTrace();
                     }
                 }
                 break;
@@ -143,20 +174,21 @@ public class ButtonHandler implements ActionListener {
         }
     }
 
-    public void setPlayDependencies(JComboBox<String> versionsComboBox, JTextField usernameField) {
+    public void setPlayDependencies(JComboBox<String> versionsComboBox, JTextField usernameField, JCheckBox saveCheckBox) {
         this.versionsComboBox = versionsComboBox;
         this.usernameField = usernameField;
+        this.saveCheckBox = saveCheckBox;
     }
 
     public void setConsoleDependencies(JTextPane consolePane) {
         this.consolePane = consolePane;
     }
 
-    public void setSaveSettingsDependencies(JTextField minRamField, JTextField maxRamField, JTextPane minRamStatusPane, JTextPane maxRamStatusPane, JCheckBox saveCheckBox) {
+    public void setSaveSettingsDependencies(JTextField minRamField, JTextField maxRamField, JTextPane minRamStatusPane, JTextPane maxRamStatusPane, JCheckBox saveSettingsCheckBox) {
         this.minRamField = minRamField;
         this.maxRamField = maxRamField;
         this.minRamStatusPane = minRamStatusPane;
         this.maxRamStatusPane = maxRamStatusPane;
-        this.saveCheckBox = saveCheckBox;
+        this.saveSettingsCheckBox = saveSettingsCheckBox;
     }
 }

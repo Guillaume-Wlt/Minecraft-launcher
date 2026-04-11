@@ -1,5 +1,6 @@
 package fr.guillaumewlt.ui.panels;
 
+import fr.guillaumewlt.parser.SettingsJSONParser;
 import fr.guillaumewlt.ui.components.ShimmerProgressBarUI;
 import fr.guillaumewlt.ui.eventhandler.ButtonHandler;
 import fr.guillaumewlt.utils.ProgressBarUtils;
@@ -16,8 +17,12 @@ public class BottomPanel extends JPanel {
     private final CountDownLatch latch;
 
     private Color backgroundColor;
+    private String version;
+    private String username;
+    private boolean isSelected;
 
     private JComboBox<String> versionCombo;
+    private JCheckBox rememberCheckBox;
     private JButton playBtn;
     private JTextField usernameField;
     private final JProgressBar progressBar;
@@ -30,6 +35,11 @@ public class BottomPanel extends JPanel {
 
         backgroundColor = Color.decode("#383838");
 
+        SettingsJSONParser settingsJSONParser = new SettingsJSONParser(context);
+        settingsJSONParser.readSettings();
+        version = settingsJSONParser.getVersion();
+        username = settingsJSONParser.getUsername();
+
         setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
         setBackground(backgroundColor);
 
@@ -39,6 +49,17 @@ public class BottomPanel extends JPanel {
 
         populateVersionCombo();
 
+        if (version != null && username != null) {
+            isSelected = true;
+            usernameField.setText(username);
+            versionCombo.setSelectedItem(version);
+        } else {
+            isSelected = false;
+        }
+
+        rememberCheckBox = new JCheckBox("Save preferences");
+        rememberCheckBox.setSelected(isSelected);
+
         playBtn.putClientProperty("JButton.buttonType", "roundRect");
         playBtn.setFont(playBtn.getFont().deriveFont(Font.BOLD, 13f));
         playBtn.setPreferredSize(new Dimension(160, 36));
@@ -47,7 +68,7 @@ public class BottomPanel extends JPanel {
         ButtonHandler buttonHandler = new ButtonHandler();
         buttonHandler.setContext(context);
         buttonHandler.setLatch(latch);
-        buttonHandler.setPlayDependencies(versionCombo, usernameField);
+        buttonHandler.setPlayDependencies(versionCombo, usernameField, rememberCheckBox);
 
         playBtn.addActionListener(buttonHandler);
 
@@ -81,7 +102,15 @@ public class BottomPanel extends JPanel {
         JPanel inner = new JPanel(new BorderLayout(0, 2));
         inner.setBackground(backgroundColor);
         inner.add(new JLabel("Version :"), BorderLayout.NORTH);
-        inner.add(versionCombo, BorderLayout.CENTER);
+
+        JPanel rowPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        rowPanel.setBackground(backgroundColor);
+        rowPanel.add(versionCombo);
+        rowPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        rowPanel.add(rememberCheckBox);
+
+        inner.add(rowPanel, BorderLayout.CENTER);
+
         JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         wrapper.setBackground(backgroundColor);
         wrapper.add(inner);

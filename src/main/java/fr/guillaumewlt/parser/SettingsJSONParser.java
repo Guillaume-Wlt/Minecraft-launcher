@@ -1,4 +1,4 @@
-package fr.guillaumewlt.utils;
+package fr.guillaumewlt.parser;
 
 import fr.guillaumewlt.workflow.LauncherContext;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class SettingsUtils {
+public class SettingsJSONParser {
 
     private final LauncherContext context;
 
@@ -17,8 +17,12 @@ public class SettingsUtils {
     private String minRam;
     @Getter
     private String maxRam;
+    @Getter
+    private String version;
+    @Getter
+    private String username;
 
-    public SettingsUtils(LauncherContext context) {
+    public SettingsJSONParser(LauncherContext context) {
         this.context = context;
         if (context == null) return;
         settingsFile = new File(context.getLauncherDirs().configDir().path() + "settings.json");
@@ -38,6 +42,14 @@ public class SettingsUtils {
                     maxRam = jsonObj.getString("maxRam");
                 } else {
                     System.out.println("The maxRam has not been set");
+                }
+                if (jsonObj.has("version")) {
+                    version = jsonObj.getString("version");
+                } else {
+                    System.out.println("The version has not been set");
+                }
+                if (jsonObj.has("username")) {
+                    username = jsonObj.getString("username");
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
