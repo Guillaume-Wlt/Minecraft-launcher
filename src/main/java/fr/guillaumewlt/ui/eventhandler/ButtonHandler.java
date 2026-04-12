@@ -2,6 +2,7 @@ package fr.guillaumewlt.ui.eventhandler;
 
 import fr.guillaumewlt.model.SelectedVersion;
 import fr.guillaumewlt.parser.ManifestParser;
+import fr.guillaumewlt.ui.panels.BackgroundPanel;
 import fr.guillaumewlt.utils.ProgressBarUtils;
 import fr.guillaumewlt.workflow.LauncherContext;
 import lombok.Setter;
@@ -25,6 +26,8 @@ public class ButtonHandler implements ActionListener {
     private LauncherContext context;
     @Setter
     private CountDownLatch latch;
+    @Setter
+    private BackgroundPanel backgroundPanel;
 
     private JComboBox<String> versionsComboBox;
     private JTextField usernameField;
@@ -170,6 +173,14 @@ public class ButtonHandler implements ActionListener {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                break;
+            case "playPause":
+                if (backgroundPanel == null) return;
+                backgroundPanel.togglePlayPause();
+                break;
+            case "volume":
+                if (backgroundPanel == null) return;
+                backgroundPanel.showVolumePopup();
                 break;
         }
     }

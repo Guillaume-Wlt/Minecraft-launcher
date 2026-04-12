@@ -4,6 +4,7 @@ import fr.guillaumewlt.model.*;
 import fr.guillaumewlt.model.assets.AssetInfos;
 import fr.guillaumewlt.model.assets.AssetsIndex;
 import fr.guillaumewlt.model.directory.LauncherDirs;
+import fr.guillaumewlt.ui.panels.BackgroundPanel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,4 +35,6 @@ public class LauncherContext {
     private String mainClassPath;
     private String classPath;
     private boolean virtualAssets;
+    // ----------------------------------------------------------UI
+    private BackgroundPanel backgroundPanel;
 }
