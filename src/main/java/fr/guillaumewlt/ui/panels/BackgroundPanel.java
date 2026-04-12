@@ -1,8 +1,11 @@
 package fr.guillaumewlt.ui.panels;
 
+import fr.guillaumewlt.parser.SettingsJSONParser;
 import fr.guillaumewlt.ui.eventhandler.ButtonHandler;
 import fr.guillaumewlt.ui.eventhandler.VolumePopupListener;
 import fr.guillaumewlt.ui.eventhandler.VolumeSliderListener;
+import fr.guillaumewlt.workflow.LauncherContext;
+import org.json.JSONObject;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.*;
 
@@ -15,7 +18,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -23,16 +28,41 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 
+/**
+ * Animated background panel that plays a video (as pre-extracted frames) with synchronized audio.
+ *
+ * <p>Architecture — two threads communicate via a bounded {@link ArrayBlockingQueue}:</p>
+ * <ul>
+ *   <li><b>Producer</b> — reads frame files from {@code /background/background-frames/},
+ *       decodes them with {@link javax.imageio.ImageIO} and pushes them into the buffer.
+ *       Blocks automatically when the queue is full (backpressure).</li>
+ *   <li><b>Consumer</b> — pops frames at 24 FPS, stores them in {@code currentFrame}
+ *       and calls {@link #repaint()}. Sleeps 100 ms when paused instead of consuming frames.</li>
+ * </ul>
+ *
+ * <p>Audio is handled by <b>OpenAL via LWJGL</b>, which applies volume changes
+ * ({@code AL_GAIN}) with zero latency — unlike {@code javax.sound.sampled.Clip}
+ * which goes through a software buffer.</p>
+ *
+ * <p>Rendering uses a <b>cover/crop</b> strategy: the frame is scaled to fill the
+ * panel while preserving its aspect ratio, cropping the overflow.</p>
+ */
 public class BackgroundPanel extends JPanel {
 
+    private final LauncherContext context;
+
+    // Queue between producer (file reader) and consumer (renderer) — capacity = 30 frames ahead
     private final ArrayBlockingQueue<BufferedImage> buffer;
+    // Last frame received from the consumer thread, drawn in paintComponent
     private BufferedImage currentFrame;
 
-    private long alDevice;
-    private long alContext;
-    private int alBuffer;
-    private int alSource;
+    // OpenAL handles — initialized in startAudio()
+    private long alDevice;   // physical audio device
+    private long alContext;  // OpenAL context bound to the device
+    private int alBuffer;    // PCM audio data loaded into OpenAL memory
+    private int alSource;    // emitter: controls play/pause/gain
 
+    // True when the video and audio are paused
     private boolean paused;
 
     private JButton playPauseBtn;
@@ -40,13 +70,15 @@ public class BackgroundPanel extends JPanel {
     private JPopupMenu volumePopup;
     private JSlider volumeSlider;
 
+    // Prevents the volume popup from reopening immediately after being dismissed by a click on volumeBtn
     private boolean skipNextVolumeShow = false;
 
+    // Preloaded to avoid reloading on every slider change event
     private ImageIcon speakerIcon;
     private ImageIcon speakerOffIcon;
 
-    public BackgroundPanel() {
-
+    public BackgroundPanel(LauncherContext context) {
+        this.context = context;
         buffer = new ArrayBlockingQueue<>(30);
         setLayout(null);
 
@@ -86,10 +118,33 @@ public class BackgroundPanel extends JPanel {
         add(playPauseBtn);
         add(volumeBtn);
 
+        // Load saved volume and paused state from settings.json
+        SettingsJSONParser parser = new SettingsJSONParser(context);
+        parser.readSettings();
+        int savedVolume = parser.getVolume();
+        boolean savedPaused = parser.isVideoPaused();
+
         startVideo();
-        SwingUtilities.invokeLater(() -> volumeSlider.setValue(30));
+
+        // Apply saved settings after OpenAL is initialized
+        SwingUtilities.invokeLater(() -> {
+            volumeSlider.setValue(savedVolume);
+            if (savedPaused) togglePlayPause();
+        });
+
+        // Save volume to settings.json on slider release
+        volumeSlider.addChangeListener(e -> {
+            if (!volumeSlider.getValueIsAdjusting()) saveSettings();
+        });
     }
 
+    /**
+     * Draws the current frame using a cover/crop strategy:
+     * the image is scaled so that both dimensions fill the panel,
+     * then centered (overflow is clipped by Swing automatically).
+     * Button positions are also updated here since the panel size
+     * is only reliable after the component is shown.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -108,6 +163,11 @@ public class BackgroundPanel extends JPanel {
         volumeBtn.setBounds(getWidth() - (btnW + margin), getHeight() - btnH - margin, btnW, btnH);
     }
 
+    /**
+     * Toggles play/pause state for both video and audio.
+     * Called by {@link fr.guillaumewlt.ui.eventhandler.ButtonHandler} on playPauseBtn click,
+     * and automatically by {@link fr.guillaumewlt.workflow.WorkflowRunner} at STARTING_CLIENT.
+     */
     public void togglePlayPause() {
         paused = !paused;
         if (paused) {
@@ -116,6 +176,28 @@ public class BackgroundPanel extends JPanel {
         } else {
             AL10.alSourcePlay(alSource);
             playPauseBtn.setIcon(loadIcon("/icons/pause-button.png", 24));
+        }
+        saveSettings();
+    }
+
+    /** Merges volume and videoPaused into settings.json, following the existing pattern. */
+    private void saveSettings() {
+        if (context == null || context.getLauncherDirs() == null) return;
+        File settingsFile = new File(context.getLauncherDirs().configDir().path() + "settings.json");
+        try {
+            JSONObject settings;
+            if (settingsFile.exists()) {
+                settings = new JSONObject(Files.readString(settingsFile.toPath()));
+            } else {
+                settings = new JSONObject();
+            }
+            settings.put("volume", volumeSlider.getValue());
+            settings.put("videoPaused", paused);
+            try (FileWriter fw = new FileWriter(settingsFile)) {
+                fw.write(settings.toString());
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -131,6 +213,11 @@ public class BackgroundPanel extends JPanel {
         );
     }
 
+    /**
+     * Starts the producer and consumer threads, then initializes audio.
+     * Must be called after all UI components are initialized so that
+     * the consumer can safely call repaint() and update button icons.
+     */
     private void startVideo() {
         startAudio();
         new Thread(() -> {
@@ -165,6 +252,18 @@ public class BackgroundPanel extends JPanel {
         }).start();
     }
 
+    /**
+     * Initializes OpenAL and starts looping audio playback.
+     *
+     * <p>Flow:</p>
+     * <ol>
+     *   <li>Open the default audio device and create an OpenAL context.</li>
+     *   <li>Decode the WAV file to raw PCM bytes using {@link AudioSystem}
+     *       (javax.sound.sampled is used only for decoding, not playback).</li>
+     *   <li>Upload PCM data to an OpenAL buffer.</li>
+     *   <li>Create a source, attach the buffer, set initial gain to 0.3 and loop.</li>
+     * </ol>
+     */
     private void startAudio() {
         try {
             // Init OpenAL device et context

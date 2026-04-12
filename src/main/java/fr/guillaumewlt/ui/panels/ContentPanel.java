@@ -17,7 +17,7 @@ public class ContentPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        BackgroundPanel backgroundPanel = new BackgroundPanel();
+        BackgroundPanel backgroundPanel = new BackgroundPanel(context);
         context.setBackgroundPanel(backgroundPanel);
         add(backgroundPanel, BorderLayout.CENTER);
 
