@@ -130,7 +130,6 @@ public class WorkflowRunner {
                     break;
                 case STARTING_CLIENT: // Start the client with a processBuilder
                     changeStepUpdate(currentStep);
-                    if (context.getBackgroundPanel() != null) context.getBackgroundPanel().togglePlayPause();
                     new StartingClientProcess(context).process();
                     end();
                     break;

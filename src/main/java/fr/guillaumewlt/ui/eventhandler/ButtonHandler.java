@@ -175,12 +175,8 @@ public class ButtonHandler implements ActionListener {
                 }
                 break;
             case "playPause":
-                if (backgroundPanel == null) return;
-                backgroundPanel.togglePlayPause();
                 break;
             case "volume":
-                if (backgroundPanel == null) return;
-                backgroundPanel.showVolumePopup();
                 break;
         }
     }
