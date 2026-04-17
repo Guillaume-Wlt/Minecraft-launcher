@@ -2,7 +2,7 @@ package fr.guillaumewlt.ui.panels;
 
 import fr.guillaumewlt.parser.SettingsJSONParser;
 import fr.guillaumewlt.ui.components.ShimmerProgressBarUI;
-import fr.guillaumewlt.ui.eventhandler.ButtonHandler;
+import fr.guillaumewlt.ui.eventhandler.ButtonsListener;
 import fr.guillaumewlt.utils.ProgressBarUtils;
 import fr.guillaumewlt.workflow.LauncherContext;
 
@@ -65,12 +65,12 @@ public class BottomPanel extends JPanel {
         playBtn.setPreferredSize(new Dimension(160, 36));
         playBtn.setActionCommand("playBtn");
 
-        ButtonHandler buttonHandler = new ButtonHandler();
-        buttonHandler.setContext(context);
-        buttonHandler.setLatch(latch);
-        buttonHandler.setPlayDependencies(versionCombo, usernameField, rememberCheckBox);
+        ButtonsListener buttonsListener = new ButtonsListener();
+        buttonsListener.setContext(context);
+        buttonsListener.setLatch(latch);
+        buttonsListener.setPlayDependencies(versionCombo, usernameField, rememberCheckBox);
 
-        playBtn.addActionListener(buttonHandler);
+        playBtn.addActionListener(buttonsListener);
 
         progressBar = new JProgressBar(0, 100);
         progressBar.setUI(new ShimmerProgressBarUI());

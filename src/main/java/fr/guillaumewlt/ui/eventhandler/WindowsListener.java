@@ -5,7 +5,7 @@ import fr.guillaumewlt.ui.windows.ConsoleWindow;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class MainWindowsHandler implements WindowListener {
+public class WindowsListener implements WindowListener {
 
     @Override
     public void windowOpened(WindowEvent e) {

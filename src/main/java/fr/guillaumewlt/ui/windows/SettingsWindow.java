@@ -1,7 +1,7 @@
 package fr.guillaumewlt.ui.windows;
 
 import fr.guillaumewlt.parser.SettingsJSONParser;
-import fr.guillaumewlt.ui.eventhandler.ButtonHandler;
+import fr.guillaumewlt.ui.eventhandler.ButtonsListener;
 import fr.guillaumewlt.workflow.LauncherContext;
 import lombok.Setter;
 
@@ -183,11 +183,11 @@ public class SettingsWindow extends JDialog {
         DirBtn.setActionCommand("openDir");
         DirBtn.putClientProperty("JButton.buttonType", "roundRect");
 
-        ButtonHandler buttonHandler = new ButtonHandler();
-        buttonHandler.setContext(context);
-        buttonHandler.setSaveSettingsDependencies(minRamTextField, maxRamTextField, minRamStatusPane, maxRamStatusPane, saveTickBox);
-        DirBtn.addActionListener(buttonHandler);
-        saveBtn.addActionListener(buttonHandler);
+        ButtonsListener buttonsListener = new ButtonsListener();
+        buttonsListener.setContext(context);
+        buttonsListener.setSaveSettingsDependencies(minRamTextField, maxRamTextField, minRamStatusPane, maxRamStatusPane, saveTickBox);
+        DirBtn.addActionListener(buttonsListener);
+        saveBtn.addActionListener(buttonsListener);
 
         buttonsWrapper.add(saveBtn);
         buttonsWrapper.add(Box.createRigidArea(new Dimension(10,0)));

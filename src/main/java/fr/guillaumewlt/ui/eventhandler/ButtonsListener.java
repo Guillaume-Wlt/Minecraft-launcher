@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.concurrent.CountDownLatch;
 
-public class ButtonHandler implements ActionListener {
+public class ButtonsListener implements ActionListener {
 
     @Setter
     private LauncherContext context;
@@ -175,8 +175,12 @@ public class ButtonHandler implements ActionListener {
                 }
                 break;
             case "playPause":
+                if (backgroundPanel == null) return;
+                backgroundPanel.togglePlayPause();
                 break;
             case "volume":
+                if (backgroundPanel == null) return;
+                backgroundPanel.toggleVolumeMenu();
                 break;
         }
     }

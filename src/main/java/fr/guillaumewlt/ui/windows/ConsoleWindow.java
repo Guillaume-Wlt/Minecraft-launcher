@@ -1,6 +1,6 @@
 package fr.guillaumewlt.ui.windows;
 
-import fr.guillaumewlt.ui.eventhandler.ButtonHandler;
+import fr.guillaumewlt.ui.eventhandler.ButtonsListener;
 import fr.guillaumewlt.utils.ConsoleUtils;
 
 import javax.swing.*;
@@ -88,11 +88,11 @@ public class ConsoleWindow extends JDialog {
         copyButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         copyButton.setMargin(new Insets(5,5,5,5));
 
-        ButtonHandler buttonHandler = new ButtonHandler();
-        buttonHandler.setConsoleDependencies(ConsoleUtils.getConsolePane());
-        clrButton.addActionListener(buttonHandler);
-        scrollDownButton.addActionListener(buttonHandler);
-        copyButton.addActionListener(buttonHandler);
+        ButtonsListener buttonsListener = new ButtonsListener();
+        buttonsListener.setConsoleDependencies(ConsoleUtils.getConsolePane());
+        clrButton.addActionListener(buttonsListener);
+        scrollDownButton.addActionListener(buttonsListener);
+        copyButton.addActionListener(buttonsListener);
 
         wrapper.add(clrButton);
         wrapper.add(Box.createRigidArea(new Dimension(0, 10)));

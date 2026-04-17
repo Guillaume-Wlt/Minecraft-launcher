@@ -18,7 +18,7 @@ public class SettingsJSONParser {
     private String maxRam;
     private String version;
     private String username;
-    private int volume = 30;
+    private double volume = 30;
     private boolean videoPaused = false;
 
     public SettingsJSONParser(LauncherContext context) {
@@ -35,7 +35,7 @@ public class SettingsJSONParser {
                 maxRam = jsonObj.optString("maxRam", "2048");
                 version = jsonObj.optString("version", null);
                 username = jsonObj.optString("username", "Player");
-                volume = jsonObj.optInt("volume", 30);
+                volume = jsonObj.optDouble("volume", 30);
                 videoPaused = jsonObj.optBoolean("videoPaused", false);
             } catch (IOException ex) {
                 ex.printStackTrace();
