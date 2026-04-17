@@ -56,7 +56,7 @@ The CLI version is fully functional. See the release page for installation instr
 | Swing GUI — Console sidebar — clear console button | Done        |
 | Swing GUI — Console sidebar — go to bottom button | Done        |
 | Swing GUI — Console sidebar — copy console to clipboard button | Done        |
-| Swing GUI — ButtonHandler centralised (replaces PlayBtnHandler) with setter-injected dependencies | Done        |
+| Swing GUI — ButtonsListener centralised (replaces PlayBtnHandler) with setter-injected dependencies | Done        |
 | Swing GUI — SettingsWindow singleton with min/max RAM fields (defaults 512 / 2048 MB) | Done        |
 | Swing GUI — Settings window — visual feedback (✔ indicator) after save | Done        |
 | Swing GUI — Settings window — "Remember Settings" checkbox controlling persistence | Done        |
@@ -66,9 +66,9 @@ The CLI version is fully functional. See the release page for installation instr
 | Swing GUI — Settings — `settings.json` loaded on startup and pre-populated in fields | Done        |
 | Swing GUI — BottomPanel — "Remember" checkbox next to version combo persisting username and version | Done        |
 | Swing GUI — `settings.json` write merges new keys into existing data (no overwrite) | Done        |
-| Swing GUI — BackgroundPanel — animated video background (frames + audio via OpenAL) | Done        |
-| Swing GUI — BackgroundPanel — play/pause button with icon toggle | Done        |
-| Swing GUI — BackgroundPanel — volume button with popup slider (real-time gain via OpenAL) | Done        |
+| Swing GUI — BackgroundPanel — animated video background (FFmpegFrameGrabber + javax.sound audio) | Done        |
+| Swing GUI — BackgroundPanel — play/pause button with icon toggle and pause/resume sync | Done        |
+| Swing GUI — BackgroundPanel — volume button with popup slider (real-time gain via FloatControl MASTER_GAIN, dB conversion) | Done        |
 | Swing GUI — BackgroundPanel — mute icon when volume reaches 0 | Done        |
 | Swing GUI — BackgroundPanel — video paused automatically when game launches (`STARTING_CLIENT`) | Done        |
 | RAM input validation against system available memory | To do       |
@@ -91,7 +91,7 @@ The CLI version is fully functional. See the release page for installation instr
 | Lombok | 1.18.44 | Boilerplate reduction |
 | org.json | 20251224 | JSON parsing |
 | FlatLaf | 3.7.1 | Swing dark/light theme |
-| LWJGL | 3.3.4 | OpenAL audio (zero-latency volume control) |
+| JavaCV / FFmpeg | 1.5.x | Video frame grabbing and audio decoding |
 | Maven Shade Plugin | 3.6.0 | Fat JAR generation |
 | JUnit Jupiter | 6.1.0-M1 | Unit & integration testing |
 | Maven Surefire Plugin | 3.5.5 | Test execution via Maven |
@@ -115,7 +115,7 @@ fr.guillaumewlt/
 │   ├── builders/         # WindowBuilder, PanelBuilder (factory helpers)
 │   ├── components/       # Reusable components (MenuBar…)
 │   ├── panels/           # Content panels (ContentPanel, BottomPanel, BackgroundPanel…)
-│   ├── eventhandler/     # UI event handlers (ButtonHandler, VolumePopupListener, VolumeSliderListener…)
+│   ├── eventhandler/     # UI event handlers (ButtonsListener, WindowsListener, VolumeSliderListener…)
 │   └── windows/          # Secondary windows (ConsoleWindow, SettingsWindow…)
 └── exceptionhandler/     # Error handling
 ```
