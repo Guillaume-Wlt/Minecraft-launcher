@@ -9,12 +9,10 @@ import fr.guillaumewlt.workflow.LauncherContext;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 public class BottomPanel extends JPanel {
 
     private final LauncherContext context;
-    private final CountDownLatch latch;
 
     private Color backgroundColor;
     private String version;
@@ -27,11 +25,10 @@ public class BottomPanel extends JPanel {
     private JTextField usernameField;
     private final JProgressBar progressBar;
 
-    public BottomPanel(LauncherContext context, CountDownLatch latch) {
+    public BottomPanel(LauncherContext context) {
         super(new BorderLayout(0, 6));
 
         this.context = context;
-        this.latch = latch;
 
         backgroundColor = Color.decode("#383838");
 
@@ -67,7 +64,6 @@ public class BottomPanel extends JPanel {
 
         ButtonsListener buttonsListener = new ButtonsListener();
         buttonsListener.setContext(context);
-        buttonsListener.setLatch(latch);
         buttonsListener.setPlayDependencies(versionCombo, usernameField, rememberCheckBox);
 
         playBtn.addActionListener(buttonsListener);
@@ -148,5 +144,14 @@ public class BottomPanel extends JPanel {
         wrapper.setBackground(backgroundColor);
         wrapper.add(inner);
         return wrapper;
+    }
+
+    public void reset() {
+        playBtn.setText("PLAY");
+        playBtn.setEnabled(true);
+
+        usernameField.setEnabled(true);
+        versionCombo.setEnabled(true);
+        ProgressBarUtils.hideAndReset();
     }
 }

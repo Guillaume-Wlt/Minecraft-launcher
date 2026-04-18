@@ -191,18 +191,6 @@ public enum ConsoleMessage {
     LIBRARYINFOS_RECORD_URL_NULL_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Library's URL is null"),
 
     /**
-     * Create Message for {@link fr.guillaumewlt.downloads.ManifestDownload} <br>
-     * - Already up-to-date -> Message for when the manifest is already download and up-to-date <br>
-     * - Successful -> Message for when the manifest is successfully downloaded <br>
-     * - Error -> Message for when an error happen while downloading the manifest
-     *   | %s : the exception error message <br>
-     *
-     */
-    MANIFEST_DOWNLOAD_ALREADY_UP_TO_DATE(ConsolePrefix.INFO.getLabel() + "Manifest already up to date, skipping download"),
-    MANIFEST_DOWNLOAD_SUCCESSFUL(ConsolePrefix.INFO.getLabel() + "Manifest download >> Successful"),
-    MANIFEST_DOWNLOAD_ERR(ConsolePrefix.FATAL_ERROR.getLabel() + "Error downloading manifest: %s"),
-
-    /**
      * Create Message for {@link fr.guillaumewlt.parser.ManifestParser} <br>
      * - Input Message -> Message for the scanner to input the wanted version <br>
      * - Input Version : Version Not Found -> Message for when the version is not found in the Manifest

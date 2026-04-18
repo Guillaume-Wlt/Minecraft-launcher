@@ -131,7 +131,7 @@ public class WorkflowRunner {
                 case STARTING_CLIENT: // Start the client with a processBuilder
                     changeStepUpdate(currentStep);
                     new StartingClientProcess(context).process();
-                    end();
+                    currentStep = ProgramStep.SHOW_UI;
                     break;
                 default: // Activate when a ProgramStep isn't recognize (fallback option)
                     ConsoleMessage.WORKFLOW_RUNNER_UNKNOWN_STEP_ERR.errPrintln(currentStep);

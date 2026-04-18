@@ -4,23 +4,21 @@ import fr.guillaumewlt.workflow.LauncherContext;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.CountDownLatch;
 
 public class ContentPanel extends JPanel {
 
     private final LauncherContext context;
-    private final CountDownLatch latch;
 
-    public ContentPanel(LauncherContext context, CountDownLatch latch) {
+    public ContentPanel(LauncherContext context) {
         this.context = context;
-        this.latch = latch;
-
         setLayout(new BorderLayout());
 
         BackgroundPanel backgroundPanel = new BackgroundPanel(context);
         context.setBackgroundPanel(backgroundPanel);
         add(backgroundPanel, BorderLayout.CENTER);
 
-        add(new BottomPanel(context, latch), BorderLayout.SOUTH);
+        BottomPanel bottomPanel = new BottomPanel(context);
+        context.setBottomPanel(bottomPanel);
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 }

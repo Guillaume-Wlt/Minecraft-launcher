@@ -2,6 +2,7 @@ package fr.guillaumewlt.processing.steps;
 
 import fr.guillaumewlt.exceptionhandler.LauncherException;
 import fr.guillaumewlt.ui.MainWindow;
+import fr.guillaumewlt.ui.panels.BottomPanel;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 import javax.swing.*;
@@ -16,8 +17,21 @@ public class ShowUIProcess extends Processes{
     public void process() {
         CountDownLatch latch = new CountDownLatch(1);
         try {
-            SwingUtilities.invokeLater(() -> new MainWindow(context, latch).show());
-            latch.await(); // workflow stuck here waiting for countDown()
+            if (context.getMainWindow() == null) {
+                context.setLatch(latch);
+                SwingUtilities.invokeLater(() -> {
+                    JFrame frame = new MainWindow(context).show();
+                    context.setMainWindow(frame);
+                });
+                latch.await(); // workflow stuck here waiting for countDown()
+            } else {
+                context.setLatch(latch);
+                SwingUtilities.invokeLater(() -> {
+                    BottomPanel bottomPanel = context.getBottomPanel();
+                    bottomPanel.reset();
+                });
+                latch.await();
+            }
         } catch (LauncherException | InterruptedException e) {
             stop(e.getMessage(), 1);
         }

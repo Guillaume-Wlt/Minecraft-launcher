@@ -7,19 +7,16 @@ import fr.guillaumewlt.ui.panels.ContentPanel;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 import javax.swing.*;
-import java.util.concurrent.CountDownLatch;
 
 public class MainWindow {
 
     private final LauncherContext context;
-    private final CountDownLatch latch;
 
-    public MainWindow(LauncherContext context, CountDownLatch latch) {
+    public MainWindow(LauncherContext context) {
         this.context = context;
-        this.latch = latch;
     }
 
-    public void show() {
+    public JFrame show() {
         JFrame frame = WindowBuilder.builder()
                 .title("Minecraft Launcher")
                 .size(1280,720)
@@ -27,11 +24,12 @@ public class MainWindow {
                 .icon("/launcher-logo.png")
                 .alwaysOnTop(false)
                 .resizable(false)
-                .content(new ContentPanel(context, latch))
+                .content(new ContentPanel(context))
                 .windowListener(new WindowsListener())
                 .build();
         frame.setJMenuBar(new MenuBar(context, frame));
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        return frame;
     }
 }

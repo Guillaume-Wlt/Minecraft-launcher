@@ -25,8 +25,6 @@ public class ButtonsListener implements ActionListener {
     @Setter
     private LauncherContext context;
     @Setter
-    private CountDownLatch latch;
-    @Setter
     private BackgroundPanel backgroundPanel;
 
     private JComboBox<String> versionsComboBox;
@@ -48,7 +46,7 @@ public class ButtonsListener implements ActionListener {
         switch (actionCommand) {
             case "playBtn":
                 try {
-                    if (context == null || latch == null) return;
+                    if (context == null) return;
                     if (versionsComboBox == null || usernameField == null || saveCheckBox == null) return;
                     String version = versionsComboBox.getSelectedItem().toString();
                     String username = usernameField.getText().trim();
@@ -94,6 +92,7 @@ public class ButtonsListener implements ActionListener {
                     }
 
                     ProgressBarUtils.show();
+                    CountDownLatch latch = context.getLatch();
                     latch.countDown();
                 } catch (Exception ex) {
                     ex.printStackTrace();

@@ -70,7 +70,11 @@ public class BackgroundPanel extends JPanel {
         volumeBtn.setActionCommand("volume");
         volumeBtn.setFont(volumeBtn.getFont().deriveFont(Font.BOLD, 13f));
         volumeBtn.setPreferredSize(new Dimension(36, 36));
-        volumeBtn.setIcon(loadIcon("/icons/speaker.png", 24));
+        if (parser.getVolume() == 0) {
+            volumeBtn.setIcon(loadIcon("/icons/speaker-off.png", 24));
+        } else {
+            volumeBtn.setIcon(loadIcon("/icons/speaker.png", 24));
+        }
         volumeBtn.setText("");
 
         volumeSlider = new JSlider(JSlider.VERTICAL, 0, 100, 30);
@@ -149,6 +153,16 @@ public class BackgroundPanel extends JPanel {
                 grabber.start();
                 long pauseStart = 0;
                 long[] startTime = { System.nanoTime() };
+
+                Frame frame;
+                frame = grabber.grabImage();
+                if (frame == null) {
+                    grabber.restart();
+                    startTime[0] = System.nanoTime();
+                } else {
+                    currentFrame = converter.convert(frame);
+                    repaint();
+                }
                 while (true) {
                     if (paused) { // If paused >> Paused the Thread
                         if (pauseStart == 0) pauseStart = System.nanoTime();
@@ -159,12 +173,11 @@ public class BackgroundPanel extends JPanel {
                         startTime[0] += System.nanoTime() - pauseStart;
                         pauseStart = 0;
                     }
-                    Frame frame = grabber.grabImage();
+                    frame = grabber.grabImage();
                     if (frame == null) {
                         grabber.restart();
                         startTime[0] = System.nanoTime();
-                    }
-                    else {
+                    } else {
                         currentFrame = converter.convert(frame);
                         repaint();
                         long delay = frame.timestamp / 1000 - (System.nanoTime() - startTime[0]) / 1_000_000;

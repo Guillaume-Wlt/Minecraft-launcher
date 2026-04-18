@@ -5,10 +5,13 @@ import fr.guillaumewlt.model.assets.AssetInfos;
 import fr.guillaumewlt.model.assets.AssetsIndex;
 import fr.guillaumewlt.model.directory.LauncherDirs;
 import fr.guillaumewlt.ui.panels.BackgroundPanel;
+import fr.guillaumewlt.ui.panels.BottomPanel;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.swing.*;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 @Getter
 @Setter
@@ -36,5 +39,8 @@ public class LauncherContext {
     private String classPath;
     private boolean virtualAssets;
     // ----------------------------------------------------------UI
+    private BottomPanel bottomPanel;
     private BackgroundPanel backgroundPanel;
+    private CountDownLatch latch;
+    private JFrame mainWindow;
 }
