@@ -4,9 +4,9 @@ A Minecraft launcher developed in Java (Swing), allowing to download and launch 
 
 ## Latest Release
 
-**[v1.2 — Current Release](https://github.com/Guillaume-Wlt/Minecraft-launcher/releases/tag/v1.2)** *(CLI only)*
+**[v1.3 — Current Release](https://github.com/Guillaume-Wlt/Minecraft-launcher/releases/tag/v1.3)** *(Swing GUI)*
 
-The CLI version is fully functional. See the release page for installation instructions.
+Full graphical interface with centralised download engine. See the release page for installation instructions.
 
 ## Project Status
 
