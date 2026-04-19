@@ -76,6 +76,7 @@ Full graphical interface with centralised download engine. See the release page 
 | Download engine (`DownloadProcess`) — centralised MD5/SHA1 download logic replacing per-class boilerplate | Done        |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
+| Log archiving — save full session logs to a timestamped file and compress it (`.gz`) on client exit | To do       |
 | Mojang / Microsoft authentication | To do       |
 | Auto-update system | Long term   |
 | LZMA compression for JRE file downloads (bandwidth optimisation) | Long term   |
