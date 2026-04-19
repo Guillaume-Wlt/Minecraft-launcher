@@ -10,7 +10,7 @@ The CLI version is fully functional. See the release page for installation instr
 
 ## Project Status
 
-> **In progress** — A centralised **`DownloadProcess` engine** is being introduced to consolidate MD5/SHA1 download logic across all download steps.
+> **Active development** — GUI and core download pipeline fully functional.
 
 | Feature | Status      |
 |---|-------------|
@@ -73,7 +73,7 @@ The CLI version is fully functional. See the release page for installation instr
 | Swing GUI — BackgroundPanel — mute icon when volume reaches 0 | Done        |
 | Swing GUI — BackgroundPanel — video paused automatically when game launches (`STARTING_CLIENT`) | Done        |
 | Swing GUI — BackgroundPanel — initial frame displayed when video starts paused (no black screen) | Done        |
-| Download engine (`DownloadProcess`) — centralised MD5/SHA1 download logic replacing per-class boilerplate | In Progress |
+| Download engine (`DownloadProcess`) — centralised MD5/SHA1 download logic replacing per-class boilerplate | Done        |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
 | Mojang / Microsoft authentication | To do       |

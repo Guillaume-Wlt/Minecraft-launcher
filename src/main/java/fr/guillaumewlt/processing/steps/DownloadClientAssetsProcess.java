@@ -1,21 +1,66 @@
 package fr.guillaumewlt.processing.steps;
 
-import fr.guillaumewlt.downloads.AssetsObjectsDownload;
+import fr.guillaumewlt.downloads.DownloadProcess;
 import fr.guillaumewlt.exceptionhandler.LauncherException;
+import fr.guillaumewlt.model.assets.AssetInfos;
+import fr.guillaumewlt.processing.CheckFoldersExistence;
+import fr.guillaumewlt.utils.LauncherUtils;
+import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 public class DownloadClientAssetsProcess extends Processes{
 
+    private final List<AssetInfos> assets;
+    private final String assetsURL;
+
     public DownloadClientAssetsProcess(LauncherContext context) {
         super(context);
+        this.assets = context.getAssetsInfos();
+        this.assetsURL = LauncherUtils.getAssetsURL();
     }
 
     @Override
     public void process() {
         try {
-            new AssetsObjectsDownload(context).download();
+            if (assets == null || assets.isEmpty()) {
+                throw new LauncherException("No assets found");
+            }
+
+            for (AssetInfos asset : assets) {
+                final String name = asset.name();
+                final String exceptedHash = asset.hash();
+                final long size = asset.size();
+                final String url = assetsURL + exceptedHash.substring(0,2) + "/" + exceptedHash;
+                final Path destination = Path.of(context.getLauncherDirs().assetsObjectsDir().path(), exceptedHash.substring(0,2), exceptedHash);
+
+                checkRequirements(destination);
+
+                new DownloadProcess(context).downloadToFile(url, destination, size, name, exceptedHash, DownloadProcess.HashType.SHA1);
+
+                if (context.isVirtualAssets()) {
+                    Path newDestination = Path.of(context.getLauncherDirs().assetsDir().path()
+                            + "virtual/legacy/" + asset.name());
+                    checkRequirements(newDestination);
+                    if (!newDestination.toFile().exists()) {
+                        try {
+                            Files.copy(destination, newDestination);
+                        } catch (IOException e) {
+                            ConsoleMessage.ASSETSOBJECTS_DOWNLOAD_COPY_VIRTUAL_ASSETS_ERROR.throwException(e.getMessage());
+                        }
+                    }
+                }
+            }
         } catch (LauncherException e) {
             stop(e.getMessage(), 1);
         }
+    }
+
+    private void checkRequirements(final Path destination) {
+        CheckFoldersExistence.checkDirectories(String.valueOf(destination.getParent()));
     }
 }

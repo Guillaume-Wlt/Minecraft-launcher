@@ -24,15 +24,6 @@ public class DownloadProcess {
         this.context = context;
     }
 
-    public byte[] downloadToMemory(String url) throws LauncherException {
-        try (InputStream is = URI.create(url).toURL().openStream()) {
-            byte[] remoteContent = is.readAllBytes();
-            return remoteContent;
-        } catch (IOException ex) {
-            throw new LauncherException(ex.getMessage());
-        }
-    }
-
     public void downloadToFile(String url, Path destination, long size, String name, String exceptedHash, HashType type) throws LauncherException {
         File localfile = destination.toFile();
 
@@ -53,12 +44,13 @@ public class DownloadProcess {
                 throw new LauncherException(ex.getMessage());
             }
         } else if (type == HashType.SHA1) {
-            DownloadProgress downloadProgress = new DownloadProgress(size);
             try {
                 if (size == 0) {
                     Files.createFile(destination);
                     return;
                 }
+
+                DownloadProgress downloadProgress = new DownloadProgress(size);
 
                 if (localfile.exists()) {
                     if (verify(localfile.toPath(), exceptedHash, HashType.SHA1)) return;
@@ -74,6 +66,13 @@ public class DownloadProcess {
                     }
                 }
                 downloadProgress.complete();
+
+                if (!verify(destination, exceptedHash, HashType.SHA1)) {
+                    Files.delete(destination);
+                    throw new LauncherException("Download Failed!");
+                } else {
+                    System.out.println("Download Success!");
+                }
             } catch (IOException ex) {
                 throw new LauncherException(ex.getMessage());
             }
