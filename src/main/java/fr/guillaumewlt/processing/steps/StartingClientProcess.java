@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.steps;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.processing.Processes;
 import fr.guillaumewlt.utils.ConsoleUtils;
 import fr.guillaumewlt.utils.ProgressBarUtils;
@@ -50,6 +51,7 @@ public class StartingClientProcess extends Processes {
      * @throws fr.guillaumewlt.exceptions.LauncherException si le processus ne peut pas
      *                                                             démarrer ou est interrompu
      */
+    @WorkerThread
     @Override
     public void process() {
         try {

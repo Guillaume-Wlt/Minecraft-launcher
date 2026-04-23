@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.download;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.console.ConsoleMessage;
 import fr.guillaumewlt.download.DownloadProcess;
 import fr.guillaumewlt.exceptions.LauncherException;
@@ -25,6 +26,7 @@ public class DownloadClientAssetsProcess extends Processes {
         this.assetsURL = ConstantUtils.ASSETS_URL;
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {

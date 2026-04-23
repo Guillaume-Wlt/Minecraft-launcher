@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.interpret;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.models.RuntimeRawData;
 import fr.guillaumewlt.parser.RuntimeJSONParser;
@@ -12,6 +13,7 @@ public class InterpretRuntimeProcess extends Processes {
         super(context);
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {

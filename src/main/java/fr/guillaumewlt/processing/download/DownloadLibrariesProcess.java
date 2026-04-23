@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.download;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.download.DownloadProcess;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.models.LibraryInfos;
@@ -21,6 +22,7 @@ public class DownloadLibrariesProcess extends Processes {
         this.librariesDir = context.getLauncherDirs().librariesDir().path();
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {

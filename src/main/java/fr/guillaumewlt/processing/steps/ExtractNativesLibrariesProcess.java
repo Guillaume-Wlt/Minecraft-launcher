@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.steps;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.extractor.NativesLibsExtract;
 import fr.guillaumewlt.processing.Processes;
@@ -11,6 +12,7 @@ public class ExtractNativesLibrariesProcess extends Processes {
         super(context);
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {

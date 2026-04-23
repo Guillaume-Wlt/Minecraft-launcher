@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.interpret;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.models.ClientJarInfos;
 import fr.guillaumewlt.parser.ClientJarInfosParser;
@@ -12,6 +13,7 @@ public class InterpretClientJarInfos extends Processes {
         super(context);
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {

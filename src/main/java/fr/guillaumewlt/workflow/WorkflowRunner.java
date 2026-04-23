@@ -1,8 +1,14 @@
 package fr.guillaumewlt.workflow;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.console.ConsoleMessage;
+import fr.guillaumewlt.exceptions.LauncherException;
+import fr.guillaumewlt.processing.Processes;
 import fr.guillaumewlt.ui.windows.ConsoleWindow;
 import fr.guillaumewlt.utils.ProgressBarUtils;
+
+import javax.swing.*;
+import java.lang.reflect.Method;
 
 /**
  * Drives the launcher workflow by iterating through {@link ProgramStep} constants.
@@ -26,8 +32,21 @@ public class WorkflowRunner {
     public void run() {
         while (currentStep != ProgramStep.END) {
             changeStepUpdate(currentStep);
-            currentStep.createProcess(context).process();
+            callEDTOnMethods(currentStep.createProcess(context));
             currentStep = currentStep.next();
+        }
+    }
+
+    private void callEDTOnMethods(Object obj) {
+        try {
+            Method processMethod = obj.getClass().getMethod("process");
+                if (processMethod.isAnnotationPresent(WorkerThread.class) && SwingUtilities.isEventDispatchThread()) {
+                    throw new LauncherException("Cannot call process() on EDT");
+                } else {
+                    ((Processes) obj).process();
+                }
+        } catch (NoSuchMethodException ex) {
+            throw new LauncherException(ex.getMessage());
         }
     }
 

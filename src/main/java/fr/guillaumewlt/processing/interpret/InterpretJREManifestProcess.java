@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.interpret;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.models.JREFileInfos;
 import fr.guillaumewlt.parser.JREManifestParser;
@@ -14,6 +15,7 @@ public class InterpretJREManifestProcess extends Processes {
         super(context);
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {

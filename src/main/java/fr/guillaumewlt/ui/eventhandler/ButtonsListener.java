@@ -105,11 +105,9 @@ public class ButtonsListener implements ActionListener {
                 break;
             case "toBottomBtn":
                 if (consolePane == null) return;
-                SwingUtilities.invokeLater(() -> {
-                    JScrollPane scrollPane = (JScrollPane) consolePane.getParent().getParent();
-                    JScrollBar bar = scrollPane.getVerticalScrollBar();
-                    bar.setValue(bar.getMaximum());
-                });
+                JScrollPane scrollPane = (JScrollPane) consolePane.getParent().getParent();
+                JScrollBar bar = scrollPane.getVerticalScrollBar();
+                bar.setValue(bar.getMaximum());
                 break;
             case "copyBtn":
                 if (consolePane == null) return;

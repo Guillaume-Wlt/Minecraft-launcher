@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh issue create --title 'Bug: \"Latest\" version not found — LauncherException on Play' --body ':*)"
+    ]
+  }
+}

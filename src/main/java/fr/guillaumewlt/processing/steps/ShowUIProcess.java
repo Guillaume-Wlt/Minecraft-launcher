@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.steps;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.processing.Processes;
 import fr.guillaumewlt.ui.MainWindow;
@@ -14,6 +15,7 @@ public class ShowUIProcess extends Processes {
         super(context);
     }
 
+    @WorkerThread
     @Override
     public void process() {
         CountDownLatch latch = new CountDownLatch(1);

@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.interpret;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.models.assets.AssetsIndex;
 import fr.guillaumewlt.parser.AssetsIndexParser;
@@ -12,6 +13,7 @@ public class InterpretClientAssetsIndex extends Processes {
         super(context);
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {

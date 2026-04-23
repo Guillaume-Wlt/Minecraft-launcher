@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.steps;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.models.directory.LauncherDir;
 import fr.guillaumewlt.models.directory.LauncherDirs;
@@ -23,6 +24,7 @@ public class InitProcess extends Processes {
         }
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {

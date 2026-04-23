@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.download;
 
+import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.download.DownloadProcess;
 import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.processing.Processes;
@@ -21,6 +22,7 @@ public class DownloadManifestProcess extends Processes {
         manifestPath = Path.of(context.getLauncherDirs().versionsDir().path(), manifestName);
     }
 
+    @WorkerThread
     @Override
     public void process() {
         try {
