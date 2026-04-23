@@ -74,6 +74,7 @@ Full graphical interface with centralised download engine. See the release page 
 | Swing GUI — BackgroundPanel — video paused automatically when game launches (`STARTING_CLIENT`) | Done        |
 | Swing GUI — BackgroundPanel — initial frame displayed when video starts paused (no black screen) | Done        |
 | Download engine (`DownloadProcess`) — centralised MD5/SHA1 download logic replacing per-class boilerplate | Done        |
+| Custom `@EDT` annotation — guarantees annotated methods execute on the Swing Event Dispatch Thread via `SwingUtilities.invokeLater()` | To do       |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
 | Log archiving — save full session logs to a timestamped file and compress it (`.gz`) on client exit | To do       |
