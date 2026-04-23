@@ -1,9 +1,10 @@
 package fr.guillaumewlt.parser;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.model.RuntimeRawData;
-import fr.guillaumewlt.utils.LauncherUtils;
-import fr.guillaumewlt.utils.console.ConsoleMessage;
+import fr.guillaumewlt.console.ConsoleMessage;
+import fr.guillaumewlt.exceptions.LauncherException;
+import fr.guillaumewlt.models.RuntimeRawData;
+import fr.guillaumewlt.utils.ConstantUtils;
+import fr.guillaumewlt.utils.OSDetectionUtils;
 import fr.guillaumewlt.workflow.LauncherContext;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ import java.nio.file.Path;
  * <p>
  * Le manifest est organisé par clé OS/architecture (ex. {@code "windows-x64"}), puis
  * par nom de composant (ex. {@code "jre-legacy"}, {@code "java-runtime-gamma"}).
- * Le composant à utiliser est lu depuis {@link fr.guillaumewlt.model.VersionRawData#javaVersion()},
+ * Le composant à utiliser est lu depuis {@link fr.guillaumewlt.models.VersionRawData#javaVersion()},
  * lui-même extrait du champ {@code javaVersion.component} du JSON de version Minecraft.
  */
 public class RuntimeJSONParser {
@@ -52,10 +53,10 @@ public class RuntimeJSONParser {
      */
     public RuntimeRawData jsonParser() {
         try {
-            String content = Files.readString(Path.of(context.getLauncherDirs().runtimeDir().path(), LauncherUtils.getRuntimeName()));
+            String content = Files.readString(Path.of(context.getLauncherDirs().runtimeDir().path(), ConstantUtils.RUNTIME_NAME));
             JSONObject runtimeJSON = new JSONObject(content);
 
-            JSONObject osEntry = runtimeJSON.getJSONObject(LauncherUtils.getRuntimeOSKey());
+            JSONObject osEntry = runtimeJSON.getJSONObject(OSDetectionUtils.getRuntimeOSKey());
             String component = context.getVersionRawData().javaVersion();
 
             JSONArray componentArray = osEntry.getJSONArray(component);

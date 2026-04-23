@@ -1,6 +1,6 @@
 package fr.guillaumewlt.ui.builders;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
+import fr.guillaumewlt.exceptions.LauncherException;
 
 import javax.swing.*;
 import java.awt.*;

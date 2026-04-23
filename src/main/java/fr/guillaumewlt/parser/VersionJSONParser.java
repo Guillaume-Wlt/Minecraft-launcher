@@ -1,9 +1,9 @@
 package fr.guillaumewlt.parser;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.model.VersionRawData;
+import fr.guillaumewlt.console.ConsoleMessage;
+import fr.guillaumewlt.exceptions.LauncherException;
+import fr.guillaumewlt.models.VersionRawData;
 import fr.guillaumewlt.utils.FilePathUtils;
-import fr.guillaumewlt.utils.console.ConsoleMessage;
 import fr.guillaumewlt.workflow.LauncherContext;
 import org.json.JSONArray;
 import org.json.JSONObject;

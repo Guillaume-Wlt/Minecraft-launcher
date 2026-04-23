@@ -1,10 +1,11 @@
 package fr.guillaumewlt.processing.steps;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.utils.console.ConsoleMessage;
+import fr.guillaumewlt.console.ConsoleMessage;
+import fr.guillaumewlt.exceptions.LauncherException;
+import fr.guillaumewlt.processing.Processes;
 import fr.guillaumewlt.workflow.LauncherContext;
 
-public class RequestInfosProcess extends Processes{
+public class RequestInfosProcess extends Processes {
 
     public RequestInfosProcess(LauncherContext context) {
         super(context);

@@ -1,7 +1,7 @@
 package fr.guillaumewlt.extractor;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
-import fr.guillaumewlt.model.LibraryInfos;
+import fr.guillaumewlt.exceptions.LauncherException;
+import fr.guillaumewlt.models.LibraryInfos;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 import java.io.FileInputStream;

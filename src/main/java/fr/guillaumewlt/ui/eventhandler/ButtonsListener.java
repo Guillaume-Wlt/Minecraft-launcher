@@ -1,6 +1,6 @@
 package fr.guillaumewlt.ui.eventhandler;
 
-import fr.guillaumewlt.model.SelectedVersion;
+import fr.guillaumewlt.models.SelectedVersion;
 import fr.guillaumewlt.parser.ManifestParser;
 import fr.guillaumewlt.ui.panels.BackgroundPanel;
 import fr.guillaumewlt.utils.ProgressBarUtils;

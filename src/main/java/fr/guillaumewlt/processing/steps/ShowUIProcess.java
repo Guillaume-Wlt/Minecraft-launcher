@@ -1,6 +1,7 @@
 package fr.guillaumewlt.processing.steps;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
+import fr.guillaumewlt.exceptions.LauncherException;
+import fr.guillaumewlt.processing.Processes;
 import fr.guillaumewlt.ui.MainWindow;
 import fr.guillaumewlt.ui.panels.BottomPanel;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -8,7 +9,7 @@ import fr.guillaumewlt.workflow.LauncherContext;
 import javax.swing.*;
 import java.util.concurrent.CountDownLatch;
 
-public class ShowUIProcess extends Processes{
+public class ShowUIProcess extends Processes {
     public ShowUIProcess(LauncherContext context) {
         super(context);
     }

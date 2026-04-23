@@ -1,8 +1,8 @@
 package fr.guillaumewlt.utils;
 
-import fr.guillaumewlt.model.LibraryInfos;
-import fr.guillaumewlt.model.directory.LauncherDirs;
-import fr.guillaumewlt.utils.console.ConsoleMessage;
+import fr.guillaumewlt.console.ConsoleMessage;
+import fr.guillaumewlt.models.LibraryInfos;
+import fr.guillaumewlt.models.directory.LauncherDirs;
 import fr.guillaumewlt.workflow.LauncherContext;
 
 public class FilePathUtils {
@@ -13,10 +13,10 @@ public class FilePathUtils {
         if (dirs.versionsDir().path() == null) {
             ConsoleMessage.LAUNCHERDIRS_VERSIONS_NULL_ERR.throwException();
         }
-        if (LauncherUtils.getManifestName() == null) {
+        if (ConstantUtils.MANIFEST_NAME == null) {
             ConsoleMessage.LAUNCHER_UTILS_MANIFEST_NAME_NULL_ERR.throwException();
         }
-        return dirs.versionsDir().path() + LauncherUtils.getManifestName();
+        return dirs.versionsDir().path() + ConstantUtils.MANIFEST_NAME;
     }
 
     public static String getSelectedVersionJSONPath(LauncherDirs dirs, String selectedVersion) { // SelectedVersionJSONPath -> [...]/launcher/versions/<selected_version>/<selected_version>.json

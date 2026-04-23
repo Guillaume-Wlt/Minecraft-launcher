@@ -1,10 +1,11 @@
 package fr.guillaumewlt.processing.steps;
 
-import fr.guillaumewlt.exceptionhandler.LauncherException;
+import fr.guillaumewlt.exceptions.LauncherException;
 import fr.guillaumewlt.extractor.NativesLibsExtract;
+import fr.guillaumewlt.processing.Processes;
 import fr.guillaumewlt.workflow.LauncherContext;
 
-public class ExtractNativesLibrariesProcess extends Processes{
+public class ExtractNativesLibrariesProcess extends Processes {
 
     public ExtractNativesLibrariesProcess(LauncherContext context) {
         super(context);

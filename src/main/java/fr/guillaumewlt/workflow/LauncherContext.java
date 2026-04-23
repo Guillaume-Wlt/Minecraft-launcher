@@ -1,9 +1,9 @@
 package fr.guillaumewlt.workflow;
 
-import fr.guillaumewlt.model.*;
-import fr.guillaumewlt.model.assets.AssetInfos;
-import fr.guillaumewlt.model.assets.AssetsIndex;
-import fr.guillaumewlt.model.directory.LauncherDirs;
+import fr.guillaumewlt.models.*;
+import fr.guillaumewlt.models.assets.AssetInfos;
+import fr.guillaumewlt.models.assets.AssetsIndex;
+import fr.guillaumewlt.models.directory.LauncherDirs;
 import fr.guillaumewlt.ui.panels.BackgroundPanel;
 import fr.guillaumewlt.ui.panels.BottomPanel;
 import lombok.Getter;

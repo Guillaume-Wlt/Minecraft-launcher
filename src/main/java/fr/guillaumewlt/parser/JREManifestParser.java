@@ -1,7 +1,7 @@
 package fr.guillaumewlt.parser;
 
-import fr.guillaumewlt.model.JREFileInfos;
-import fr.guillaumewlt.utils.console.ConsoleMessage;
+import fr.guillaumewlt.console.ConsoleMessage;
+import fr.guillaumewlt.models.JREFileInfos;
 import fr.guillaumewlt.workflow.LauncherContext;
 import org.json.JSONObject;
 

@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.steps;
 
+import fr.guillaumewlt.processing.Processes;
 import fr.guillaumewlt.utils.ConsoleUtils;
 import fr.guillaumewlt.utils.ProgressBarUtils;
 import fr.guillaumewlt.workflow.LauncherContext;
@@ -46,7 +47,7 @@ public class StartingClientProcess extends Processes {
      *   --username --version --gameDir ...  (arguments du jeu, dont --userProperties {} requis par 1.7/1.8)
      * </pre>
      *
-     * @throws fr.guillaumewlt.exceptionhandler.LauncherException si le processus ne peut pas
+     * @throws fr.guillaumewlt.exceptions.LauncherException si le processus ne peut pas
      *                                                             démarrer ou est interrompu
      */
     @Override
