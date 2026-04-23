@@ -77,6 +77,7 @@ Full graphical interface with centralised download engine. See the release page 
 | Custom `@EDT` annotation — guarantees annotated methods execute on the Swing Event Dispatch Thread via `SwingUtilities.invokeLater()` | To do       |
 | RAM input validation against system available memory | To do       |
 | Error recovery — retry failed steps instead of stopping | To do       |
+| Replace `System.out` / `System.err` with Log4j2 — structured logging with levels (INFO, DEBUG, WARN, ERROR) | To do       |
 | Log archiving — save full session logs to a timestamped file and compress it (`.gz`) on client exit | To do       |
 | Mojang / Microsoft authentication | To do       |
 | Auto-update system | Long term   |
