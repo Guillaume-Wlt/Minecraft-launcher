@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.download;
 
+import fr.guillaumewlt.annotations.Retryable;
 import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.download.DownloadProcess;
 import fr.guillaumewlt.exceptions.LauncherException;
@@ -28,6 +29,7 @@ public class DownloadAssetsIndexProcess extends Processes {
         this.destination = Path.of(context.getLauncherDirs().assetsIndexesDir().path(), assetsIndexName);
     }
 
+    @Retryable(attempts = 3)
     @WorkerThread
     @Override
     public void process() {

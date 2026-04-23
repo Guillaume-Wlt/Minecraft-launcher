@@ -1,5 +1,6 @@
 package fr.guillaumewlt.workflow;
 
+import fr.guillaumewlt.annotations.Retryable;
 import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.console.ConsoleMessage;
 import fr.guillaumewlt.exceptions.LauncherException;
@@ -32,21 +33,39 @@ public class WorkflowRunner {
     public void run() {
         while (currentStep != ProgramStep.END) {
             changeStepUpdate(currentStep);
-            callEDTOnMethods(currentStep.createProcess(context));
+            callProcess(currentStep.createProcess(context));
             currentStep = currentStep.next();
         }
     }
 
-    private void callEDTOnMethods(Object obj) {
+    private void callProcess(Object obj) {
         try {
             Method processMethod = obj.getClass().getMethod("process");
-                if (processMethod.isAnnotationPresent(WorkerThread.class) && SwingUtilities.isEventDispatchThread()) {
-                    throw new LauncherException("Cannot call process() on EDT");
-                } else {
-                    ((Processes) obj).process();
-                }
+            if (processMethod.isAnnotationPresent(WorkerThread.class) && SwingUtilities.isEventDispatchThread()) {
+                throw new LauncherException("Cannot call process() on EDT");
+            } else if (processMethod.isAnnotationPresent(Retryable.class)) {
+                Retryable retryable = processMethod.getAnnotation(Retryable.class);
+                retryProcess(retryable.attempts(), obj);
+            } else {
+                ((Processes) obj).process();
+            }
         } catch (NoSuchMethodException ex) {
             throw new LauncherException(ex.getMessage());
+        }
+    }
+
+    private void retryProcess(int attempts, Object obj) {
+        for (int i = 0; i < attempts; i++) {
+            try {
+                ((Processes) obj).process();
+                break;
+            } catch (LauncherException ex) {
+                if (i == attempts - 1) {
+                    System.err.println("Process Failed:" + ex.getMessage() + ". Stopping...");
+                    throw new LauncherException(ex.getMessage(), 1000);
+                }
+                System.err.println("Process Failed:" + ex.getMessage() + ". Retrying...");
+            }
         }
     }
 
