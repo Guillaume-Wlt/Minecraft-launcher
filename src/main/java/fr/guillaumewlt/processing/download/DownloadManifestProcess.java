@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.download;
 
+import fr.guillaumewlt.annotations.Retryable;
 import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.download.DownloadProcess;
 import fr.guillaumewlt.exceptions.LauncherException;
@@ -22,6 +23,7 @@ public class DownloadManifestProcess extends Processes {
         manifestPath = Path.of(context.getLauncherDirs().versionsDir().path(), manifestName);
     }
 
+    @Retryable(attempts = 3)
     @WorkerThread
     @Override
     public void process() {

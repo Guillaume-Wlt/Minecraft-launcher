@@ -42,7 +42,7 @@ public class WorkflowRunner {
         try {
             Method processMethod = obj.getClass().getMethod("process");
             if (processMethod.isAnnotationPresent(WorkerThread.class) && SwingUtilities.isEventDispatchThread()) {
-                throw new LauncherException("Cannot call process() on EDT");
+                throw new LauncherException("Cannot call process() on EDT", 1100);
             } else if (processMethod.isAnnotationPresent(Retryable.class)) {
                 Retryable retryable = processMethod.getAnnotation(Retryable.class);
                 retryProcess(retryable.attempts(), obj);

@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.download;
 
+import fr.guillaumewlt.annotations.Retryable;
 import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.console.ConsoleMessage;
 import fr.guillaumewlt.download.DownloadProcess;
@@ -25,6 +26,7 @@ public class DownloadVersionJSONProcess extends Processes {
         this.destination = Path.of(selectedVersionDir, versionName + ".json");
     }
 
+    @Retryable(attempts = 3)
     @WorkerThread
     @Override
     public void process() {

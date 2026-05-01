@@ -1,5 +1,6 @@
 package fr.guillaumewlt.processing.download;
 
+import fr.guillaumewlt.annotations.Retryable;
 import fr.guillaumewlt.annotations.WorkerThread;
 import fr.guillaumewlt.console.ConsoleMessage;
 import fr.guillaumewlt.download.DownloadProcess;
@@ -26,6 +27,7 @@ public class DownloadClientAssetsProcess extends Processes {
         this.assetsURL = ConstantUtils.ASSETS_URL;
     }
 
+    @Retryable(attempts = 3)
     @WorkerThread
     @Override
     public void process() {
