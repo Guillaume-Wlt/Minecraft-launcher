@@ -21,3 +21,6 @@ release-notes.md
 
 ### Excluded Project Folder ###
 docs/
+
+#### Exclude Claude Folder ####
+.claude/
